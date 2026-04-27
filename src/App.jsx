@@ -84,7 +84,10 @@ export default function App() {
   const [connected, setConnected] = useState(false);
   const [showWallets, setShowWallets] = useState(false);
   const [showDisclaimer, setShowDisclaimer] = useState(false);
-  const [agreed, setAgreed] = useState(false);
+  const [agreed, setAgreed] = useState(() => {
+    // Check session storage so it doesn't pop up every refresh within same session
+    return sessionStorage.getItem('cappy_disclaimer_agreed') === '1';
+  });
   const [minting, setMinting] = useState(false);
   const [geiger, setGeiger] = useState(''); // '', 'requesting', 'fulfilling', 'done'
   const [result, setResult] = useState(null);
@@ -97,6 +100,7 @@ export default function App() {
 
   const connect = async (key) => {
     setErr(null);
+    if (!agreed) { setShowDisclaimer(true); return; }
     try {
       const prov = getProvider(key);
       if (!prov) throw new Error(`${WALLETS.find(w => w.key === key).name} not found. Install it first.`);
@@ -107,12 +111,11 @@ export default function App() {
 
   const disconnect = async () => {
     if (provider) try { await provider.disconnect(); } catch (_) {}
-    setProvider(null); setPubkey(null); setConnected(false); setAgreed(false);
+    setProvider(null); setPubkey(null); setConnected(false);
   };
 
   const startMint = async () => {
     if (!connected) { setShowWallets(true); return; }
-    if (!agreed) { setShowDisclaimer(true); return; }
     setMinting(true); setErr(null); setResult(null); setReveal(false); setGeiger('requesting');
     try {
       const { Keypair } = await import('@solana/web3.js');
@@ -231,7 +234,7 @@ export default function App() {
         </div>
       )}
 
-      <DisclaimerModal open={showDisclaimer} onClose={() => { setAgreed(true); setShowDisclaimer(false); }} />
+      <DisclaimerModal open={showDisclaimer} onClose={() => { setAgreed(true); sessionStorage.setItem('cappy_disclaimer_agreed', '1'); setShowDisclaimer(false); }} />
 
       {/* Header */}
       <header className="c-header">
@@ -249,7 +252,7 @@ export default function App() {
             <span className="c-wallet-x">✕</span>
           </button>
         ) : (
-          <button className="c-header-connect" onClick={() => setShowWallets(true)}>Connect</button>
+          <button className="c-header-connect" onClick={() => agreed ? setShowWallets(true) : setShowDisclaimer(true)}>Connect</button>
         )}
       </header>
 
@@ -319,17 +322,11 @@ export default function App() {
                   {geiger === 'requesting' ? 'Requesting Entropy...' : geiger === 'fulfilling' ? 'Fulfilling...' : 'Minting...'}
                 </>
               ) : connected ? (
-                agreed ? '🦫 Mint Cappy' : '⚠️ Accept Disclaimer to Mint'
+                '🦫 Mint Cappy'
               ) : (
                 'Connect Wallet'
               )}
             </button>
-
-            {!agreed && connected && (
-              <button className="c-disclaimer-link" onClick={() => setShowDisclaimer(true)}>
-                Read the disclaimer first →
-              </button>
-            )}
 
             <p className="c-price-note">Mint price: <strong>10 XNT</strong> + network fees</p>
           </div>
