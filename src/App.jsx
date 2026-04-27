@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Connection, PublicKey, Transaction, SystemProgram, LAMPORTS_PER_SOL } from '@solana/web3.js';
 import {
   TOKEN_PROGRAM_ID,
@@ -17,438 +17,334 @@ const METADATA_PROGRAM_ID = new PublicKey('metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt
 const GEIGER_PROGRAM_ID = new PublicKey('BxUNg2yo5371BQMZPkfcxdCptFRDHkhvEXNM1QNPBRYU');
 const RPC = 'https://rpc.mainnet.x1.xyz';
 
-const RARITY_TIERS = {
-  LEGENDARY: { threshold: 0.05, label: 'Legendary', color: '#ffd700', icon: '👑', bg: 'rgba(255,215,0,0.08)' },
-  MYTHIC: { threshold: 0.30, label: 'Mythic', color: '#ff6b35', icon: '✨', bg: 'rgba(255,107,53,0.08)' },
-  COMMON: { threshold: 1.0, label: 'Common', color: '#9ca3af', icon: '🦫', bg: 'rgba(156,163,175,0.06)' },
+const RARITY = {
+  LEGENDARY: { pct: 5, label: 'Legendary', color: '#ffd700', icon: '👑', glow: '0 0 30px rgba(255,215,0,0.4)' },
+  MYTHIC:   { pct: 25, label: 'Mythic',    color: '#ff6b35', icon: '✨', glow: '0 0 30px rgba(255,107,53,0.4)' },
+  COMMON:   { pct: 70, label: 'Common',    color: '#9ca3af', icon: '🦫', glow: '0 0 20px rgba(156,163,175,0.2)' },
 };
 
 const WALLETS = [
-  { key: 'phantom', name: 'Phantom', icon: '👻', check: () => window.phantom?.solana },
-  { key: 'backpack', name: 'Backpack', icon: '🎒', check: () => window.backpack?.solana },
-  { key: 'solflare', name: 'Solflare', icon: '🔥', check: () => window.solflare },
+  { key: 'phantom',  name: 'Phantom',   icon: '👻' },
+  { key: 'backpack', name: 'Backpack',  icon: '🎒' },
+  { key: 'solflare', name: 'Solflare',  icon: '🔥' },
 ];
 
-const SAMPLE_CAPYS = [
-  'https://i.imgur.com/JP0CJfG.jpeg',
-  'https://i.imgur.com/8Km9t8J.jpeg',
-  'https://i.imgur.com/5QXz4QG.jpeg',
-  'https://i.imgur.com/LK9t8HJ.jpeg',
-];
-
-function shortenAddress(addr) {
-  if (!addr) return '';
-  return `${addr.slice(0, 6)}...${addr.slice(-4)}`;
+function getProvider(key) {
+  if (key === 'phantom')  return window.phantom?.solana;
+  if (key === 'backpack') return window.backpack?.solana;
+  if (key === 'solflare') return window.solflare;
+  return null;
 }
+
+function short(addr) { return addr ? `${addr.slice(0,6)}...${addr.slice(-4)}` : ''; }
 
 export default function App() {
   const [provider, setProvider] = useState(null);
-  const [publicKey, setPublicKey] = useState(null);
+  const [pubkey, setPubkey] = useState(null);
   const [connected, setConnected] = useState(false);
-  const [showWalletModal, setShowWalletModal] = useState(false);
-  const [formData, setFormData] = useState({ name: '', symbol: '', uri: '', royaltyPercent: 5 });
-  const [imagePreview, setImagePreview] = useState('');
-  const [imageError, setImageError] = useState(false);
+  const [showWallets, setShowWallets] = useState(false);
+  const [form, setForm] = useState({ name: '', symbol: '', uri: '', royalty: 5 });
+  const [imgOk, setImgOk] = useState(false);
+  const [imgErr, setImgErr] = useState(false);
   const [minting, setMinting] = useState(false);
+  const [geiger, setGeiger] = useState(''); // '', 'requesting', 'fulfilling', 'done'
   const [result, setResult] = useState(null);
-  const [error, setError] = useState(null);
-  const [geigerStatus, setGeigerStatus] = useState('idle');
+  const [err, setErr] = useState(null);
 
-  const connection = new Connection(import.meta.env.VITE_RPC_URL || RPC, 'confirmed');
+  const conn = new Connection(import.meta.env.VITE_RPC_URL || RPC, 'confirmed');
 
-  const [oracleStatePDA] = PublicKey.findProgramAddressSync(
-    [Buffer.from('oracle_state')],
-    GEIGER_PROGRAM_ID
-  );
-  const [entropyPoolPDA] = PublicKey.findProgramAddressSync(
-    [Buffer.from('entropy_pool')],
-    GEIGER_PROGRAM_ID
-  );
+  const [oraclePDA] = PublicKey.findProgramAddressSync([Buffer.from('oracle_state')], GEIGER_PROGRAM_ID);
+  const [poolPDA]   = PublicKey.findProgramAddressSync([Buffer.from('entropy_pool')], GEIGER_PROGRAM_ID);
 
-  const handleConnect = async (walletKey) => {
-    setError(null);
+  const connect = async (key) => {
+    setErr(null);
     try {
-      const walletDef = WALLETS.find(w => w.key === walletKey);
-      const prov = walletDef.check();
-      if (!prov) throw new Error(`${walletDef.name} wallet not found. Please install it first.`);
+      const prov = getProvider(key);
+      if (!prov) throw new Error(`${WALLETS.find(w=>w.key===key).name} not found`);
       const resp = await prov.connect();
       setProvider(prov);
-      setPublicKey(resp.publicKey);
+      setPubkey(resp.publicKey);
       setConnected(true);
-      setShowWalletModal(false);
-    } catch (err) {
-      setError(err.message);
+      setShowWallets(false);
+    } catch (e) { setErr(e.message); }
+  };
+
+  const disconnect = async () => {
+    if (provider) try { await provider.disconnect(); } catch(_) {}
+    setProvider(null); setPubkey(null); setConnected(false);
+  };
+
+  const onUri = (uri) => {
+    setForm(f => ({ ...f, uri }));
+    setImgOk(false); setImgErr(false);
+    if (uri) {
+      const img = new Image();
+      img.onload = () => setImgOk(true);
+      img.onerror = () => setImgErr(true);
+      img.src = uri;
     }
   };
 
-  const handleDisconnect = async () => {
-    if (provider) { try { await provider.disconnect(); } catch(e) {} }
-    setProvider(null);
-    setPublicKey(null);
-    setConnected(false);
-  };
-
-  const handleImageChange = (uri) => {
-    setFormData({ ...formData, uri });
-    setImageError(false);
-    setImagePreview(uri || '');
-  };
-
-  const determineRarity = (entropyBytes) => {
-    const value = entropyBytes.slice(0, 8).reduce((acc, b, i) => acc + b * Math.pow(256, -i-1), 0);
-    if (value < RARITY_TIERS.LEGENDARY.threshold) return 'LEGENDARY';
-    if (value < RARITY_TIERS.MYTHIC.threshold) return 'MYTHIC';
-    return 'COMMON';
-  };
-
-  const requestGeigerRandomness = async () => {
-    const anchorProvider = new anchor.AnchorProvider(
-      connection,
-      { publicKey, signTransaction: provider.signTransaction.bind(provider) },
-      { commitment: 'confirmed' }
-    );
-    anchor.setProvider(anchorProvider);
-    const program = new anchor.Program(GEIGER_IDL, GEIGER_PROGRAM_ID, anchorProvider);
-
-    const userSeed = crypto.getRandomValues(new Uint8Array(32));
-    const oracleState = await program.account.oracleState.fetch(oracleStatePDA);
-    const requestIndex = Buffer.alloc(8);
-    requestIndex.writeBigUInt64LE(BigInt(oracleState.totalRequests.toString()));
-
-    const [requestPDA] = PublicKey.findProgramAddressSync(
-      [Buffer.from('rand_request'), publicKey.toBuffer(), requestIndex],
-      GEIGER_PROGRAM_ID
-    );
-
-    const requestTx = await program.methods
-      .requestRandomness(Array.from(userSeed))
-      .accounts({
-        oracleState: oracleStatePDA,
-        entropyPool: entropyPoolPDA,
-        randomnessRequest: requestPDA,
-        requester: publicKey,
-        systemProgram: SystemProgram.programId,
-      })
-      .rpc();
-
-    return { requestPDA, userSeed };
-  };
-
-  const fulfillGeigerRandomness = async (requestPDA) => {
-    const anchorProvider = new anchor.AnchorProvider(
-      connection,
-      { publicKey, signTransaction: provider.signTransaction.bind(provider) },
-      { commitment: 'confirmed' }
-    );
-    anchor.setProvider(anchorProvider);
-    const program = new anchor.Program(GEIGER_IDL, GEIGER_PROGRAM_ID, anchorProvider);
-
-    await program.methods
-      .fulfillRandomness()
-      .accounts({
-        oracleState: oracleStatePDA,
-        entropyPool: entropyPoolPDA,
-        randomnessRequest: requestPDA,
-        requester: publicKey,
-        systemProgram: SystemProgram.programId,
-      })
-      .rpc();
-
-    const request = await program.account.randomnessRequest.fetch(requestPDA);
-    return request.result;
-  };
-
-  const handleMint = async () => {
-    if (!connected) { setError('Connect your wallet first'); return; }
-    if (!formData.name || !formData.symbol || !formData.uri) {
-      setError('Name, symbol, and image URI are required'); return;
-    }
-
-    setMinting(true);
-    setError(null);
-    setResult(null);
-    setGeigerStatus('requesting');
-
+  const mint = async () => {
+    if (!connected) { setErr('Connect wallet first'); return; }
+    if (!form.name || !form.symbol || !form.uri) { setErr('Name, symbol, and image URI required'); return; }
+    setMinting(true); setErr(null); setResult(null); setGeiger('requesting');
     try {
       const { Keypair } = await import('@solana/web3.js');
       const { createCreateMetadataAccountV3Instruction } = await import('@metaplex-foundation/mpl-token-metadata');
 
-      // Step 1: Geiger randomness
-      const { requestPDA } = await requestGeigerRandomness();
-      setGeigerStatus('fulfilling');
-      const entropyResult = await fulfillGeigerRandomness(requestPDA);
-      const rarity = determineRarity(entropyResult);
-      setGeigerStatus('complete');
+      // 1. Geiger randomness
+      const anchorProv = new anchor.AnchorProvider(conn,
+        { publicKey, signTransaction: provider.signTransaction.bind(provider) },
+        { commitment: 'confirmed' }
+      );
+      anchor.setProvider(anchorProv);
+      const program = new anchor.Program(GEIGER_IDL, GEIGER_PROGRAM_ID, anchorProv);
 
-      // Step 2: Mint NFT
-      const mintKeypair = Keypair.generate();
-      const mintPubkey = mintKeypair.publicKey;
-      const lamports = await connection.getMinimumBalanceForRentExemption(MINT_SIZE);
-      const associatedTokenAddress = getAssociatedTokenAddressSync(mintPubkey, publicKey);
-      const [metadataPDA] = PublicKey.findProgramAddressSync(
-        [Buffer.from('metadata'), METADATA_PROGRAM_ID.toBuffer(), mintPubkey.toBuffer()],
-        METADATA_PROGRAM_ID
+      const userSeed = crypto.getRandomValues(new Uint8Array(32));
+      const oracleState = await program.account.oracleState.fetch(oraclePDA);
+      const idx = Buffer.alloc(8);
+      idx.writeBigUInt64LE(BigInt(oracleState.totalRequests.toString()));
+      const [reqPDA] = PublicKey.findProgramAddressSync(
+        [Buffer.from('rand_request'), pubkey.toBuffer(), idx], GEIGER_PROGRAM_ID
       );
 
-      const transaction = new Transaction();
-      transaction.add(SystemProgram.createAccount({
-        fromPubkey: publicKey, newAccountPubkey: mintPubkey,
-        space: MINT_SIZE, lamports, programId: TOKEN_PROGRAM_ID,
-      }));
-      transaction.add(createInitializeMintInstruction(mintPubkey, 0, publicKey, publicKey, TOKEN_PROGRAM_ID));
-      transaction.add(createAssociatedTokenAccountInstruction(
-        publicKey, associatedTokenAddress, publicKey, mintPubkey,
-        TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID
-      ));
-      transaction.add(createMintToInstruction(mintPubkey, associatedTokenAddress, publicKey, 1, [], TOKEN_PROGRAM_ID));
+      await program.methods.requestRandomness(Array.from(userSeed)).accounts({
+        oracleState: oraclePDA, entropyPool: poolPDA, randomnessRequest: reqPDA,
+        requester: pubkey, systemProgram: SystemProgram.programId,
+      }).rpc();
 
-      const rarityConfig = RARITY_TIERS[rarity];
-      transaction.add(createCreateMetadataAccountV3Instruction(
-        {
-          metadata: metadataPDA, mint: mintPubkey, mintAuthority: publicKey,
-          payer: publicKey, updateAuthority: publicKey,
-        },
-        {
-          createMetadataAccountArgsV3: {
-            data: {
-              name: `${rarityConfig.icon} ${formData.name}`,
-              symbol: formData.symbol,
-              uri: formData.uri,
-              sellerFeeBasisPoints: Math.floor(formData.royaltyPercent * 100),
-              creators: null, collection: null, uses: null,
-            },
-            isMutable: true, collectionDetails: null,
+      setGeiger('fulfilling');
+
+      await program.methods.fulfillRandomness().accounts({
+        oracleState: oraclePDA, entropyPool: poolPDA, randomnessRequest: reqPDA,
+        requester: pubkey, systemProgram: SystemProgram.programId,
+      }).rpc();
+
+      const req = await program.account.randomnessRequest.fetch(reqPDA);
+      const entropyBytes = req.result;
+      const val = entropyBytes.slice(0, 8).reduce((a, b, i) => a + b * Math.pow(256, -i - 1), 0);
+      let tier;
+      if (val < 0.05) tier = 'LEGENDARY';
+      else if (val < 0.30) tier = 'MYTHIC';
+      else tier = 'COMMON';
+      setGeiger('done');
+
+      // 2. Mint NFT
+      const mintKP = Keypair.generate();
+      const mintPk = mintKP.publicKey;
+      const lamports = await conn.getMinimumBalanceForRentExemption(MINT_SIZE);
+      const ata = getAssociatedTokenAddressSync(mintPk, pubkey);
+      const [metaPDA] = PublicKey.findProgramAddressSync(
+        [Buffer.from('metadata'), METADATA_PROGRAM_ID.toBuffer(), mintPk.toBuffer()], METADATA_PROGRAM_ID
+      );
+
+      const tx = new Transaction();
+      tx.add(SystemProgram.createAccount({ fromPubkey: pubkey, newAccountPubkey: mintPk, space: MINT_SIZE, lamports, programId: TOKEN_PROGRAM_ID }));
+      tx.add(createInitializeMintInstruction(mintPk, 0, pubkey, pubkey, TOKEN_PROGRAM_ID));
+      tx.add(createAssociatedTokenAccountInstruction(pubkey, ata, pubkey, mintPk, TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID));
+      tx.add(createMintToInstruction(mintPk, ata, pubkey, 1, [], TOKEN_PROGRAM_ID));
+      tx.add(createCreateMetadataAccountV3Instruction({
+        metadata: metaPDA, mint: mintPk, mintAuthority: pubkey,
+        payer: pubkey, updateAuthority: pubkey,
+      }, {
+        createMetadataAccountArgsV3: {
+          data: {
+            name: `${RARITY[tier].icon} ${form.name}`,
+            symbol: form.symbol,
+            uri: form.uri,
+            sellerFeeBasisPoints: Math.floor(form.royalty * 100),
+            creators: null, collection: null, uses: null,
           },
-        }
-      ));
+          isMutable: true, collectionDetails: null,
+        },
+      }));
 
-      const { blockhash } = await connection.getLatestBlockhash();
-      transaction.recentBlockhash = blockhash;
-      transaction.feePayer = publicKey;
-      transaction.partialSign(mintKeypair);
-      const signed = await provider.signTransaction(transaction);
-      const txid = await connection.sendRawTransaction(signed.serialize());
-      await connection.confirmTransaction(txid, 'confirmed');
+      const { blockhash } = await conn.getLatestBlockhash();
+      tx.recentBlockhash = blockhash; tx.feePayer = pubkey;
+      tx.partialSign(mintKP);
+      const signed = await provider.signTransaction(tx);
+      const txid = await conn.sendRawTransaction(signed.serialize());
+      await conn.confirmTransaction(txid, 'confirmed');
 
-      setResult({
-        mintAddress: mintPubkey.toString(),
-        txid,
-        rarity,
-        rarityConfig,
-        entropyHash: Buffer.from(entropyResult).toString('hex').slice(0, 32) + '...',
-      });
-    } catch (err) {
-      console.error('Mint error:', err);
-      setError(err.message || 'Mint failed');
-      setGeigerStatus('idle');
-    } finally {
-      setMinting(false);
-    }
+      setResult({ mint: mintPk.toString(), txid, tier, entropy: Buffer.from(entropyBytes).toString('hex').slice(0, 32) + '...' });
+    } catch (e) {
+      console.error(e);
+      setErr(e.message?.slice(0, 300) || 'Mint failed');
+      setGeiger('');
+    } finally { setMinting(false); }
   };
 
-  const statusMsg = {
-    requesting: '☢️ Requesting Geiger entropy...',
-    fulfilling: '⚡ Fulfilling randomness...',
-    complete: '✨ Entropy captured!',
-  };
+  const tier = result ? RARITY[result.tier] : null;
 
   return (
-    <div className="app">
-      {/* BG */}
-      <div className="bg-glow" />
+    <div className="cappy-app">
+      {/* Glow bg */}
+      <div className="cappy-bg" />
 
       {/* Header */}
-      <header className="header">
-        <div className="logo">
-          <span className="logo-icon">🦫</span>
+      <header className="cappy-header">
+        <div className="cappy-brand">
+          <span className="cappy-logo">🦫</span>
           <div>
-            <h1 className="logo-text">CAPPY</h1>
-            <p className="logo-sub">Mint · Preview · Geiger Randomness</p>
+            <h1 className="cappy-title">CAPPY</h1>
+            <p className="cappy-subtitle">NFT Mint · X1 Network</p>
           </div>
         </div>
-        <div>
-          {connected ? (
-            <button className="wallet-pill" onClick={handleDisconnect}>
-              <span className="wallet-dot" />
-              <span className="wallet-addr">{shortenAddress(publicKey?.toString())}</span>
-              <span className="wallet-x">✕</span>
-            </button>
-          ) : (
-            <button className="connect-btn" onClick={() => setShowWalletModal(true)}>
-              CONNECT WALLET
-            </button>
-          )}
-        </div>
+        {connected ? (
+          <button className="cappy-wallet-pill" onClick={disconnect}>
+            <span className="cappy-dot" />
+            <span className="cappy-addr">{short(pubkey?.toString())}</span>
+            <span className="cappy-x">✕</span>
+          </button>
+        ) : (
+          <button className="cappy-connect" onClick={() => setShowWallets(true)}>
+            Connect Wallet
+          </button>
+        )}
       </header>
 
       {/* Wallet Modal */}
-      {showWalletModal && (
-        <div className="modal-overlay" onClick={() => setShowWalletModal(false)}>
-          <div className="modal-box" onClick={e => e.stopPropagation()}>
-            <h3 className="modal-title">Connect Wallet</h3>
-            <div className="wallet-list">
-              {WALLETS.map(w => (
-                <button key={w.key} className="wallet-option" onClick={() => handleConnect(w.key)}>
-                  <span className="wallet-option-icon">{w.icon}</span>
-                  <span className="wallet-option-name">{w.name}</span>
-                </button>
-              ))}
-            </div>
+      {showWallets && (
+        <div className="cappy-overlay" onClick={() => setShowWallets(false)}>
+          <div className="cappy-modal" onClick={e => e.stopPropagation()}>
+            <h3 className="cappy-modal-title">Connect Wallet</h3>
+            {WALLETS.map(w => (
+              <button key={w.key} className="cappy-wallet-opt" onClick={() => connect(w.key)}>
+                <span className="cappy-wallet-icon">{w.icon}</span>
+                <span>{w.name}</span>
+              </button>
+            ))}
           </div>
         </div>
       )}
 
-      {/* Main */}
-      <div className="main-grid">
-        {/* Left: Preview */}
-        <div className="card preview-card">
-          <h3 className="card-title">🖼️ PREVIEW</h3>
-          <div className="preview-frame">
-            {imagePreview && !imageError ? (
-              <img src={imagePreview} alt="NFT Preview" className="preview-img" onError={() => setImageError(true)} />
+      {/* Content */}
+      <main className="cappy-main">
+        {/* Left: Preview + Rarity */}
+        <section className="cappy-card cappy-preview-section">
+          <h2 className="cappy-section-title">PREVIEW</h2>
+          <div className="cappy-preview-box">
+            {form.uri && !imgErr ? (
+              <img src={form.uri} alt="NFT preview" className="cappy-preview-img" onError={() => setImgErr(true)} />
             ) : (
-              <div className="preview-placeholder">
-                <span className="preview-placeholder-icon">🦫</span>
-                <span className="preview-placeholder-text">Paste an image URL</span>
+              <div className="cappy-preview-empty">
+                <span className="cappy-preview-empty-icon">🦫</span>
+                <span>Paste an image URL to preview</span>
               </div>
             )}
+            {imgOk && !imgErr && (
+              <span className="cappy-img-badge">✓ Image loaded</span>
+            )}
           </div>
-          {imageError && <p className="error-sm">⚠️ Could not load image. Check the URL.</p>}
+          {imgErr && <p className="cappy-img-err">⚠️ Couldn't load image — check the URL</p>}
 
-          {/* Sample capys */}
-          {!imagePreview && (
-            <div className="samples">
-              <p className="samples-label">Sample Cappys:</p>
-              <div className="samples-row">
-                {SAMPLE_CAPYS.map((url, i) => (
-                  <button key={i} className="sample-thumb" onClick={() => handleImageChange(url)}>
-                    <img src={url} alt={`Sample ${i+1}`} className="sample-img" />
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Rarity Legend */}
-          <div className="rarity-legend">
-            <h4 className="rarity-legend-title">RARITY TIERS</h4>
-            {Object.entries(RARITY_TIERS).map(([key, tier]) => (
-              <div key={key} className="rarity-row">
-                <span className="rarity-icon" style={{ color: tier.color }}>{tier.icon}</span>
-                <span className="rarity-label" style={{ color: tier.color }}>{tier.label}</span>
-                <span className="rarity-pct">
-                  {key === 'LEGENDARY' ? '5%' : key === 'MYTHIC' ? '25%' : '70%'}
-                </span>
+          {/* Rarity */}
+          <div className="cappy-rarity">
+            <h3 className="cappy-rarity-title">RARITY TIERS</h3>
+            {Object.entries(RARITY).map(([key, r]) => (
+              <div key={key} className="cappy-rarity-row" style={{ borderLeftColor: r.color }}>
+                <span className="cappy-rarity-icon" style={{ color: r.color }}>{r.icon}</span>
+                <span className="cappy-rarity-name" style={{ color: r.color }}>{r.label}</span>
+                <span className="cappy-rarity-pct">{r.pct}%</span>
               </div>
             ))}
+            <p className="cappy-rarity-note">
+              ☢️ Determined by Geiger Entropy Oracle at mint time — provably random, on-chain verifiable.
+            </p>
           </div>
-        </div>
+        </section>
 
-        {/* Right: Form */}
-        <div className="card form-card">
-          <h3 className="card-title">✨ MINT DETAILS</h3>
+        {/* Right: Form + Status */}
+        <section className="cappy-card cappy-form-section">
+          <h2 className="cappy-section-title">MINT YOUR CAPPY</h2>
 
-          <div className="form-group">
-            <label className="form-label">Image URL *</label>
+          <label className="cappy-label">
+            Image URL *
             <input
               type="url"
-              placeholder="https://..."
-              value={formData.uri}
-              onChange={e => handleImageChange(e.target.value)}
-              className="form-input"
+              placeholder="https://arweave.net/... or IPFS URI"
+              value={form.uri}
+              onChange={e => onUri(e.target.value)}
+              className="cappy-input"
             />
-          </div>
+          </label>
 
-          <div className="form-row">
-            <div className="form-group">
-              <label className="form-label">Name *</label>
+          <div className="cappy-row">
+            <label className="cappy-label cappy-col">
+              Name *
               <input
                 type="text"
                 placeholder="Cappy #001"
-                value={formData.name}
-                onChange={e => setFormData({ ...formData, name: e.target.value })}
-                className="form-input"
+                value={form.name}
+                onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+                className="cappy-input"
               />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Symbol *</label>
+            </label>
+            <label className="cappy-label cappy-col">
+              Symbol *
               <input
                 type="text"
                 placeholder="CAPPY"
-                value={formData.symbol}
-                onChange={e => setFormData({ ...formData, symbol: e.target.value.toUpperCase() })}
-                className="form-input"
+                value={form.symbol}
+                onChange={e => setForm(f => ({ ...f, symbol: e.target.value.toUpperCase() }))}
+                className="cappy-input"
               />
-            </div>
+            </label>
           </div>
 
-          <div className="form-group">
-            <label className="form-label">Royalty %</label>
+          <label className="cappy-label">
+            Royalty %
             <input
-              type="number"
-              min="0" max="50" step="0.5"
-              value={formData.royaltyPercent}
-              onChange={e => setFormData({ ...formData, royaltyPercent: parseFloat(e.target.value) || 0 })}
-              className="form-input"
+              type="number" min="0" max="50" step="0.5"
+              value={form.royalty}
+              onChange={e => setForm(f => ({ ...f, royalty: parseFloat(e.target.value) || 0 }))}
+              className="cappy-input"
             />
-          </div>
+          </label>
 
-          {/* Geiger Status */}
-          {geigerStatus !== 'idle' && (
-            <div className="status-box geiger-status">
-              <span className={`status-icon ${geigerStatus === 'fulfilling' ? 'spin' : geigerStatus === 'complete' ? '' : 'pulse'}`}>
-                {geigerStatus === 'complete' ? '✅' : '☢️'}
-              </span>
-              <span>{statusMsg[geigerStatus]}</span>
+          {/* Geiger status */}
+          {geiger && (
+            <div className={`cappy-status ${geiger === 'done' ? 'cappy-status-ok' : 'cappy-status-geiger'}`}>
+              {geiger === 'requesting' && '☢️ Requesting Geiger entropy...'}
+              {geiger === 'fulfilling' && '⚡ Fulfilling randomness...'}
+              {geiger === 'done' && '✅ Entropy captured!'}
             </div>
           )}
 
           {/* Error */}
-          {error && (
-            <div className="status-box error-status">
-              ❌ {error}
-            </div>
-          )}
+          {err && <div className="cappy-status cappy-status-err">❌ {err}</div>}
 
-          {/* Mint Button */}
+          {/* Mint button */}
           <button
-            onClick={handleMint}
-            disabled={!connected || minting || !formData.name || !formData.symbol || !formData.uri}
-            className={`mint-btn ${connected && !minting ? 'mint-btn-active' : ''}`}
+            className={`cappy-mint-btn ${connected && !minting ? 'cappy-mint-btn-ready' : ''}`}
+            onClick={mint}
+            disabled={!connected || minting || !form.name || !form.symbol || !form.uri}
           >
-            {minting ? '☢️ MINTING...' : connected ? '🦫 MINT CAPPY' : 'CONNECT WALLET'}
+            {minting ? '☢️ MINTING...' : connected ? '🦫 MINT CAPPY' : 'CONNECT WALLET TO MINT'}
           </button>
 
           {/* Result */}
-          {result && (
-            <div className="result-box" style={{ background: result.rarityConfig.bg, borderColor: result.rarityConfig.color }}>
-              <div className="result-header">
-                <span className="result-icon">{result.rarityConfig.icon}</span>
-                <span className="result-title" style={{ color: result.rarityConfig.color }}>
-                  {result.rarityConfig.label} CAPPY MINTED!
-                </span>
+          {result && tier && (
+            <div className="cappy-result" style={{ borderColor: tier.color, boxShadow: tier.glow }}>
+              <div className="cappy-result-header">
+                <span className="cappy-result-icon">{tier.icon}</span>
+                <span className="cappy-result-tier" style={{ color: tier.color }}>{tier.label} Cappy Minted!</span>
               </div>
-              <div className="result-details">
-                <p className="result-mono">Mint: {shortenAddress(result.mintAddress)}</p>
-                <p className="result-mono">Entropy: {result.entropyHash}</p>
+              <div className="cappy-result-meta">
+                <p><span className="cappy-result-label">Mint:</span> <code>{short(result.mint)}</code></p>
+                <p><span className="cappy-result-label">Entropy:</span> <code>{result.entropy}</code></p>
               </div>
-              <a
-                href={`https://explorer.x1.xyz/tx/${result.txid}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="result-link"
-                style={{ color: result.rarityConfig.color }}
-              >
-                View on Explorer →
+              <a href={`https://explorer.x1.xyz/tx/${result.txid}`} target="_blank" rel="noopener noreferrer" className="cappy-result-link">
+                View on X1 Explorer →
               </a>
             </div>
           )}
-        </div>
-      </div>
+        </section>
+      </main>
 
-      {/* Footer */}
-      <footer className="footer">
-        Powered by X1 Network · Geiger Entropy Oracle ☢️
+      <footer className="cappy-footer">
+        Powered by X1 Network · Geiger Entropy Oracle ☢️ · <a href="https://github.com/echohound-labs/geiger-entropy-oracle" target="_blank" rel="noopener noreferrer">Docs</a>
       </footer>
     </div>
   );
