@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Connection, PublicKey, Transaction, SystemProgram } from '@solana/web3.js';
 import {
   TOKEN_PROGRAM_ID,
@@ -17,14 +17,28 @@ const METADATA_PROGRAM_ID = new PublicKey('metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt
 const GEIGER_PROGRAM_ID = new PublicKey('BxUNg2yo5371BQMZPkfcxdCptFRDHkhvEXNM1QNPBRYU');
 const RPC = 'https://rpc.mainnet.x1.xyz';
 
+// ── Collection Config ──────────────────────────────────
+const COLLECTION = {
+  symbol: 'CAPPY',
+  royalty: 5,        // 5%
+  baseUri: 'https://cappy-nft-mint.vercel.app/metadata/',  // placeholder
+  namePrefix: 'Cappy',
+};
+// ── Tiers ───────────────────────────────────────────────
+const TIERS = [
+  { key: 'COMMON',    label: 'Common',    pct: 70, color: '#b87333', emoji: '🦫', glow: '0 0 30px rgba(184,115,51,0.25)', bg: 'linear-gradient(135deg,#2a1f0e,#1a1208)' },
+  { key: 'MYTHIC',    label: 'Mythic',    pct: 25, color: '#e8722a', emoji: '✨', glow: '0 0 30px rgba(232,114,42,0.3)',  bg: 'linear-gradient(135deg,#2a1508,#1a0c04)' },
+  { key: 'LEGENDARY', label: 'Legendary', pct: 5,  color: '#ffd700', emoji: '👑', glow: '0 0 40px rgba(255,215,0,0.35)',  bg: 'linear-gradient(135deg,#2a2208,#1a1604)' },
+];
+
 const WALLETS = [
-  { key: 'phantom', name: 'Phantom', icon: '👻' },
+  { key: 'phantom',  name: 'Phantom',  icon: '👻' },
   { key: 'backpack', name: 'Backpack', icon: '🎒' },
   { key: 'solflare', name: 'Solflare', icon: '🔥' },
 ];
 
 function getProvider(key) {
-  if (key === 'phantom') return window.phantom?.solana;
+  if (key === 'phantom')  return window.phantom?.solana;
   if (key === 'backpack') return window.backpack?.solana;
   if (key === 'solflare') return window.solflare;
   return null;
@@ -35,10 +49,10 @@ function short(a) { return a ? `${a.slice(0,5)}...${a.slice(-4)}` : ''; }
 function DisclaimerModal({ open, onClose }) {
   if (!open) return null;
   return (
-    <div className="cappy-overlay" onClick={onClose}>
-      <div className="cappy-modal" onClick={e => e.stopPropagation()}>
+    <div className="c-overlay" onClick={onClose}>
+      <div className="c-modal" onClick={e => e.stopPropagation()}>
         <h2>⚠️ Disclaimer</h2>
-        <div className="cappy-modal-body">
+        <div className="c-modal-body">
           <p><strong>Last updated: April 27, 2026</strong></p>
           <p>By accessing this website and participating in the CAPPY NFT mint, you acknowledge and agree to the following:</p>
           <ol>
@@ -56,8 +70,8 @@ function DisclaimerModal({ open, onClose }) {
           </ol>
           <p>By clicking "I Agree," you confirm that you have read, understood, and accept all terms above.</p>
         </div>
-        <div className="cappy-modal-actions">
-          <button className="cappy-modal-agree" onClick={onClose}>I Agree</button>
+        <div className="c-modal-actions">
+          <button className="c-modal-agree" onClick={onClose}>I Agree</button>
         </div>
       </div>
     </div>
@@ -71,16 +85,15 @@ export default function App() {
   const [showWallets, setShowWallets] = useState(false);
   const [showDisclaimer, setShowDisclaimer] = useState(false);
   const [agreed, setAgreed] = useState(false);
-  const [form, setForm] = useState({ name: '', symbol: '', uri: '', royalty: 5 });
-  const [imgOk, setImgOk] = useState(false);
   const [minting, setMinting] = useState(false);
-  const [geiger, setGeiger] = useState('');
+  const [geiger, setGeiger] = useState(''); // '', 'requesting', 'fulfilling', 'done'
   const [result, setResult] = useState(null);
   const [err, setErr] = useState(null);
+  const [reveal, setReveal] = useState(false);
 
   const conn = new Connection(import.meta.env.VITE_RPC_URL || RPC, 'confirmed');
   const [oraclePDA] = PublicKey.findProgramAddressSync([Buffer.from('oracle_state')], GEIGER_PROGRAM_ID);
-  const [poolPDA] = PublicKey.findProgramAddressSync([Buffer.from('entropy_pool')], GEIGER_PROGRAM_ID);
+  const [poolPDA]   = PublicKey.findProgramAddressSync([Buffer.from('entropy_pool')], GEIGER_PROGRAM_ID);
 
   const connect = async (key) => {
     setErr(null);
@@ -94,20 +107,13 @@ export default function App() {
 
   const disconnect = async () => {
     if (provider) try { await provider.disconnect(); } catch (_) {}
-    setProvider(null); setPubkey(null); setConnected(false);
+    setProvider(null); setPubkey(null); setConnected(false); setAgreed(false);
   };
 
-  const onUri = (uri) => {
-    setForm(f => ({ ...f, uri }));
-    setImgOk(false);
-    if (uri) { const img = new Image(); img.onload = () => setImgOk(true); img.src = uri; }
-  };
-
-  const mint = async () => {
-    if (!connected) { setErr('Connect wallet first'); return; }
+  const startMint = async () => {
+    if (!connected) { setShowWallets(true); return; }
     if (!agreed) { setShowDisclaimer(true); return; }
-    if (!form.name || !form.symbol || !form.uri) { setErr('Name, symbol, and image URI required'); return; }
-    setMinting(true); setErr(null); setResult(null); setGeiger('requesting');
+    setMinting(true); setErr(null); setResult(null); setReveal(false); setGeiger('requesting');
     try {
       const { Keypair } = await import('@solana/web3.js');
       const { createCreateMetadataAccountV3Instruction } = await import('@metaplex-foundation/mpl-token-metadata');
@@ -119,6 +125,7 @@ export default function App() {
       anchor.setProvider(anchorProv);
       const program = new anchor.Program(GEIGER_IDL, GEIGER_PROGRAM_ID, anchorProv);
 
+      // 1. Geiger randomness
       const userSeed = crypto.getRandomValues(new Uint8Array(32));
       const oracleState = await program.account.oracleState.fetch(oraclePDA);
       const idx = Buffer.alloc(8);
@@ -142,13 +149,15 @@ export default function App() {
       const req = await program.account.randomnessRequest.fetch(reqPDA);
       const bytes = req.result;
       const val = bytes.slice(0, 8).reduce((a, b, i) => a + b * Math.pow(256, -i - 1), 0);
-      let tier, tierConfig;
-      if (val < 0.05) { tier = 'LEGENDARY'; tierConfig = { label: 'Legendary', color: '#ffd700', icon: '👑' }; }
-      else if (val < 0.30) { tier = 'MYTHIC'; tierConfig = { label: 'Mythic', color: '#ff6b35', icon: '✨' }; }
-      else { tier = 'COMMON'; tierConfig = { label: 'Common', color: '#9ca3af', icon: '🦫' }; }
+
+      let tierKey, tier;
+      if (val < 0.05)       { tierKey = 'LEGENDARY'; tier = TIERS[2]; }
+      else if (val < 0.30)  { tierKey = 'MYTHIC';    tier = TIERS[1]; }
+      else                  { tierKey = 'COMMON';    tier = TIERS[0]; }
 
       setGeiger('done');
 
+      // 2. Mint NFT
       const mintKP = Keypair.generate();
       const mintPk = mintKP.publicKey;
       const lamports = await conn.getMinimumBalanceForRentExemption(MINT_SIZE);
@@ -156,6 +165,9 @@ export default function App() {
       const [metaPDA] = PublicKey.findProgramAddressSync(
         [Buffer.from('metadata'), METADATA_PROGRAM_ID.toBuffer(), mintPk.toBuffer()], METADATA_PROGRAM_ID
       );
+
+      // Sequential mint number — use timestamp for uniqueness
+      const mintNumber = Date.now().toString(36).toUpperCase().slice(-4);
 
       const tx = new Transaction();
       tx.add(SystemProgram.createAccount({ fromPubkey: pubkey, newAccountPubkey: mintPk, space: MINT_SIZE, lamports, programId: TOKEN_PROGRAM_ID }));
@@ -168,10 +180,10 @@ export default function App() {
       }, {
         createMetadataAccountArgsV3: {
           data: {
-            name: `${tierConfig.icon} ${form.name}`,
-            symbol: form.symbol,
-            uri: form.uri,
-            sellerFeeBasisPoints: Math.floor(form.royalty * 100),
+            name: `${tier.emoji} ${COLLECTION.namePrefix} #${mintNumber}`,
+            symbol: COLLECTION.symbol,
+            uri: `${COLLECTION.baseUri}${mintNumber}.json`,
+            sellerFeeBasisPoints: COLLECTION.royalty * 100,
             creators: null, collection: null, uses: null,
           },
           isMutable: true, collectionDetails: null,
@@ -185,7 +197,16 @@ export default function App() {
       const txid = await conn.sendRawTransaction(signed.serialize());
       await conn.confirmTransaction(txid, 'confirmed');
 
-      setResult({ mint: mintPk.toString(), txid, tier, tierConfig, entropy: Buffer.from(bytes).toString('hex').slice(0, 32) + '...' });
+      setResult({
+        mint: mintPk.toString(),
+        txid,
+        tierKey,
+        tier,
+        mintNumber,
+        entropy: Buffer.from(bytes).toString('hex').slice(0, 32) + '...',
+      });
+
+      setTimeout(() => setReveal(true), 200);
     } catch (e) {
       console.error(e);
       setErr(e.message?.slice(0, 300) || 'Mint failed');
@@ -193,22 +214,16 @@ export default function App() {
     } finally { setMinting(false); }
   };
 
-  const tc = result?.tierConfig;
-
   return (
-    <div className="cappy-app">
-      <div className="cappy-bg" />
-
-      <DisclaimerModal open={showDisclaimer} onClose={() => { setAgreed(true); setShowDisclaimer(false); }} />
-
+    <div className="c-app">
       {/* Wallet Modal */}
       {showWallets && (
-        <div className="cappy-overlay" onClick={() => setShowWallets(false)}>
-          <div className="cappy-modal" onClick={e => e.stopPropagation()}>
-            <h3 className="cappy-modal-title">Connect Wallet</h3>
+        <div className="c-overlay" onClick={() => setShowWallets(false)}>
+          <div className="c-modal" onClick={e => e.stopPropagation()}>
+            <h3 className="c-modal-title">Connect Wallet</h3>
             {WALLETS.map(w => (
-              <button key={w.key} className="cappy-wallet-opt" onClick={() => connect(w.key)}>
-                <span className="cappy-wallet-icon">{w.icon}</span>
+              <button key={w.key} className="c-wallet-opt" onClick={() => connect(w.key)}>
+                <span className="c-wallet-icon">{w.icon}</span>
                 <span>{w.name}</span>
               </button>
             ))}
@@ -216,197 +231,117 @@ export default function App() {
         </div>
       )}
 
-      {/* Nav */}
-      <nav className="cappy-nav">
-        <div className="cappy-nav-brand">
-          <span className="cappy-nav-logo">🦫</span>
-          <span className="cappy-nav-title">CAPPY</span>
+      <DisclaimerModal open={showDisclaimer} onClose={() => { setAgreed(true); setShowDisclaimer(false); }} />
+
+      {/* Header */}
+      <header className="c-header">
+        <div className="c-header-brand">
+          <span className="c-header-emoji">🦫</span>
+          <div>
+            <h1 className="c-header-title">CAPPY</h1>
+            <p className="c-header-sub">NFT Mint · X1 Network</p>
+          </div>
         </div>
         {connected ? (
-          <button className="cappy-wallet-pill" onClick={disconnect}>
-            <span className="cappy-dot" />
-            <span className="cappy-addr">{short(pubkey?.toString())}</span>
-            <span className="cappy-x">✕</span>
+          <button className="c-wallet-pill" onClick={disconnect}>
+            <span className="c-wallet-dot" />
+            <span className="c-wallet-addr">{short(pubkey?.toString())}</span>
+            <span className="c-wallet-x">✕</span>
           </button>
         ) : (
-          <button className="cappy-nav-connect" onClick={() => setShowWallets(true)}>Connect Wallet</button>
+          <button className="c-header-connect" onClick={() => setShowWallets(true)}>Connect</button>
         )}
-      </nav>
+      </header>
 
-      {/* Hero */}
-      <section className="cappy-hero">
-        <div className="cappy-particles">
-          {Array.from({ length: 15 }).map((_, i) => (
-            <span key={i} className="cappy-particle" style={{
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${4 + Math.random() * 4}s`,
-            }} />
-          ))}
-        </div>
-        <div className="cappy-hero-content">
-          <span className="cappy-badge">X1 Network · Powered by Geiger Entropy Oracle ☢️</span>
-          <h1 className="cappy-hero-title">CAPPY</h1>
-          <p className="cappy-hero-desc">Mint unique capybara NFTs with provable on-chain randomness. Every Cappy's rarity is determined at mint time by the Geiger Entropy Oracle — quantum decay, verifiable on-chain.</p>
-          <div className="cappy-stats">
-            <div className="cappy-stat">
-              <div className="cappy-stat-num">3</div>
-              <div className="cappy-stat-label">Rarity Tiers</div>
-            </div>
-            <div className="cappy-stat">
-              <div className="cappy-stat-num">5%</div>
-              <div className="cappy-stat-label">Legendary</div>
-            </div>
-            <div className="cappy-stat">
-              <div className="cappy-stat-num">☢️</div>
-              <div className="cappy-stat-label">Geiger Random</div>
-            </div>
-          </div>
-          <a href="#mint" className="cappy-cta">Mint Your Cappy ↓</a>
-        </div>
-      </section>
+      {/* Main */}
+      <main className="c-main">
 
-      {/* Tiers */}
-      <section className="cappy-tiers" id="tiers">
-        <h2>Three Tiers. Three Temperaments.</h2>
-        <p className="cappy-section-sub">Every capybara is unique — but some are more legendary than others.</p>
-        <div className="cappy-tier-grid">
-          <div className="cappy-tier-card cappy-tier-common">
-            <div className="cappy-tier-badge" style={{ color: '#9ca3af', borderColor: '#9ca3af' }}>COMMON</div>
-            <div className="cappy-tier-emoji">🦫</div>
-            <h3 style={{ color: '#9ca3af' }}>COMMON</h3>
-            <p className="cappy-tier-desc">The chill capybara. Soaking in the onsen, minding its business. Most will be this — but "common" is relative when every one is unique.</p>
-            <div className="cappy-tier-chance">
-              <span className="cappy-tier-pct" style={{ color: '#9ca3af' }}>70%</span>
-              <span className="cappy-tier-pct-label">chance</span>
-            </div>
-          </div>
-          <div className="cappy-tier-card cappy-tier-mythic">
-            <div className="cappy-tier-badge" style={{ color: '#ff6b35', borderColor: '#ff6b35' }}>MYTHIC</div>
-            <div className="cappy-tier-emoji">✨</div>
-            <h3 style={{ color: '#ff6b35' }}>MYTHIC</h3>
-            <p className="cappy-tier-desc">The hot spring boss. Glowing ember markings, rare temperament. 1 in 4 mints — if you're lucky enough to feel the heat.</p>
-            <div className="cappy-tier-chance">
-              <span className="cappy-tier-pct" style={{ color: '#ff6b35' }}>25%</span>
-              <span className="cappy-tier-pct-label">chance</span>
-            </div>
-          </div>
-          <div className="cappy-tier-card cappy-tier-legendary">
-            <div className="cappy-tier-badge" style={{ color: '#ffd700', borderColor: '#ffd700' }}>LEGENDARY</div>
-            <div className="cappy-tier-emoji">👑</div>
-            <h3 style={{ color: '#ffd700' }}>LEGENDARY</h3>
-            <p className="cappy-tier-desc">The capybara king. Golden crown, radiant aura, one per twenty. If you see this, you've witnessed something rare.</p>
-            <div className="cappy-tier-chance">
-              <span className="cappy-tier-pct" style={{ color: '#ffd700' }}>5%</span>
-              <span className="cappy-tier-pct-label">chance</span>
-            </div>
-          </div>
-        </div>
-        <div className="cappy-entropy-note">
-          <span className="cappy-entropy-icon">☢️</span>
-          <div>
-            <strong>Which one will you get?</strong>
-            <p>Rarity is determined by the <a href="https://github.com/echohound-labs/geiger-entropy-oracle" target="_blank" rel="noopener noreferrer">Geiger Entropy Oracle</a> — quantum randomness from radioactive decay, verifiable on-chain. No one can predict, rig, or game which Cappy you get.</p>
-          </div>
-        </div>
-      </section>
+        {/* ── Mint Card ────────────────────────────── */}
+        <div className="c-mint-area">
 
-      {/* Mint Section */}
-      <section className="cappy-mint-section" id="mint">
-        <h2>Mint Your Cappy</h2>
-        <p className="cappy-section-sub">Provide your NFT details · Rarity assigned by Geiger Oracle ☢️</p>
-        <div className="cappy-mint-card">
-          {/* Left: Preview */}
-          <div className="cappy-mint-preview">
-            {form.uri && imgOk ? (
-              <img src={form.uri} alt="NFT preview" className="cappy-mint-img" />
-            ) : (
-              <div className="cappy-mint-placeholder">
-                <span className="cappy-mint-placeholder-icon">🦫</span>
-                <span>Image preview will appear here</span>
-              </div>
-            )}
-          </div>
-
-          {/* Right: Form */}
-          <div className="cappy-mint-form">
-            <label className="cappy-label">
-              Image URI *
-              <input type="url" placeholder="https://arweave.net/... or IPFS URI" value={form.uri} onChange={e => onUri(e.target.value)} className="cappy-input" />
-            </label>
-
-            <div className="cappy-row">
-              <label className="cappy-label cappy-col">
-                Name *
-                <input type="text" placeholder="Cappy #001" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} className="cappy-input" />
-              </label>
-              <label className="cappy-label cappy-col">
-                Symbol *
-                <input type="text" placeholder="CAPPY" value={form.symbol} onChange={e => setForm(f => ({ ...f, symbol: e.target.value.toUpperCase() }))} className="cappy-input" />
-              </label>
-            </div>
-
-            <label className="cappy-label">
-              Royalty %
-              <input type="number" min="0" max="50" step="0.5" value={form.royalty} onChange={e => setForm(f => ({ ...f, royalty: parseFloat(e.target.value) || 0 }))} className="cappy-input" />
-            </label>
-
-            {geiger && (
-              <div className={`cappy-status ${geiger === 'done' ? 'cappy-status-ok' : 'cappy-status-geiger'}`}>
-                {geiger === 'requesting' && '☢️ Requesting Geiger entropy...'}
-                {geiger === 'fulfilling' && '⚡ Fulfilling randomness...'}
-                {geiger === 'done' && '✅ Entropy captured!'}
-              </div>
-            )}
-
-            {err && <div className="cappy-status cappy-status-err">❌ {err}</div>}
-
-            {!agreed ? (
-              <div className="cappy-disclaimer-banner">
-                <p>⚠️ You must accept the disclaimer before minting.</p>
-                <button className="cappy-disclaimer-btn" onClick={() => setShowDisclaimer(true)}>Read Disclaimer</button>
-              </div>
-            ) : (
-              <>
-                <div className="cappy-wallet-area">
-                  {connected ? (
-                    <span className="cappy-wallet-connected">✓ Connected: {short(pubkey?.toString())}</span>
-                  ) : (
-                    <button className="cappy-connect-form" onClick={() => setShowWallets(true)}>Connect Wallet</button>
-                  )}
+          {/* Left: Card Preview */}
+          <div className={`c-card-container ${reveal ? 'c-card-revealed' : ''}`}>
+            {result && reveal ? (
+              <div className="c-result-card" style={{ background: result.tier.bg, borderColor: result.tier.color, boxShadow: result.tier.glow }}>
+                <div className="c-result-badge" style={{ color: result.tier.color, borderColor: result.tier.color }}>{result.tier.label.toUpperCase()}</div>
+                <div className="c-result-emoji">{result.tier.emoji}</div>
+                <div className="c-result-name" style={{ color: result.tier.color }}>{result.tier.emoji} {COLLECTION.namePrefix} #{result.mintNumber}</div>
+                <div className="c-result-chance" style={{ color: result.tier.color }}>{result.tier.pct}% chance</div>
+                <div className="c-result-meta">
+                  <p><span className="c-meta-label">Mint</span> <code>{short(result.mint)}</code></p>
+                  <p><span className="c-meta-label">Entropy</span> <code>{result.entropy}</code></p>
                 </div>
-                <button
-                  className={`cappy-mint-btn ${connected ? 'cappy-mint-btn-ready' : ''}`}
-                  onClick={mint}
-                  disabled={!connected || minting || !form.name || !form.symbol || !form.uri}
-                >
-                  {minting ? '☢️ MINTING...' : connected ? '🦫 MINT CAPPY' : 'CONNECT WALLET'}
-                </button>
-              </>
-            )}
-
-            {result && tc && (
-              <div className="cappy-result" style={{ borderColor: tc.color, boxShadow: `0 0 40px ${tc.color}33` }}>
-                <div className="cappy-result-header">
-                  <span className="cappy-result-icon">{tc.icon}</span>
-                  <span className="cappy-result-tier" style={{ color: tc.color }}>{tc.label} Cappy Minted!</span>
-                </div>
-                <div className="cappy-result-meta">
-                  <p><span className="cappy-result-label">Mint:</span> <code>{short(result.mint)}</code></p>
-                  <p><span className="cappy-result-label">Entropy:</span> <code>{result.entropy}</code></p>
-                </div>
-                <a href={`https://explorer.x1.xyz/tx/${result.txid}`} target="_blank" rel="noopener noreferrer" className="cappy-result-link" style={{ color: tc.color }}>
+                <a href={`https://explorer.x1.xyz/tx/${result.txid}`} target="_blank" rel="noopener noreferrer" className="c-result-link" style={{ color: result.tier.color }}>
                   View on X1 Explorer →
                 </a>
               </div>
+            ) : (
+              <div className="c-placeholder-card">
+                <div className="c-placeholder-emoji">🦫</div>
+                <div className="c-placeholder-text">
+                  {minting ? (
+                    geiger === 'requesting' ? '☢️ Requesting entropy...' :
+                    geiger === 'fulfilling' ? '⚡ Fulfilling randomness...' :
+                    '🦫 Minting...'
+                  ) : 'Your Cappy appears here'}
+                </div>
+              </div>
             )}
           </div>
-        </div>
-      </section>
 
-      <footer className="cappy-footer">
-        Powered by X1 Network · Geiger Entropy Oracle ☢️ · <a href="https://github.com/echohound-labs/geiger-entropy-oracle" target="_blank" rel="noopener noreferrer">Docs</a>
-        <p className="cappy-footer-disclaimer">CAPPY NFTs are digital collectibles, not securities. No financial guarantees. Mint at your own risk.</p>
+          {/* Right: Action */}
+          <div className="c-action-area">
+            {/* Tier preview pills */}
+            <div className="c-tier-pills">
+              {TIERS.map(t => (
+                <div key={t.key} className="c-tier-pill" style={{ borderColor: t.color }}>
+                  <span className="c-tier-pill-emoji">{t.emoji}</span>
+                  <span className="c-tier-pill-name" style={{ color: t.color }}>{t.label}</span>
+                  <span className="c-tier-pill-pct">{t.pct}%</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="c-entropy-badge">
+              ☢️ Rarity determined by Geiger Entropy Oracle — provably random, on-chain verifiable
+            </div>
+
+            {err && <div className="c-err">❌ {err}</div>}
+
+            <button
+              className={`c-mint-btn ${connected && !minting ? 'c-mint-btn-active' : ''}`}
+              onClick={startMint}
+              disabled={minting}
+            >
+              {minting ? (
+                <>
+                  <span className="c-mint-spinner" />
+                  {geiger === 'requesting' ? 'Requesting Entropy...' : geiger === 'fulfilling' ? 'Fulfilling...' : 'Minting...'}
+                </>
+              ) : connected ? (
+                agreed ? '🦫 Mint Cappy' : '⚠️ Accept Disclaimer to Mint'
+              ) : (
+                'Connect Wallet'
+              )}
+            </button>
+
+            {!agreed && connected && (
+              <button className="c-disclaimer-link" onClick={() => setShowDisclaimer(true)}>
+                Read the disclaimer first →
+              </button>
+            )}
+
+            <p className="c-price-note">Mint price: <strong>10 XNT</strong> + network fees</p>
+          </div>
+        </div>
+
+      </main>
+
+      {/* Footer */}
+      <footer className="c-footer">
+        <p>Powered by X1 Network · Geiger Entropy Oracle ☢️</p>
+        <p><a href="https://github.com/echohound-labs/geiger-entropy-oracle" target="_blank" rel="noopener noreferrer">Docs</a> · <a href="https://explorer.x1.xyz" target="_blank" rel="noopener noreferrer">Explorer</a></p>
+        <p className="c-footer-legal">CAPPY NFTs are digital collectibles, not securities. No financial guarantees. Mint at your own risk.</p>
       </footer>
     </div>
   );
