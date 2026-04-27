@@ -1,0 +1,1971 @@
+{
+  "address": "BxUNg2yo5371BQMZPkfcxdCptFRDHkhvEXNM1QNPBRYU",
+  "metadata": {
+    "name": "geiger_entropy",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Physical entropy VRF oracle for X1 — powered by radioactive decay"
+  },
+  "instructions": [
+    {
+      "name": "close_pending_finalize",
+      "discriminator": [
+        25,
+        117,
+        131,
+        150,
+        141,
+        236,
+        218,
+        128
+      ],
+      "accounts": [
+        {
+          "name": "pending_finalize",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  105,
+                  110,
+                  97,
+                  108,
+                  105,
+                  122,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "operator"
+              },
+              {
+                "kind": "account",
+                "path": "pending_finalize.sequence",
+                "account": "PendingFinalize"
+              }
+            ]
+          }
+        },
+        {
+          "name": "operator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "commit_entropy",
+      "docs": [
+        "Step 1: Commit entropy hash on-chain (blind)"
+      ],
+      "discriminator": [
+        91,
+        173,
+        89,
+        22,
+        226,
+        128,
+        74,
+        62
+      ],
+      "accounts": [
+        {
+          "name": "oracle_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  114,
+                  97,
+                  99,
+                  108,
+                  101,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "pending_commitment",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  109,
+                  109,
+                  105,
+                  116,
+                  109,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "operator"
+              }
+            ]
+          }
+        },
+        {
+          "name": "operator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "commitment_hash",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "sequence",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "finalize_entropy",
+      "discriminator": [
+        81,
+        189,
+        56,
+        201,
+        150,
+        29,
+        124,
+        235
+      ],
+      "accounts": [
+        {
+          "name": "entropy_pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  110,
+                  116,
+                  114,
+                  111,
+                  112,
+                  121,
+                  95,
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "pending_finalize",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  105,
+                  110,
+                  97,
+                  108,
+                  105,
+                  122,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pending_finalize.operator",
+                "account": "PendingFinalize"
+              },
+              {
+                "kind": "account",
+                "path": "pending_finalize.sequence",
+                "account": "PendingFinalize"
+              }
+            ]
+          }
+        },
+        {
+          "name": "entropy_node",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  110,
+                  116,
+                  114,
+                  111,
+                  112,
+                  121,
+                  95,
+                  110,
+                  111,
+                  100,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "pending_finalize.operator",
+                "account": "PendingFinalize"
+              }
+            ]
+          }
+        },
+        {
+          "name": "slot_hashes",
+          "address": "SysvarS1otHashes111111111111111111111111111"
+        },
+        {
+          "name": "caller",
+          "writable": true,
+          "signer": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "fulfill_randomness",
+      "discriminator": [
+        235,
+        105,
+        140,
+        46,
+        40,
+        88,
+        117,
+        2
+      ],
+      "accounts": [
+        {
+          "name": "oracle_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  114,
+                  97,
+                  99,
+                  108,
+                  101,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "entropy_pool",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  110,
+                  116,
+                  114,
+                  111,
+                  112,
+                  121,
+                  95,
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "randomness_request",
+          "writable": true
+        },
+        {
+          "name": "requester",
+          "relations": [
+            "randomness_request"
+          ]
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize",
+      "discriminator": [
+        175,
+        175,
+        109,
+        31,
+        13,
+        152,
+        155,
+        237
+      ],
+      "accounts": [
+        {
+          "name": "oracle_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  114,
+                  97,
+                  99,
+                  108,
+                  101,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "entropy_pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  110,
+                  116,
+                  114,
+                  111,
+                  112,
+                  121,
+                  95,
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "register_node",
+      "discriminator": [
+        102,
+        85,
+        117,
+        114,
+        194,
+        188,
+        211,
+        168
+      ],
+      "accounts": [
+        {
+          "name": "oracle_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  114,
+                  97,
+                  99,
+                  108,
+                  101,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "entropy_node",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  110,
+                  116,
+                  114,
+                  111,
+                  112,
+                  121,
+                  95,
+                  110,
+                  111,
+                  100,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "operator"
+              }
+            ]
+          }
+        },
+        {
+          "name": "operator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "node_pubkey",
+          "type": "pubkey"
+        },
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "request_randomness",
+      "discriminator": [
+        213,
+        5,
+        173,
+        166,
+        37,
+        236,
+        31,
+        18
+      ],
+      "accounts": [
+        {
+          "name": "oracle_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  114,
+                  97,
+                  99,
+                  108,
+                  101,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "entropy_pool",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  110,
+                  116,
+                  114,
+                  111,
+                  112,
+                  121,
+                  95,
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "randomness_request",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  97,
+                  110,
+                  100,
+                  95,
+                  114,
+                  101,
+                  113,
+                  117,
+                  101,
+                  115,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "requester"
+              },
+              {
+                "kind": "account",
+                "path": "oracle_state.total_requests",
+                "account": "OracleState"
+              }
+            ]
+          }
+        },
+        {
+          "name": "requester",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "user_seed",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "reset_commitment",
+      "discriminator": [
+        197,
+        238,
+        250,
+        49,
+        70,
+        138,
+        49,
+        248
+      ],
+      "accounts": [
+        {
+          "name": "pending_commitment",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  109,
+                  109,
+                  105,
+                  116,
+                  109,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "operator"
+              }
+            ]
+          }
+        },
+        {
+          "name": "operator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "reveal_entropy",
+      "docs": [
+        "Step 2: Reveal entropy — must match commitment"
+      ],
+      "discriminator": [
+        112,
+        157,
+        174,
+        123,
+        233,
+        83,
+        16,
+        238
+      ],
+      "accounts": [
+        {
+          "name": "oracle_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  114,
+                  97,
+                  99,
+                  108,
+                  101,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "entropy_pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  110,
+                  116,
+                  114,
+                  111,
+                  112,
+                  121,
+                  95,
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "pending_commitment",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  109,
+                  109,
+                  105,
+                  116,
+                  109,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "operator"
+              }
+            ]
+          }
+        },
+        {
+          "name": "entropy_node",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  110,
+                  116,
+                  114,
+                  111,
+                  112,
+                  121,
+                  95,
+                  110,
+                  111,
+                  100,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "operator"
+              }
+            ]
+          }
+        },
+        {
+          "name": "operator",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "entropy_node"
+          ]
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "slot_hashes",
+          "address": "SysvarS1otHashes111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "vdf_output",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "operator_nonce",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "cpm",
+          "type": "u32"
+        },
+        {
+          "name": "timestamp",
+          "type": "i64"
+        },
+        {
+          "name": "_signature",
+          "type": {
+            "array": [
+              "u8",
+              64
+            ]
+          }
+        },
+        {
+          "name": "delta_t_ms",
+          "type": "u64"
+        },
+        {
+          "name": "usv_h_milli",
+          "type": "u32"
+        },
+        {
+          "name": "vdf_iters",
+          "type": "u32"
+        }
+      ]
+    },
+    {
+      "name": "reveal_entropy_v6",
+      "docs": [
+        "v6: Reveal entropy and create PendingFinalize for delayed SlotHash binding",
+        "Closes selective withholding — operator reveals BEFORE knowing SlotHash[binding_slot]"
+      ],
+      "discriminator": [
+        73,
+        145,
+        135,
+        41,
+        133,
+        195,
+        253,
+        96
+      ],
+      "accounts": [
+        {
+          "name": "pending_commitment",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  109,
+                  109,
+                  105,
+                  116,
+                  109,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "operator"
+              }
+            ]
+          }
+        },
+        {
+          "name": "pending_finalize",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  102,
+                  105,
+                  110,
+                  97,
+                  108,
+                  105,
+                  122,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "operator"
+              },
+              {
+                "kind": "account",
+                "path": "pending_commitment.sequence",
+                "account": "PendingCommitment"
+              }
+            ]
+          }
+        },
+        {
+          "name": "entropy_node",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  110,
+                  116,
+                  114,
+                  111,
+                  112,
+                  121,
+                  95,
+                  110,
+                  111,
+                  100,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "operator"
+              }
+            ]
+          }
+        },
+        {
+          "name": "operator",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "entropy_node"
+          ]
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "vdf_output",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "operator_nonce",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "cpm",
+          "type": "u32"
+        },
+        {
+          "name": "timestamp",
+          "type": "i64"
+        },
+        {
+          "name": "_signature",
+          "type": {
+            "array": [
+              "u8",
+              64
+            ]
+          }
+        },
+        {
+          "name": "delta_t_ms",
+          "type": "u64"
+        },
+        {
+          "name": "usv_h_milli",
+          "type": "u32"
+        },
+        {
+          "name": "vdf_iters",
+          "type": "u32"
+        }
+      ]
+    },
+    {
+      "name": "slash_missed_reveal",
+      "docs": [
+        "Slash operator who committed but failed to reveal"
+      ],
+      "discriminator": [
+        147,
+        44,
+        161,
+        189,
+        92,
+        230,
+        201,
+        235
+      ],
+      "accounts": [
+        {
+          "name": "pending_commitment",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  109,
+                  109,
+                  105,
+                  116,
+                  109,
+                  101,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "operator"
+              }
+            ]
+          }
+        },
+        {
+          "name": "operator",
+          "writable": true
+        },
+        {
+          "name": "reporter",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "submit_entropy",
+      "discriminator": [
+        68,
+        195,
+        191,
+        106,
+        137,
+        209,
+        58,
+        132
+      ],
+      "accounts": [
+        {
+          "name": "oracle_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  111,
+                  114,
+                  97,
+                  99,
+                  108,
+                  101,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "entropy_pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  110,
+                  116,
+                  114,
+                  111,
+                  112,
+                  121,
+                  95,
+                  112,
+                  111,
+                  111,
+                  108
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "entropy_node",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  110,
+                  116,
+                  114,
+                  111,
+                  112,
+                  121,
+                  95,
+                  110,
+                  111,
+                  100,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "operator"
+              }
+            ]
+          }
+        },
+        {
+          "name": "operator",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "entropy_node"
+          ]
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "seed",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "cpm",
+          "type": "u32"
+        },
+        {
+          "name": "timestamp",
+          "type": "i64"
+        },
+        {
+          "name": "_signature",
+          "type": {
+            "array": [
+              "u8",
+              64
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "EntropyNode",
+      "discriminator": [
+        57,
+        233,
+        222,
+        95,
+        24,
+        184,
+        184,
+        116
+      ]
+    },
+    {
+      "name": "EntropyPool",
+      "discriminator": [
+        27,
+        58,
+        82,
+        79,
+        166,
+        202,
+        159,
+        93
+      ]
+    },
+    {
+      "name": "OracleState",
+      "discriminator": [
+        97,
+        156,
+        157,
+        189,
+        194,
+        73,
+        8,
+        15
+      ]
+    },
+    {
+      "name": "PendingCommitment",
+      "discriminator": [
+        9,
+        68,
+        181,
+        144,
+        209,
+        77,
+        79,
+        47
+      ]
+    },
+    {
+      "name": "PendingFinalize",
+      "discriminator": [
+        24,
+        174,
+        249,
+        250,
+        22,
+        77,
+        151,
+        36
+      ]
+    },
+    {
+      "name": "RandomnessRequest",
+      "discriminator": [
+        244,
+        231,
+        228,
+        160,
+        148,
+        28,
+        17,
+        184
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "CommitEvent",
+      "discriminator": [
+        252,
+        78,
+        246,
+        83,
+        244,
+        83,
+        218,
+        56
+      ]
+    },
+    {
+      "name": "EntropySubmitted",
+      "discriminator": [
+        127,
+        136,
+        80,
+        169,
+        3,
+        3,
+        24,
+        3
+      ]
+    },
+    {
+      "name": "NodeRegistered",
+      "discriminator": [
+        15,
+        57,
+        183,
+        59,
+        93,
+        55,
+        157,
+        195
+      ]
+    },
+    {
+      "name": "RandomnessFulfilled",
+      "discriminator": [
+        61,
+        67,
+        128,
+        142,
+        15,
+        77,
+        223,
+        252
+      ]
+    },
+    {
+      "name": "RandomnessRequested",
+      "discriminator": [
+        10,
+        64,
+        183,
+        29,
+        104,
+        63,
+        90,
+        149
+      ]
+    },
+    {
+      "name": "RevealEvent",
+      "discriminator": [
+        51,
+        6,
+        123,
+        75,
+        48,
+        187,
+        64,
+        1
+      ]
+    },
+    {
+      "name": "SlashEvent",
+      "discriminator": [
+        126,
+        150,
+        240,
+        12,
+        183,
+        103,
+        116,
+        71
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "OraclePaused",
+      "msg": "Oracle is paused"
+    },
+    {
+      "code": 6001,
+      "name": "NodeNotActive",
+      "msg": "Node is not active"
+    },
+    {
+      "code": 6002,
+      "name": "InvalidSignature",
+      "msg": "Invalid signature"
+    },
+    {
+      "code": 6003,
+      "name": "CpmTooLow",
+      "msg": "CPM too low — minimum 5 required"
+    },
+    {
+      "code": 6004,
+      "name": "NoEntropyAvailable",
+      "msg": "No entropy available yet"
+    },
+    {
+      "code": 6005,
+      "name": "RequestAlreadyFulfilled",
+      "msg": "Request already fulfilled"
+    },
+    {
+      "code": 6006,
+      "name": "NameTooLong",
+      "msg": "Node name too long (max 64 chars)"
+    },
+    {
+      "code": 6007,
+      "name": "InvalidCommitment",
+      "msg": "Invalid commitment hash"
+    },
+    {
+      "code": 6008,
+      "name": "InvalidSequence",
+      "msg": "Sequence number invalid"
+    },
+    {
+      "code": 6009,
+      "name": "UnrevealedCommitmentPending",
+      "msg": "Previous commitment not yet revealed"
+    },
+    {
+      "code": 6010,
+      "name": "BindingSlotNotReached",
+      "msg": "Binding slot not reached yet — must wait for delayed finalize"
+    },
+    {
+      "code": 6011,
+      "name": "SlotHashNotAvailable",
+      "msg": "Slot hash not available in sysvar — too old"
+    },
+    {
+      "code": 6012,
+      "name": "NotYetRevealed",
+      "msg": "Not yet revealed"
+    },
+    {
+      "code": 6013,
+      "name": "AlreadyFinalized",
+      "msg": "Already finalized"
+    },
+    {
+      "code": 6014,
+      "name": "CommitmentMismatch",
+      "msg": "Commitment hash mismatch"
+    },
+    {
+      "code": 6015,
+      "name": "RevealTooEarly",
+      "msg": "Reveal too early"
+    },
+    {
+      "code": 6016,
+      "name": "RevealDeadlineMissed",
+      "msg": "Reveal deadline missed"
+    },
+    {
+      "code": 6017,
+      "name": "RevealDeadlineNotReached",
+      "msg": "Reveal deadline not yet reached"
+    },
+    {
+      "code": 6018,
+      "name": "AlreadyRevealed",
+      "msg": "Already revealed"
+    }
+  ],
+  "types": [
+    {
+      "name": "CommitEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "operator",
+            "type": "pubkey"
+          },
+          {
+            "name": "commitment_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "slot",
+            "type": "u64"
+          },
+          {
+            "name": "sequence",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "EntropyNode",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "operator",
+            "type": "pubkey"
+          },
+          {
+            "name": "node_pubkey",
+            "type": "pubkey"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "submissions",
+            "type": "u64"
+          },
+          {
+            "name": "reputation",
+            "type": "u8"
+          },
+          {
+            "name": "active",
+            "type": "bool"
+          },
+          {
+            "name": "registered_at",
+            "type": "i64"
+          },
+          {
+            "name": "last_submission",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "EntropyPool",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "seeds",
+            "type": {
+              "array": [
+                {
+                  "array": [
+                    "u8",
+                    32
+                  ]
+                },
+                32
+              ]
+            }
+          },
+          {
+            "name": "head",
+            "type": "u64"
+          },
+          {
+            "name": "total_submissions",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "EntropySubmitted",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "node",
+            "type": "pubkey"
+          },
+          {
+            "name": "node_pubkey",
+            "type": "pubkey"
+          },
+          {
+            "name": "seed",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "cpm",
+            "type": "u32"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "NodeRegistered",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "operator",
+            "type": "pubkey"
+          },
+          {
+            "name": "node_pubkey",
+            "type": "pubkey"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "OracleState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          },
+          {
+            "name": "total_nodes",
+            "type": "u64"
+          },
+          {
+            "name": "total_requests",
+            "type": "u64"
+          },
+          {
+            "name": "total_fulfillments",
+            "type": "u64"
+          },
+          {
+            "name": "paused",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PendingCommitment",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "operator",
+            "type": "pubkey"
+          },
+          {
+            "name": "commitment_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "committed_slot",
+            "type": "u64"
+          },
+          {
+            "name": "sequence",
+            "type": "u64"
+          },
+          {
+            "name": "revealed",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PendingFinalize",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "operator",
+            "type": "pubkey"
+          },
+          {
+            "name": "vdf_output",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "binding_slot",
+            "type": "u64"
+          },
+          {
+            "name": "committed_at_slot",
+            "type": "u64"
+          },
+          {
+            "name": "sequence",
+            "type": "u64"
+          },
+          {
+            "name": "finalized",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RandomnessFulfilled",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "request",
+            "type": "pubkey"
+          },
+          {
+            "name": "requester",
+            "type": "pubkey"
+          },
+          {
+            "name": "result",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "RandomnessRequest",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "requester",
+            "type": "pubkey"
+          },
+          {
+            "name": "user_seed",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "result",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "status",
+            "type": {
+              "defined": {
+                "name": "RequestStatus"
+              }
+            }
+          },
+          {
+            "name": "requested_at",
+            "type": "i64"
+          },
+          {
+            "name": "fulfilled_at",
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RandomnessRequested",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "request",
+            "type": "pubkey"
+          },
+          {
+            "name": "requester",
+            "type": "pubkey"
+          },
+          {
+            "name": "user_seed",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "RequestStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Pending"
+          },
+          {
+            "name": "Fulfilled"
+          },
+          {
+            "name": "Cancelled"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RevealEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "operator",
+            "type": "pubkey"
+          },
+          {
+            "name": "sequence",
+            "type": "u64"
+          },
+          {
+            "name": "commit_slot",
+            "type": "u64"
+          },
+          {
+            "name": "reveal_slot",
+            "type": "u64"
+          },
+          {
+            "name": "vdf_output",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "cpm",
+            "type": "u32"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "delta_t_ms",
+            "type": "u64"
+          },
+          {
+            "name": "usv_h_milli",
+            "type": "u32"
+          },
+          {
+            "name": "vdf_iters",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SlashEvent",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "operator",
+            "type": "pubkey"
+          },
+          {
+            "name": "reporter",
+            "type": "pubkey"
+          },
+          {
+            "name": "sequence",
+            "type": "u64"
+          },
+          {
+            "name": "slash_amount",
+            "type": "u64"
+          },
+          {
+            "name": "slot",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ]
+}
