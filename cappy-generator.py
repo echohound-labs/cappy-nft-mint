@@ -22,6 +22,9 @@ OUTPUT_DIR = Path(__file__).parent / "public" / "generated"
 IMG_WIDTH = 1000
 IMG_HEIGHT = 1000
 
+# ── Supply Cap ─────────────────────────────────────────
+MAX_SUPPLY = 1000  # Hard cap — no more than 1000 Cappys will ever exist
+
 # ── Tier mapping (same odds as frontend) ────────────────
 # Armor is baked into the tier base image:
 #   COMMON    = light/minimal armor
@@ -148,6 +151,16 @@ def main():
 
     mint_id = sys.argv[1]
     entropy_hex = sys.argv[2]
+
+    # Enforce supply cap
+    try:
+        mint_num = int(mint_id)
+        if mint_num < 1 or mint_num > MAX_SUPPLY:
+            print(f"❌ Mint ID must be 1-{MAX_SUPPLY}. Got: {mint_id}")
+            sys.exit(1)
+    except ValueError:
+        print(f"❌ Mint ID must be numeric (1-{MAX_SUPPLY}). Got: {mint_id}")
+        sys.exit(1)
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 

@@ -221,6 +221,13 @@ a { color: var(--amber); text-decoration: none; }
   line-height: 1.5;
 }
 
+.c-supply-badge {
+  font-size: 12px; color: var(--dim); text-align: center;
+  padding: 10px 16px; border-radius: var(--radius-sm);
+  background: rgba(184,115,51,0.05); border: 1px solid rgba(184,115,51,0.12);
+  line-height: 1.5;
+}
+
 /* ── ERROR ── */
 .c-err {
   padding: 12px 16px; border-radius: var(--radius-sm);

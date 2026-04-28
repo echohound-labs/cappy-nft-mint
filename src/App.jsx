@@ -23,6 +23,7 @@ const COLLECTION = {
   royalty: 5,        // 5%
   baseUri: 'https://cappy-nft-mint.vercel.app/metadata/',  // placeholder
   namePrefix: 'Cappy',
+  maxSupply: 1000,   // Hard cap — only 1,000 Cappys will ever exist
 };
 // ── Tiers ───────────────────────────────────────────────
 const TIERS = [
@@ -308,6 +309,10 @@ export default function App() {
 
             <div className="c-entropy-badge">
               ☢️ Rarity determined by Geiger Entropy Oracle — provably random, on-chain verifiable
+            </div>
+
+            <div className="c-supply-badge">
+              🦫 Limited to <strong>1,000</strong> Cappys — no more will ever be minted
             </div>
 
             {err && <div className="c-err">❌ {err}</div>}
