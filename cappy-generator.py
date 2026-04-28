@@ -23,6 +23,10 @@ IMG_WIDTH = 1000
 IMG_HEIGHT = 1000
 
 # ── Tier mapping (same odds as frontend) ────────────────
+# Armor is baked into the tier base image:
+#   COMMON    = light/minimal armor
+#   MYTHIC    = medium cyber armor
+#   LEGENDARY = full heavy armor/exosuit
 def tier_from_value(val):
     """val is 0.0-1.0 float derived from entropy bytes"""
     if val < 0.05:
@@ -111,10 +115,12 @@ def compose_image(traits: dict, output_path: str):
 def generate_metadata(mint_id: str, traits: dict, image_url: str) -> dict:
     """Generate Metaplex-compatible metadata JSON"""
     tier_emoji = {"COMMON": "🦫", "MYTHIC": "✨", "LEGENDARY": "👑"}[traits["tier"]]
+    tier_armor = {"COMMON": "Light armor — minimal gear", "MYTHIC": "Cyber armor — medium plating", "LEGENDARY": "Heavy exosuit — full plating"}[traits["tier"]]
 
     attributes = []
-    # Tier as attribute
+    # Tier + armor as attributes
     attributes.append({"trait_type": "Tier", "value": traits["tier"].capitalize()})
+    attributes.append({"trait_type": "Armor", "value": tier_armor})
     # Other traits
     for trait_name in ["background", "hat", "accessory", "expression", "companion"]:
         val = traits.get(trait_name, "none")

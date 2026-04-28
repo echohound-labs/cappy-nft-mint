@@ -26,9 +26,9 @@ const COLLECTION = {
 };
 // ── Tiers ───────────────────────────────────────────────
 const TIERS = [
-  { key: 'COMMON',    label: 'Common',    pct: 70, color: '#b87333', emoji: '🦫', glow: '0 0 30px rgba(184,115,51,0.25)', bg: 'linear-gradient(135deg,#2a1f0e,#1a1208)' },
-  { key: 'MYTHIC',    label: 'Mythic',    pct: 25, color: '#e8722a', emoji: '✨', glow: '0 0 30px rgba(232,114,42,0.3)',  bg: 'linear-gradient(135deg,#2a1508,#1a0c04)' },
-  { key: 'LEGENDARY', label: 'Legendary', pct: 5,  color: '#ffd700', emoji: '👑', glow: '0 0 40px rgba(255,215,0,0.35)',  bg: 'linear-gradient(135deg,#2a2208,#1a1604)' },
+  { key: 'COMMON',    label: 'Common',    pct: 70, color: '#b87333', emoji: '🦫', armor: 'Light armor — minimal gear', glow: '0 0 30px rgba(184,115,51,0.25)', bg: 'linear-gradient(135deg,#2a1f0e,#1a1208)' },
+  { key: 'MYTHIC',    label: 'Mythic',    pct: 25, color: '#e8722a', emoji: '✨', armor: 'Cyber armor — medium plating', glow: '0 0 30px rgba(232,114,42,0.3)',  bg: 'linear-gradient(135deg,#2a1508,#1a0c04)' },
+  { key: 'LEGENDARY', label: 'Legendary', pct: 5,  color: '#ffd700', emoji: '👑', armor: 'Heavy exosuit — full plating', glow: '0 0 40px rgba(255,215,0,0.35)',  bg: 'linear-gradient(135deg,#2a2208,#1a1604)' },
 ];
 
 const WALLETS = [
@@ -60,7 +60,7 @@ function DisclaimerModal({ open, onClose }) {
             <li><strong>High Risk.</strong> Cryptocurrency and NFTs are highly volatile and speculative. You may lose all funds spent.</li>
             <li><strong>No Guarantees.</strong> The project makes no guarantees regarding token value, liquidity, returns, or market performance.</li>
             <li><strong>Not a Security.</strong> CAPPY NFTs are not securities, investment contracts, or financial instruments. They are digital collectibles.</li>
-            <li><strong>Randomized Rarity.</strong> Each CAPPY NFT is assigned a rarity tier (Common 70%, Mythic 25%, Legendary 5%) at mint time using the Geiger Entropy Oracle. Results are unpredictable, provably random, and final.</li>
+            <li><strong>Randomized Rarity.</strong> Each CAPPY NFT is assigned a rarity tier (Common 70%, Mythic 25%, Legendary 5%) at mint time using the Geiger Entropy Oracle. Armor level defines the tier visually — Common = light armor, Mythic = cyber armor, Legendary = full exosuit. Results are unpredictable, provably random, and final.</li>
             <li><strong>Regulatory Risk.</strong> Regulations vary by jurisdiction. Ensure compliance with local laws before participating.</li>
             <li><strong>Smart Contract Risk.</strong> Smart contracts may contain bugs or vulnerabilities. Participation is at your own risk.</li>
             <li><strong>No Refunds.</strong> All mints are final. No refunds once a transaction is confirmed on-chain.</li>
@@ -269,6 +269,7 @@ export default function App() {
                 <div className="c-result-badge" style={{ color: result.tier.color, borderColor: result.tier.color }}>{result.tier.label.toUpperCase()}</div>
                 <div className="c-result-emoji">{result.tier.emoji}</div>
                 <div className="c-result-name" style={{ color: result.tier.color }}>{result.tier.emoji} {COLLECTION.namePrefix} #{result.mintNumber}</div>
+                <div className="c-result-armor" style={{ color: result.tier.color }}>{result.tier.armor}</div>
                 <div className="c-result-chance" style={{ color: result.tier.color }}>{result.tier.pct}% chance</div>
                 <div className="c-result-meta">
                   <p><span className="c-meta-label">Mint</span> <code>{short(result.mint)}</code></p>
