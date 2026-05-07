@@ -43,7 +43,7 @@ def tier_from_value(val):
 TRAIT_DEFS = {
     "background": {
         "order": 0,
-        "options": ["swamp", "forest", "hotspring", "sunset", "riverbank", "tropical"],
+        "options": ["swamp", "forest", "lava_core", "neon_city", "ocean_lab", "space_grid"],
     },
     "hat": {
         "order": 1,
