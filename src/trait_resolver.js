@@ -19,7 +19,7 @@
  *   Bytes 28-31: reserved (rarity score salt)
  */
 
-const TRAIT_DEFS = {
+export const TRAIT_DEFS = {
   background: {
     options: {
       swamp:      1/6,
