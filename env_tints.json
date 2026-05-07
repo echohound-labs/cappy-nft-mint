@@ -1,0 +1,190 @@
+{
+  "_description": "Environment-aware tint mapping for CAPPY NFT traits. Each trait adapts visually to its background environment.",
+  "_approach": "One base art per trait, code applies hue shift + saturation + brightness per environment. Art asset stays minimal.",
+  "environments": {
+    "swamp": {
+      "hue_shift": 90,
+      "saturation": 1.2,
+      "brightness": 0.85,
+      "glow_rgba": [100, 200, 80, 40],
+      "vibe": "mossy, organic, vine-covered, bioluminescent, damp"
+    },
+    "forest": {
+      "hue_shift": 60,
+      "saturation": 1.1,
+      "brightness": 0.9,
+      "glow_rgba": [80, 160, 60, 30],
+      "vibe": "bark-textured, leafy, trail-worn, earthy"
+    },
+    "lava_core": {
+      "hue_shift": -20,
+      "saturation": 1.4,
+      "brightness": 1.1,
+      "glow_rgba": [255, 100, 20, 60],
+      "vibe": "molten, ember-glow, soot-stained, heat shimmer, fiery"
+    },
+    "neon_city": {
+      "hue_shift": 180,
+      "saturation": 1.5,
+      "brightness": 1.15,
+      "glow_rgba": [0, 255, 255, 50],
+      "vibe": "chrome, LED strips, holographic, matte black, cyberpunk"
+    },
+    "ocean_lab": {
+      "hue_shift": 150,
+      "saturation": 1.2,
+      "brightness": 0.95,
+      "glow_rgba": [60, 180, 200, 35],
+      "vibe": "coral, sea-glass, salt-crusted, bubble accents, underwater"
+    },
+    "space_grid": {
+      "hue_shift": 210,
+      "saturation": 0.8,
+      "brightness": 1.2,
+      "glow_rgba": [180, 200, 255, 45],
+      "vibe": "silver, starlight, reflective, constellation patterns, cold"
+    }
+  },
+  "hat_env_details": {
+    "beanie": {
+      "swamp": "mossy knit, vine stitch pattern",
+      "forest": "dark green wool, bark texture",
+      "lava_core": "burnt orange, soot stains, ember thread",
+      "neon_city": "matte black with cyan LED stripe",
+      "ocean_lab": "teal knit, water bead droplets",
+      "space_grid": "silver thermal, star patch"
+    },
+    "bucket_hat": {
+      "swamp": "camo, mud stains, swamp gear",
+      "forest": "bark brown, leaf print band",
+      "lava_core": "charcoal, ember dots, heat vents",
+      "neon_city": "holographic UV, neon rim",
+      "ocean_lab": "navy, salt-crusted, coral band",
+      "space_grid": "void black, constellation pattern"
+    },
+    "safari": {
+      "swamp": "worn khaki, swamp mud, mosquito net",
+      "forest": "deep green, trail dust, leaf pockets",
+      "lava_core": "desert tan, heat shimmer, vented crown",
+      "neon_city": "matte black, neon visor, comms patch",
+      "ocean_lab": "white, coral accent, waterproof",
+      "space_grid": "white, reflective strip, mission patch"
+    },
+    "flower_crown": {
+      "swamp": "living orchids, dripping moss",
+      "forest": "autumn leaves and berries",
+      "lava_core": "flame petals, smoking stems",
+      "neon_city": "neon pixel flowers, LED bloom",
+      "ocean_lab": "sea anemone bloom, pearl accents",
+      "space_grid": "crystal ice flowers, stardust pollen"
+    },
+    "top_hat": {
+      "swamp": "mossy velvet, vine band",
+      "forest": "bark textured, leaf carving",
+      "lava_core": "obsidian, lava vein stripe",
+      "neon_city": "chrome, LED band, holographic",
+      "ocean_lab": "deep sea blue, pearl band, bubble accents",
+      "space_grid": "matte white, glow ring, constellation"
+    },
+    "crown": {
+      "swamp": "ancient gold, moss patina, hanging vines",
+      "forest": "dark bronze, leaf carvings, bark inlay",
+      "lava_core": "molten metal, ember glow, fire tips",
+      "neon_city": "chrome, cyan LED strip, holographic sheen",
+      "ocean_lab": "coral gold, bubble tips, pearl accents",
+      "space_grid": "white gold, starlight shimmer, constellation band"
+    }
+  },
+  "accessory_env_details": {
+    "dog_tags": {
+      "swamp": "tarnished brass, mud-smeared",
+      "forest": "olive drab, bark scratches",
+      "lava_core": "blackened metal, ember glow",
+      "neon_city": "matte black, glowing engraving",
+      "ocean_lab": "coral-accented, water droplet",
+      "space_grid": "silver, laser-etched, star map"
+    },
+    "scarf": {
+      "swamp": "mossy green, damp, vine-wrapped",
+      "forest": "earthy brown, leaf pattern",
+      "lava_core": "charcoal, ember thread, heat-resistant",
+      "neon_city": "black, neon stripe, LED weave",
+      "ocean_lab": "teal, water-beaded, coral clasp",
+      "space_grid": "silver thermal, star pattern"
+    },
+    "tactical_goggles": {
+      "swamp": "fogged lenses, moss strap",
+      "forest": "amber lenses, bark frame",
+      "lava_core": "smoked lenses, heat vent frame",
+      "neon_city": "holographic visor, LED HUD",
+      "ocean_lab": "polarized blue, salt-cracked",
+      "space_grid": "UV visor, constellation HUD"
+    },
+    "bandolier": {
+      "swamp": "rotting leather, vine loops",
+      "forest": "bark-leather, moss pouches",
+      "lava_core": "heat-forged metal, ember pouches",
+      "neon_city": "carbon fiber, LED pouch indicators",
+      "ocean_lab": "coral buckle, waterproof pods",
+      "space_grid": "sleek alloy, magnetic clasps"
+    },
+    "monocle": {
+      "swamp": "tarnished gold, vine chain",
+      "forest": "wood frame, leaf engraving",
+      "lava_core": "obsidian rim, ember lens tint",
+      "neon_city": "chrome rim, holographic lens",
+      "ocean_lab": "pearl frame, blue lens tint",
+      "space_grid": "platinum, star map lens"
+    },
+    "earring": {
+      "swamp": "mossy hoop, bioluminescent",
+      "forest": "leaf-shaped, bark texture",
+      "lava_core": "ember drop, fire glow",
+      "neon_city": "LED stud, holographic",
+      "ocean_lab": "pearl drop, bubble accent",
+      "space_grid": "starlight gem, constellation"
+    }
+  },
+  "companion_env_details": {
+    "duck": {
+      "swamp": "swamp duck, mossy feathers",
+      "forest": "wood duck, leafy camo",
+      "lava_core": "ceramic heat-resistant, ember beak",
+      "neon_city": "LED duck, neon outline",
+      "ocean_lab": "rubber duck, classic",
+      "space_grid": "zero-G floating, silver feathers"
+    },
+    "turtle": {
+      "swamp": "mossy shell, algae-covered",
+      "forest": "bark shell, leaf pattern",
+      "lava_core": "obsidian shell, ember cracks",
+      "neon_city": "chrome shell, LED grid",
+      "ocean_lab": "coral shell, bubble trail",
+      "space_grid": "starmap shell, constellation"
+    },
+    "frog": {
+      "swamp": "bioluminescent, tree frog",
+      "forest": "green tree frog, mossy",
+      "lava_core": "fire belly toad, ember spots",
+      "neon_city": "neon poison dart, LED spots",
+      "ocean_lab": "translucent, bubble skin",
+      "space_grid": "crystal frog, ice glint"
+    },
+    "butterfly": {
+      "swamp": "bioluminescent moth, green glow",
+      "forest": "monarch, leaf wing pattern",
+      "lava_core": "fire butterfly, ember trail",
+      "neon_city": "holographic wings, LED veins",
+      "ocean_lab": "sea butterfly, translucent",
+      "space_grid": "crystal wings, stardust"
+    },
+    "bird": {
+      "swamp": "heron, mossy plumage",
+      "forest": "owl, bark feathers",
+      "lava_core": "phoenix wren, ember tail",
+      "neon_city": "drone bird, LED eyes",
+      "ocean_lab": "seagull, salt-crusted",
+      "space_grid": "starling, silver feathers"
+    }
+  }
+}

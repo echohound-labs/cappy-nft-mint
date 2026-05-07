@@ -1,0 +1,127 @@
+{
+  "collection": "CAPPY",
+  "total_supply": 1000,
+  "image_size": "1000x1000",
+  "layer_order": ["background", "base", "expression", "hat", "accessory", "companion"],
+  "tier_distribution": {
+    "COMMON": { "count": 700, "pct": 70, "armor": "minimal" },
+    "MYTHIC": { "count": 250, "pct": 25, "armor": "cyber_armor" },
+    "LEGENDARY": { "count": 50, "pct": 5, "armor": "full_exosuit" }
+  },
+  "entropy_mapping": {
+    "bytes_0_7": "tier",
+    "bytes_8_11": "background",
+    "bytes_12_15": "expression",
+    "bytes_16_19": "hat",
+    "bytes_20_23": "accessory",
+    "bytes_24_27": "companion",
+    "bytes_28_31": "reserved_rarity_salt"
+  },
+  "layers": {
+    "background": {
+      "order": 0,
+      "tinted": false,
+      "options": [
+        { "name": "swamp",      "weight": 0.1667, "rarity": "common", "prompt": "dark swamp, bioluminescent plants, mist, murky water reflections, cyber capybara habitat" },
+        { "name": "forest",      "weight": 0.1667, "rarity": "common", "prompt": "dense dark forest, mossy ground, shafts of light, ancient trees" },
+        { "name": "lava_core",   "weight": 0.1667, "rarity": "common", "prompt": "volcanic interior, molten lava rivers, ember particles, dark rock formations" },
+        { "name": "neon_city",   "weight": 0.1667, "rarity": "common", "prompt": "cyberpunk cityscape, neon signs, rain-slicked streets, holographic ads" },
+        { "name": "ocean_lab",   "weight": 0.1667, "rarity": "common", "prompt": "underwater research lab, blue light, bubble streams, coral growth on walls" },
+        { "name": "space_grid",  "weight": 0.1667, "rarity": "common", "prompt": "deep space station, star field, holographic grid floor, cold blue light" }
+      ]
+    },
+    "base": {
+      "order": 1,
+      "tinted": false,
+      "note": "Tier determines base. Same pose, different armor level.",
+      "options": [
+        { "name": "common",    "weight": 0.70, "rarity": "common",    "prompt": "capybara, minimal gear, light vest, calm pose, transparent background, dark tech style, no purple glow" },
+        { "name": "mythic",    "weight": 0.25, "rarity": "rare",       "prompt": "capybara, cyber armor plating, medium tactical gear, same pose, transparent background, dark tech style, no purple glow" },
+        { "name": "legendary", "weight": 0.05, "rarity": "legendary",  "prompt": "capybara, full exosuit, heavy powered armor, same pose, transparent background, dark tech style, no purple glow" }
+      ]
+    },
+    "expression": {
+      "order": 2,
+      "tinted": true,
+      "tint_strength": "light",
+      "note": "Face overlay — subtle environment tinting",
+      "options": [
+        { "name": "chill",     "weight": 0.28, "rarity": "common",   "prompt": "capybara face, relaxed chill expression, half-lidded eyes, slight smile, transparent background" },
+        { "name": "happy",     "weight": 0.25, "rarity": "common",   "prompt": "capybara face, happy expression, bright eyes, open smile, transparent background" },
+        { "name": "smug",      "weight": 0.20, "rarity": "common",   "prompt": "capybara face, smug expression, knowing smirk, confident eyes, transparent background" },
+        { "name": "surprised", "weight": 0.13, "rarity": "uncommon", "prompt": "capybara face, surprised expression, wide eyes, open mouth, transparent background" },
+        { "name": "zen",       "weight": 0.08, "rarity": "rare",     "prompt": "capybara face, zen meditation expression, closed eyes, peaceful, transparent background" },
+        { "name": "derp",      "weight": 0.06, "rarity": "rare",     "prompt": "capybara face, derp expression, goofy, tongue out, cross-eyed, transparent background" }
+      ]
+    },
+    "hat": {
+      "order": 3,
+      "tinted": true,
+      "tint_strength": "strong",
+      "note": "Hat sits on head — must visually match environment",
+      "env_details_file": "env_tints.json",
+      "options": [
+        { "name": "none",          "weight": 0.35, "rarity": "common",   "prompt": null },
+        { "name": "beanie",        "weight": 0.22, "rarity": "common",   "prompt": "capybara wearing beanie hat, knit texture, transparent background" },
+        { "name": "bucket_hat",   "weight": 0.17, "rarity": "common",   "prompt": "capybara wearing bucket hat, casual style, transparent background" },
+        { "name": "safari",       "weight": 0.12, "rarity": "uncommon", "prompt": "capybara wearing safari hat, adventure style, transparent background" },
+        { "name": "flower_crown", "weight": 0.07, "rarity": "rare",     "prompt": "capybara wearing flower crown, natural flowers, transparent background" },
+        { "name": "top_hat",      "weight": 0.04, "rarity": "rare",     "prompt": "capybara wearing top hat, formal style, transparent background" },
+        { "name": "crown",        "weight": 0.03, "rarity": "epic",    "prompt": "capybara wearing crown, royal style, ornate, transparent background" }
+      ]
+    },
+    "accessory": {
+      "order": 4,
+      "tinted": true,
+      "tint_strength": "medium",
+      "note": "Worn item — moderate environment tinting",
+      "env_details_file": "env_tints.json",
+      "options": [
+        { "name": "none",             "weight": 0.35, "rarity": "common",   "prompt": null },
+        { "name": "dog_tags",         "weight": 0.22, "rarity": "common",   "prompt": "capybara wearing dog tags, military style, metal chain, transparent background" },
+        { "name": "scarf",            "weight": 0.17, "rarity": "common",   "prompt": "capybara wearing scarf, wrapped around neck, transparent background" },
+        { "name": "tactical_goggles","weight": 0.12, "rarity": "uncommon", "prompt": "capybara wearing tactical goggles, on forehead, transparent background" },
+        { "name": "bandolier",       "weight": 0.07, "rarity": "rare",     "prompt": "capybara wearing bandolier, ammo pouch style, transparent background" },
+        { "name": "monocle",         "weight": 0.04, "rarity": "rare",     "prompt": "capybara wearing monocle, single lens, chain, transparent background" },
+        { "name": "earring",         "weight": 0.03, "rarity": "epic",    "prompt": "capybara wearing earring, stud or hoop, transparent background" }
+      ]
+    },
+    "companion": {
+      "order": 5,
+      "tinted": true,
+      "tint_strength": "light",
+      "note": "Small creature companion — light tinting, they're alive",
+      "env_details_file": "env_tints.json",
+      "options": [
+        { "name": "none",      "weight": 0.55, "rarity": "common",   "prompt": null },
+        { "name": "duck",      "weight": 0.15, "rarity": "uncommon", "prompt": "small duck companion beside capybara, cute, transparent background" },
+        { "name": "turtle",    "weight": 0.12, "rarity": "uncommon", "prompt": "small turtle companion beside capybara, shell detail, transparent background" },
+        { "name": "frog",      "weight": 0.08, "rarity": "rare",     "prompt": "small frog companion on capybara, tree frog, transparent background" },
+        { "name": "butterfly", "weight": 0.06, "rarity": "rare",    "prompt": "butterfly companion near capybara, delicate wings, transparent background" },
+        { "name": "bird",      "weight": 0.04, "rarity": "epic",    "prompt": "small bird companion perched on capybara, feathers, transparent background" }
+      ]
+    }
+  },
+  "rarity_score_formula": {
+    "description": "Sum of (1 / weight) for each trait. Lower weight = higher score. Common capy with rare traits can beat mythic with common traits.",
+    "tier_contribution": {
+      "COMMON": 1.43,
+      "MYTHIC": 4.00,
+      "LEGENDARY": 20.00
+    },
+    "example_scores": {
+      "common_all_common": "~5.7 + 6.0 + 6.0 + 2.9 + 2.9 + 1.8 ≈ 25.3",
+      "mythic_all_common": "~4.0 + 6.0 + 6.0 + 2.9 + 2.9 + 1.8 ≈ 23.6",
+      "common_crown_earring_bird": "~1.4 + 6.0 + 6.0 + 33.3 + 33.3 + 25.0 ≈ 105.0",
+      "legendary_all_rare": "~20.0 + 6.0 + 12.5 + 25.0 + 14.3 + 16.7 ≈ 94.5"
+    }
+  },
+  "art_guidelines": {
+    "canvas_size": "1000x1000",
+    "format": "PNG with transparency",
+    "style": "dark tech, no purple glow, clean lines, atmospheric",
+    "base_pose": "same across all 3 tiers — upright, three-quarter view, arms slightly away from body",
+    "tinting_approach": "one base art per trait, code handles environment color shifts",
+    "total_base_assets_needed": 26
+  }
+}
