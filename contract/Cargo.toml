@@ -1,0 +1,9 @@
+[workspace]
+members = ["programs/cappy-mint"]
+resolver = "2"
+
+[profile.release]
+overflow-checks = false
+lto = true
+codegen-units = 1
+strip = true
