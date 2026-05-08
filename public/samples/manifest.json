@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "tier": "common",
+    "emoji": "\ud83e\uddab",
+    "background": "neon_city",
+    "file": "/samples/sample_1_common.png"
+  },
+  {
+    "id": 2,
+    "tier": "mythic",
+    "emoji": "\u2728",
+    "background": "lava_core",
+    "file": "/samples/sample_2_mythic.png"
+  },
+  {
+    "id": 3,
+    "tier": "legendary",
+    "emoji": "\ud83d\udc51",
+    "background": "space_grid_v5",
+    "file": "/samples/sample_3_legendary.png"
+  },
+  {
+    "id": 4,
+    "tier": "common",
+    "emoji": "\ud83e\uddab",
+    "background": "swamp",
+    "file": "/samples/sample_4_common.png"
+  },
+  {
+    "id": 5,
+    "tier": "mythic",
+    "emoji": "\u2728",
+    "background": "ocean_lab",
+    "file": "/samples/sample_5_mythic.png"
+  },
+  {
+    "id": 6,
+    "tier": "legendary",
+    "emoji": "\ud83d\udc51",
+    "background": "neon_city",
+    "file": "/samples/sample_6_legendary.png"
+  }
+]
