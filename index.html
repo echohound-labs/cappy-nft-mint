@@ -3,359 +3,427 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PROJECT CAPYBARA — X1 Network</title>
+<title>$CAPPY — X1 Network</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --black: #050508; --black2: #080b10;
-  --blue: #00aaff; --blue-dim: rgba(0,170,255,0.12); --blue-line: rgba(0,170,255,0.22);
-  --green: #00ff88; --green-dim: rgba(0,255,136,0.1);
-  --orange: #ff6600; --orange-dim: rgba(255,102,0,0.1);
-  --purple: #9933ff;
-  --red: #ff2233;
-  --white: #ddeeff; --muted: #5a7a99;
-  --surface: rgba(0,170,255,0.04); --border: rgba(0,170,255,0.15); --border2: rgba(0,170,255,0.35);
-  --mono: 'Share Tech Mono', monospace; --display: 'Bebas Neue', sans-serif; --body: 'Inter', sans-serif;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#04050a;
+  --black2:#070810;
+  --cyan:#00e5ff;
+  --cyan-dim:rgba(0,229,255,0.1);
+  --cyan-line:rgba(0,229,255,0.2);
+  --green:#00ff88;
+  --green-dim:rgba(0,255,136,0.1);
+  --orange:#ff6a00;
+  --orange-dim:rgba(255,106,0,0.1);
+  --purple:#c040ff;
+  --purple-dim:rgba(192,64,255,0.1);
+  --gold:#ffc940;
+  --gold-dim:rgba(255,201,64,0.1);
+  --red:#ff2244;
+  --white:#e0f0ff;
+  --muted:#4a6a7a;
+  --border:rgba(0,229,255,0.13);
+  --border2:rgba(0,229,255,0.3);
+  --mono:'Share Tech Mono',monospace;
+  --display:'Bebas Neue',sans-serif;
+  --body:'Inter',sans-serif;
 }
-html { scroll-behavior: smooth; }
-body { background: var(--black); color: var(--white); font-family: var(--body); font-weight: 300; line-height: 1.7; overflow-x: hidden; }
-body::before { content:''; position:fixed; inset:0; background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 4px); pointer-events:none; z-index:999; }
-body::after { content:''; position:fixed; inset:0; background-image:linear-gradient(rgba(0,170,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(0,170,255,0.025) 1px,transparent 1px); background-size:64px 64px; pointer-events:none; z-index:0; }
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:var(--body);font-weight:300;line-height:1.7;overflow-x:hidden}
 
-nav { position:fixed; top:0; left:0; right:0; z-index:200; display:flex; align-items:center; justify-content:space-between; padding:1rem 2.5rem; background:rgba(5,5,8,0.92); border-bottom:1px solid var(--border); backdrop-filter:blur(12px); }
-.nav-logo { font-family:var(--display); font-size:1.6rem; color:var(--blue); letter-spacing:.05em; }
-.nav-links { display:flex; gap:2rem; list-style:none; }
-.nav-links a { font-family:var(--mono); font-size:.68rem; letter-spacing:.15em; color:var(--muted); text-decoration:none; transition:color .2s; }
-.nav-links a:hover { color:var(--blue); }
-.live { font-family:var(--mono); font-size:.62rem; letter-spacing:.15em; color:var(--green); display:flex; align-items:center; gap:.4rem; }
-.dot { width:6px; height:6px; border-radius:50%; background:var(--green); animation:blink 1.8s infinite; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.2} }
+/* scanlines */
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.03) 3px,rgba(0,0,0,0.04) 4px);pointer-events:none;z-index:999}
 
-.hero { position:relative; z-index:1; min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:7rem 2rem 4rem; overflow:hidden; }
-.alert-bar { font-family:var(--mono); font-size:.7rem; letter-spacing:.2em; color:var(--red); border:1px solid rgba(255,34,51,.45); padding:.45rem 1.5rem; margin-bottom:2.5rem; animation:flash 1.4s infinite; }
-@keyframes flash { 0%,100%{border-color:rgba(255,34,51,.3)} 50%{border-color:rgba(255,34,51,1)} }
-.hero-tag { font-family:var(--mono); font-size:.7rem; letter-spacing:.28em; color:var(--blue); margin-bottom:1.25rem; }
-.hero-title { font-family:var(--display); font-size:clamp(4.5rem,14vw,11rem); line-height:.88; letter-spacing:.02em; color:#fff; margin-bottom:.75rem; }
-.hero-title .bl { color:var(--blue); }
-.hero-sub { font-family:var(--mono); font-size:clamp(.65rem,1.6vw,.85rem); color:var(--muted); letter-spacing:.1em; max-width:540px; margin:0 auto 2.5rem; }
-.btn-row { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-bottom:4rem; }
-.btn-a { font-family:var(--mono); font-size:.72rem; letter-spacing:.15em; background:var(--blue); color:var(--black); border:none; padding:.8rem 2.2rem; text-decoration:none; display:inline-block; clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%); transition:all .2s; }
-.btn-a:hover { background:#fff; transform:translateY(-2px); }
-.btn-b { font-family:var(--mono); font-size:.72rem; letter-spacing:.15em; background:transparent; color:var(--orange); border:1px solid rgba(255,102,0,.4); padding:.8rem 2.2rem; text-decoration:none; display:inline-block; transition:all .2s; }
-.btn-b:hover { background:var(--orange-dim); }
+/* subtle grid */
+body::after{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,229,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,255,0.02) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
 
-.ticker { width:100%; overflow:hidden; border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:rgba(0,170,255,0.03); padding:.55rem 0; }
-.tick-inner { display:flex; gap:3rem; white-space:nowrap; width:max-content; animation:tick 38s linear infinite; }
-.tick-item { font-family:var(--mono); font-size:.65rem; letter-spacing:.1em; color:var(--muted); display:flex; align-items:center; gap:.5rem; }
-.tick-item b { color:var(--blue); font-weight:400; }
-@keyframes tick { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:.9rem 2.5rem;background:rgba(4,5,10,0.92);border-bottom:1px solid var(--border);backdrop-filter:blur(14px)}
+.nav-logo{font-family:var(--display);font-size:1.8rem;letter-spacing:.05em;background:linear-gradient(90deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-family:var(--mono);font-size:.65rem;letter-spacing:.15em;color:var(--muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--cyan)}
+.live{font-family:var(--mono);font-size:.62rem;letter-spacing:.15em;color:var(--green);display:flex;align-items:center;gap:.4rem}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 1.8s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
 
-.stats { position:relative; z-index:1; display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--border); border-bottom:1px solid var(--border); }
-.stat { padding:2.25rem 1.5rem; border-right:1px solid var(--border); text-align:center; background:var(--surface); }
-.stat:last-child { border-right:none; }
-.stat-n { font-family:var(--display); font-size:3rem; color:var(--blue); line-height:1; display:block; margin-bottom:.25rem; }
-.stat-l { font-family:var(--mono); font-size:.58rem; letter-spacing:.2em; color:var(--muted); }
+/* HERO */
+.hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:7rem 2rem 2rem;overflow:hidden}
 
-.wrap { position:relative; z-index:1; max-width:1080px; margin:0 auto; padding:5rem 2rem; }
-.full { position:relative; z-index:1; }
-.full-inner { max-width:1080px; margin:0 auto; padding:5rem 2rem; }
-.stag { font-family:var(--mono); font-size:.6rem; letter-spacing:.3em; color:var(--blue); margin-bottom:.75rem; display:flex; align-items:center; gap:.5rem; }
-.stag::before { content:''; display:inline-block; width:18px; height:1px; background:var(--blue); }
-.sh { font-family:var(--display); font-size:clamp(2.2rem,5.5vw,4.5rem); line-height:.95; color:#fff; margin-bottom:1.5rem; letter-spacing:.02em; }
-.sh .bl { color:var(--blue); } .sh .or { color:var(--orange); } .sh .gr { color:var(--green); }
-.sb { font-size:.94rem; color:var(--muted); max-width:660px; line-height:1.85; }
+/* cosmic bg orbs */
+.hero::before{content:'';position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(192,64,255,0.08) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:0}
+.hero::after{content:'';position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,255,0.06) 0%,transparent 70%);top:30%;left:20%;pointer-events:none;z-index:0}
 
-.notice { border:1px solid rgba(0,170,255,.4); background:rgba(0,170,255,.05); padding:2rem 2.5rem; margin:3rem 0; position:relative; }
-.notice::before { content:'// IMPORTANT DISTINCTION'; font-family:var(--mono); font-size:.56rem; letter-spacing:.2em; color:var(--blue); position:absolute; top:-.5rem; left:1rem; background:var(--black); padding:0 .5rem; }
-.notice p { font-family:var(--mono); font-size:.83rem; line-height:1.9; color:var(--white); }
-.notice p b { color:var(--blue); font-weight:400; }
-.notice p .sep { color:var(--orange); }
+.alert-bar{position:relative;z-index:2;font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;color:var(--red);border:1px solid rgba(255,34,68,.4);padding:.4rem 1.4rem;margin-bottom:2rem;animation:flash 1.5s infinite}
+@keyframes flash{0%,100%{border-color:rgba(255,34,68,.25)}50%{border-color:rgba(255,34,68,.9)}}
 
-.lore { border:1px solid var(--border); background:var(--surface); padding:2.5rem; margin:3rem 0; position:relative; }
-.lore::before { content:'// CLASSIFIED — X1 PROTOCOL BRIEF'; font-family:var(--mono); font-size:.56rem; letter-spacing:.2em; color:var(--red); position:absolute; top:-.5rem; left:1rem; background:var(--black); padding:0 .5rem; }
-.lore p { font-family:var(--mono); font-size:.83rem; line-height:1.9; color:var(--white); }
-.lore p .hi { color:var(--blue); }
+.hero-tag{position:relative;z-index:2;font-family:var(--mono);font-size:.65rem;letter-spacing:.35em;color:var(--muted);margin-bottom:1rem}
 
-.quote { border-left:3px solid var(--blue); padding:2rem 2.5rem; background:var(--surface); margin:3rem 0; }
-.q-text { font-family:var(--mono); font-size:.88rem; color:var(--white); line-height:1.9; margin-bottom:.75rem; font-style:italic; }
-.q-auth { font-family:var(--mono); font-size:.62rem; letter-spacing:.2em; color:var(--blue); }
+.hero-title{position:relative;z-index:2;font-family:var(--display);font-size:clamp(5rem,18vw,14rem);line-height:.85;letter-spacing:.02em;margin-bottom:.5rem}
+.hero-title .t1{display:block;background:linear-gradient(135deg,var(--cyan) 0%,var(--purple) 50%,var(--gold) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-title .t2{display:block;color:rgba(255,255,255,0.08);font-size:clamp(3rem,10vw,8rem);letter-spacing:.15em;margin-top:-.5rem}
 
-.steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1.25rem; margin-top:3rem; }
-.step { border:1px solid var(--border); padding:2rem 1.5rem; background:var(--surface); transition:border-color .25s; }
-.step:hover { border-color:var(--blue); }
-.step-n { font-family:var(--display); font-size:3.5rem; color:rgba(0,170,255,.12); line-height:1; margin-bottom:.4rem; }
-.step-t { font-family:var(--mono); font-size:.7rem; letter-spacing:.15em; color:var(--blue); margin-bottom:.6rem; }
-.step-b { font-size:.84rem; color:var(--muted); line-height:1.7; }
+.hero-sub{position:relative;z-index:2;font-family:var(--mono);font-size:.75rem;letter-spacing:.12em;color:var(--muted);max-width:500px;margin:0 auto 2.5rem;line-height:1.8}
 
-.term { background:#000; border:1px solid var(--border); padding:1.75rem; font-family:var(--mono); font-size:.78rem; line-height:2; margin:3rem 0; position:relative; }
-.term::before { content:'CAPYBARA_RUNTIME.exe  //  X1 DELEGATION ENGINE'; font-size:.56rem; letter-spacing:.2em; color:var(--muted); display:block; margin-bottom:1rem; padding-bottom:.75rem; border-bottom:1px solid var(--border); }
-.tc{color:#334433}.tk{color:var(--blue)}.tv{color:#66ccaa}.to{color:var(--orange)}.ts{color:#ffcc55}
-.cur { display:inline-block; width:8px; height:14px; background:var(--blue); vertical-align:middle; animation:cur 1s step-end infinite; }
-@keyframes cur { 50%{opacity:0} }
+.btn-row{position:relative;z-index:2;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:4rem}
+.btn-main{font-family:var(--mono);font-size:.72rem;letter-spacing:.15em;background:linear-gradient(90deg,var(--cyan),var(--purple));color:var(--black);border:none;padding:.85rem 2.5rem;text-decoration:none;display:inline-block;font-weight:500;transition:all .2s;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)}
+.btn-main:hover{transform:translateY(-2px);filter:brightness(1.1)}
+.btn-ghost{font-family:var(--mono);font-size:.72rem;letter-spacing:.15em;background:transparent;color:var(--purple);border:1px solid rgba(192,64,255,.4);padding:.85rem 2.5rem;text-decoration:none;display:inline-block;transition:all .2s}
+.btn-ghost:hover{background:var(--purple-dim);border-color:var(--purple)}
 
-.crit { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1px; border:1px solid var(--border); margin-top:3rem; overflow:hidden; }
-.ci { padding:1.75rem; background:var(--surface); border-right:1px solid var(--border); border-bottom:1px solid var(--border); transition:background .25s; }
-.ci:hover { background:var(--blue-dim); }
-.ci-icon { font-family:var(--mono); font-size:1.2rem; color:var(--blue); margin-bottom:.6rem; }
-.ci-name { font-family:var(--mono); font-size:.62rem; letter-spacing:.18em; color:var(--blue); margin-bottom:.4rem; }
-.ci-val { font-family:var(--display); font-size:1.8rem; color:#fff; margin-bottom:.2rem; }
-.ci-desc { font-size:.76rem; color:var(--muted); line-height:1.6; }
+/* TICKER */
+.ticker{position:relative;z-index:2;width:100%;overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(0,229,255,0.02);padding:.5rem 0}
+.tick-inner{display:flex;gap:3rem;white-space:nowrap;width:max-content;animation:tick 40s linear infinite}
+.tick-item{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;color:var(--muted);display:flex;align-items:center;gap:.5rem}
+.tick-item b{font-weight:400}
+.tc{color:var(--cyan)}.tg{color:var(--green)}.tp{color:var(--purple)}.to{color:var(--orange)}.tgo{color:var(--gold)}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-.why { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:2rem; margin-top:3rem; }
-.why-label { font-family:var(--mono); font-size:.62rem; letter-spacing:.22em; color:var(--blue); margin-bottom:.6rem; }
-.why-body { font-size:.86rem; color:var(--muted); line-height:1.8; }
+/* MYTHIC SHOWCASE STRIP */
+.myth-strip{position:relative;z-index:1;padding:1rem 0;border-top:1px solid var(--border);border-bottom:1px solid rgba(192,64,255,.2);background:linear-gradient(180deg,rgba(192,64,255,0.04),rgba(0,229,255,0.04));overflow:hidden}
+.myth-strip-inner{display:flex;gap:0;width:max-content;animation:slide 60s linear infinite}
+.myth-img{width:160px;height:160px;object-fit:cover;opacity:.7;transition:opacity .3s;filter:saturate(1.2)}
+.myth-img:hover{opacity:1}
+@keyframes slide{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-.sep-line { position:relative; z-index:1; height:1px; background:linear-gradient(90deg,transparent,var(--blue-line),transparent); }
+/* MEME HERO SECTION */
+.meme-hero{position:relative;z-index:1;padding:6rem 2rem;text-align:center;overflow:hidden}
+.meme-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(255,106,0,0.06) 0%,transparent 70%);pointer-events:none}
+.meme-inner{max-width:860px;margin:0 auto;position:relative;z-index:2}
+.meme-eyebrow{font-family:var(--mono);font-size:.62rem;letter-spacing:.35em;color:var(--orange);margin-bottom:1.5rem;display:flex;align-items:center;justify-content:center;gap:.75rem}
+.meme-eyebrow::before,.meme-eyebrow::after{content:'';display:inline-block;width:30px;height:1px;background:var(--orange)}
+.meme-big{font-family:var(--display);font-size:clamp(3rem,8vw,7rem);line-height:.9;color:#fff;margin-bottom:1.5rem;letter-spacing:.02em}
+.meme-big .g1{background:linear-gradient(90deg,var(--orange),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.meme-big .g2{background:linear-gradient(90deg,var(--purple),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
-/* MEME — orange theme, clearly different from blue protocol sections */
-.meme { position:relative; z-index:1; border-top:2px solid var(--orange); border-bottom:1px solid rgba(255,102,0,.25); background:rgba(255,102,0,.03); padding:5rem 2rem; text-align:center; }
-.meme-inner { max-width:820px; margin:0 auto; }
-.meme-tag { font-family:var(--mono); font-size:.62rem; letter-spacing:.3em; color:var(--orange); margin-bottom:1.5rem; display:flex; align-items:center; justify-content:center; gap:.75rem; }
-.meme-tag::before,.meme-tag::after { content:''; display:inline-block; width:28px; height:1px; background:var(--orange); }
-.meme-title { font-family:var(--display); font-size:clamp(2.5rem,7vw,5.5rem); line-height:.95; color:#fff; margin-bottom:1.5rem; letter-spacing:.02em; }
-.meme-title .or { color:var(--orange); }
-.meme-dis { font-family:var(--mono); font-size:.76rem; line-height:1.85; color:var(--muted); max-width:560px; margin:0 auto 2.5rem; border:1px solid rgba(255,102,0,.2); padding:1.25rem 1.5rem; background:rgba(255,102,0,.04); }
-.meme-dis b { color:var(--orange); font-weight:400; }
-.meme-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1.25rem; margin-top:2.5rem; }
-.mc { border:1px solid rgba(255,102,0,.2); padding:1.75rem 1.25rem; background:rgba(255,102,0,.04); text-align:center; transition:all .25s; }
-.mc:hover { border-color:var(--orange); transform:translateY(-3px); }
-.mc-ico { font-size:2rem; margin-bottom:.6rem; display:block; }
-.mc-t { font-family:var(--mono); font-size:.65rem; letter-spacing:.15em; color:var(--orange); margin-bottom:.4rem; }
-.mc-d { font-size:.78rem; color:var(--muted); line-height:1.6; }
-.btn-or { font-family:var(--mono); font-size:.72rem; letter-spacing:.15em; background:var(--orange); color:var(--black); border:none; padding:.8rem 2.2rem; text-decoration:none; display:inline-block; clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%); transition:all .2s; margin-top:2rem; }
-.btn-or:hover { background:#fff; }
+.launch-box{border:1px solid rgba(255,106,0,.3);background:rgba(255,106,0,.04);padding:1.75rem 2rem;margin:2rem auto;max-width:680px;text-align:left;position:relative}
+.launch-box::before{content:'// FAIR LAUNCH';font-family:var(--mono);font-size:.55rem;letter-spacing:.2em;color:var(--green);position:absolute;top:-.5rem;left:1rem;background:var(--black);padding:0 .5rem}
+.launch-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.launch-item{}
+.launch-label{font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;color:var(--muted);margin-bottom:.3rem}
+.launch-val{font-family:var(--display);font-size:1.6rem;color:var(--green);line-height:1}
+.launch-desc{font-size:.75rem;color:var(--muted);line-height:1.6;margin-top:.2rem}
 
-.nft-wrap { position:relative; z-index:1; max-width:1080px; margin:0 auto; padding:5rem 2rem; }
-.tier-row { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; border:1px solid var(--border); margin-top:3rem; overflow:hidden; }
-.tier { padding:2.5rem 2rem; background:var(--surface); text-align:center; }
-.tier.leg { background:rgba(0,170,255,.06); border-top:3px solid var(--blue); }
-.tier-n { font-family:var(--display); font-size:3rem; line-height:1; margin-bottom:.4rem; }
-.tier-n.c{color:var(--muted)} .tier-n.l{color:var(--blue)} .tier-n.m{color:var(--orange)}
-.tier-label { font-family:var(--mono); font-size:.62rem; letter-spacing:.2em; margin-bottom:1rem; }
-.tier-label.c{color:var(--muted)} .tier-label.l{color:var(--blue)} .tier-label.m{color:var(--orange)}
-.tier-desc { font-size:.78rem; color:var(--muted); line-height:1.7; }
-.env-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(125px,1fr)); gap:.6rem; margin-top:2rem; }
-.env { font-family:var(--mono); font-size:.62rem; letter-spacing:.1em; color:var(--muted); padding:.65rem .75rem; border:1px solid var(--border); text-align:center; transition:all .2s; }
-.env:hover { color:var(--blue); border-color:var(--blue); }
-.rarity { margin-top:2rem; padding:1.25rem 1.5rem; border:1px solid var(--border); background:var(--surface); font-family:var(--mono); font-size:.76rem; color:var(--muted); line-height:1.9; }
-.rarity b { color:var(--blue); font-weight:400; }
-.rarity .big { color:#fff; font-size:.96rem; }
+.meme-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;border:1px solid var(--border);margin-top:3rem;overflow:hidden}
+.mc{padding:1.5rem 1.25rem;background:rgba(4,5,10,0.8);border-right:1px solid var(--border);text-align:center;transition:background .25s}
+.mc:hover{background:rgba(192,64,255,0.06)}
+.mc-ico{font-size:1.75rem;margin-bottom:.6rem;display:block}
+.mc-t{font-family:var(--mono);font-size:.62rem;letter-spacing:.15em;margin-bottom:.4rem}
+.mc-t.c{color:var(--cyan)}.mc-t.g{color:var(--green)}.mc-t.p{color:var(--purple)}.mc-t.o{color:var(--orange)}
+.mc-d{font-size:.78rem;color:var(--muted);line-height:1.6}
 
-footer { position:relative; z-index:1; border-top:1px solid var(--border); padding:3rem 2.5rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:2rem; background:rgba(5,5,8,.96); }
-.f-logo { font-family:var(--display); font-size:2.2rem; color:var(--blue); }
-.f-links { display:flex; gap:2rem; list-style:none; }
-.f-links a { font-family:var(--mono); font-size:.62rem; letter-spacing:.12em; color:var(--muted); text-decoration:none; transition:color .2s; }
-.f-links a:hover { color:var(--blue); }
-.f-meta { font-family:var(--mono); font-size:.6rem; letter-spacing:.12em; color:var(--muted); line-height:2; text-align:right; }
-.f-meta b { color:var(--blue); font-weight:400; }
+/* NFT SECTION */
+.nft-section{position:relative;z-index:1;border-top:1px solid rgba(192,64,255,.2);border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(192,64,255,0.03),transparent)}
+.nft-inner{max-width:1080px;margin:0 auto;padding:5rem 2rem}
+.stag{font-family:var(--mono);font-size:.58rem;letter-spacing:.35em;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.stag::before{content:'';display:inline-block;width:16px;height:1px}
+.stag.cy{color:var(--cyan)}.stag.cy::before{background:var(--cyan)}
+.stag.pu{color:var(--purple)}.stag.pu::before{background:var(--purple)}
+.stag.or{color:var(--orange)}.stag.or::before{background:var(--orange)}
+.sh{font-family:var(--display);font-size:clamp(2.5rem,6vw,5rem);line-height:.92;color:#fff;margin-bottom:1.5rem;letter-spacing:.02em}
+.sh .cy{color:var(--cyan)}.sh .pu{color:var(--purple)}.sh .go{color:var(--gold)}
+.sb{font-size:.92rem;color:var(--muted);max-width:620px;line-height:1.85}
 
-@media(max-width:768px) {
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .nav-links{display:none}
+/* TIER CARDS */
+.tier-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:3rem;border:1px solid var(--border);overflow:hidden}
+.tier{padding:2.5rem 1.75rem;text-align:center;position:relative;overflow:hidden}
+.tier::before{content:'';position:absolute;inset:0;opacity:.04}
+.tier.c{background:rgba(4,5,10,.9)}.tier.c::before{background:linear-gradient(135deg,#fff,transparent)}
+.tier.l{background:rgba(0,229,255,.04);border-top:2px solid var(--cyan)}.tier.l::before{background:linear-gradient(135deg,var(--cyan),transparent)}
+.tier.m{background:rgba(192,64,255,.05);border-top:2px solid var(--purple)}.tier.m::before{background:linear-gradient(135deg,var(--purple),transparent)}
+.tier-n{font-family:var(--display);font-size:3.5rem;line-height:1;margin-bottom:.3rem}
+.tier-n.c{color:var(--muted)}.tier-n.l{color:var(--cyan)}.tier-n.m{color:var(--purple)}
+.tier-lbl{font-family:var(--mono);font-size:.6rem;letter-spacing:.25em;margin-bottom:1rem}
+.tier-lbl.c{color:var(--muted)}.tier-lbl.l{color:var(--cyan)}.tier-lbl.m{color:var(--purple)}
+.tier-desc{font-size:.78rem;color:var(--muted);line-height:1.7}
+
+/* ENV GRID */
+.env-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.5rem;margin-top:2rem}
+.env{font-family:var(--mono);font-size:.6rem;letter-spacing:.1em;color:var(--muted);padding:.6rem .75rem;border:1px solid var(--border);text-align:center;transition:all .2s;cursor:default}
+.env:hover{border-color:var(--cyan);color:var(--cyan)}
+
+/* NFT ECONOMICS */
+.econ-box{margin-top:2.5rem;border:1px solid rgba(0,255,136,.2);background:rgba(0,255,136,.03);padding:2rem;position:relative}
+.econ-box::before{content:'// NFT SALE ECONOMICS';font-family:var(--mono);font-size:.55rem;letter-spacing:.2em;color:var(--green);position:absolute;top:-.5rem;left:1rem;background:var(--black);padding:0 .5rem}
+.econ-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:.5rem}
+.econ-item{}
+.econ-pct{font-family:var(--display);font-size:3rem;line-height:1;margin-bottom:.25rem}
+.econ-pct.g{color:var(--green)}.econ-pct.c{color:var(--cyan)}
+.econ-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;margin-bottom:.35rem}
+.econ-label.g{color:var(--green)}.econ-label.c{color:var(--cyan)}
+.econ-desc{font-size:.78rem;color:var(--muted);line-height:1.6}
+
+.rarity{margin-top:2rem;padding:1.25rem 1.5rem;border:1px solid var(--border);background:rgba(4,5,10,.6);font-family:var(--mono);font-size:.72rem;color:var(--muted);line-height:1.9}
+.rarity b{color:var(--cyan);font-weight:400}
+.rarity .big{color:#fff}
+
+/* PROTOCOL SECTION — minimal, clean */
+.proto-section{position:relative;z-index:1;border-top:1px solid var(--border)}
+.proto-inner{max-width:1080px;margin:0 auto;padding:5rem 2rem}
+.proto-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.proto-left{}
+.proto-right{}
+.notice{border-left:2px solid var(--cyan);padding:1.25rem 1.5rem;background:rgba(0,229,255,.04);margin-bottom:2rem}
+.notice p{font-family:var(--mono);font-size:.78rem;line-height:1.9;color:var(--muted)}
+.notice p b{color:var(--cyan);font-weight:400}
+.notice p .sep{color:var(--orange)}
+
+.crit-list{display:flex;flex-direction:column;gap:.75rem;margin-top:1.5rem}
+.crit-item{display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;border:1px solid var(--border);background:rgba(4,5,10,.6);transition:border-color .2s}
+.crit-item:hover{border-color:var(--cyan)}
+.crit-val{font-family:var(--display);font-size:1.4rem;color:var(--cyan);min-width:60px}
+.crit-info{}
+.crit-name{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;color:var(--cyan);margin-bottom:.15rem}
+.crit-desc{font-size:.75rem;color:var(--muted);line-height:1.5}
+
+.quote{border-left:2px solid var(--purple);padding:1.5rem 1.75rem;background:rgba(192,64,255,.04);margin-top:2rem}
+.q-text{font-family:var(--mono);font-size:.82rem;color:var(--white);line-height:1.9;font-style:italic;margin-bottom:.6rem}
+.q-auth{font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;color:var(--purple)}
+
+/* FOOTER */
+footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2.5rem 2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;background:rgba(4,5,10,.97)}
+.f-logo{font-family:var(--display);font-size:2rem;background:linear-gradient(90deg,var(--cyan),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.f-links{display:flex;gap:1.75rem;list-style:none}
+.f-links a{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;color:var(--muted);text-decoration:none;transition:color .2s}
+.f-links a:hover{color:var(--cyan)}
+.f-meta{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;color:var(--muted);line-height:2;text-align:right}
+.f-meta b{color:var(--purple);font-weight:400}
+
+.sep-line{position:relative;z-index:1;height:1px;background:linear-gradient(90deg,transparent,rgba(192,64,255,.3),rgba(0,229,255,.3),transparent)}
+
+@media(max-width:900px){
+  .proto-grid{grid-template-columns:1fr}
   .tier-row{grid-template-columns:1fr}
+  .nav-links{display:none}
   footer{flex-direction:column;text-align:center}
   .f-meta{text-align:center}
+  .launch-grid{grid-template-columns:1fr}
+  .econ-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="nav-logo">CAPPY</div>
+  <div class="nav-logo">$CAPPY</div>
   <ul class="nav-links">
-    <li><a href="#protocol">PROTOCOL</a></li>
-    <li><a href="#mechanism">MECHANISM</a></li>
-    <li><a href="#criteria">CRITERIA</a></li>
-    <li><a href="#meme">$CAPPY</a></li>
+    <li><a href="#meme">MEME</a></li>
     <li><a href="#nfts">NFTS</a></li>
+    <li><a href="#protocol">PROTOCOL</a></li>
   </ul>
-  <div class="live"><div class="dot"></div>EPOCH LIVE</div>
+  <div class="live"><div class="dot"></div>LIVE ON X1</div>
 </nav>
 
+<!-- HERO -->
 <div class="hero">
   <div class="alert-bar">⚠ BLOCKCHAIN UNDER ATTACK — IMPLEMENT PROJECT CAPYBARA</div>
-  <div class="hero-tag">X1 NETWORK // LIVE PROTOCOL IMPLEMENTATION</div>
-  <h1 class="hero-title">PROJECT<br><span class="bl">CAPYBARA</span></h1>
-  <p class="hero-sub">THE X1 DELEGATION PROGRAM'S FAIR STAKE THRESHOLD SYSTEM — DEPLOYED ON MAINNET</p>
+  <div class="hero-tag">X1 NETWORK // COMMUNITY MEME</div>
+  <h1 class="hero-title">
+    <span class="t1">$CAPPY</span>
+    <span class="t2">X1</span>
+  </h1>
+  <p class="hero-sub">THE CAPYBARA THAT GUARDS THE BLOCKCHAIN<br>NOW GUARDS YOUR PORTFOLIO</p>
   <div class="btn-row">
-    <a href="#protocol" class="btn-a">READ THE PROTOCOL</a>
-    <a href="#meme" class="btn-b">$CAPPY MEME ↓</a>
+    <a href="#" class="btn-main">BUY $CAPPY</a>
+    <a href="#nfts" class="btn-ghost">VIEW NFTS</a>
   </div>
   <div class="ticker">
     <div class="tick-inner">
-      <div class="tick-item">P85 THRESHOLD <b>ACTIVE EACH EPOCH</b></div>
-      <div class="tick-item">MAX COMMISSION <b>≤10%</b></div>
-      <div class="tick-item">MIN VOTE CREDITS <b>≥97%</b></div>
-      <div class="tick-item">SKIP RATE <b>WITHIN ±10% NETWORK AVG</b></div>
-      <div class="tick-item">TACHYON <b>MAJORITY VERSION REQUIRED</b></div>
-      <div class="tick-item">SPECIFIED BY <b>JACK LEVIN // CYPHEREUS PRIME // MAY 1ST</b></div>
-      <div class="tick-item">STATUS <b>LIVE ON X1 MAINNET</b></div>
-      <div class="tick-item">P85 THRESHOLD <b>ACTIVE EACH EPOCH</b></div>
-      <div class="tick-item">MAX COMMISSION <b>≤10%</b></div>
-      <div class="tick-item">MIN VOTE CREDITS <b>≥97%</b></div>
-      <div class="tick-item">SKIP RATE <b>WITHIN ±10% NETWORK AVG</b></div>
-      <div class="tick-item">TACHYON <b>MAJORITY VERSION REQUIRED</b></div>
-      <div class="tick-item">SPECIFIED BY <b>JACK LEVIN // CYPHEREUS PRIME // MAY 1ST</b></div>
-      <div class="tick-item">STATUS <b>LIVE ON X1 MAINNET</b></div>
+      <div class="tick-item">$CAPPY <b class="tg">FAIRLY LAUNCHED</b></div>
+      <div class="tick-item">PLATFORM <b class="to">DEGEN LAUNCHPAD X1</b></div>
+      <div class="tick-item">NO PRESALE <b class="tg">NO VC</b></div>
+      <div class="tick-item">NFT SALES <b class="tc">90% TO LP</b></div>
+      <div class="tick-item">GEIGER NODE <b class="tp">10% DEV RNG</b></div>
+      <div class="tick-item">COLLECTION <b class="tgo">500 NFTS</b></div>
+      <div class="tick-item">MYTHIC TIER <b class="tp">30 UNIQUE</b></div>
+      <div class="tick-item">NAMED AFTER <b class="tc">REAL X1 PROTOCOL</b></div>
+      <div class="tick-item">$CAPPY <b class="tg">FAIRLY LAUNCHED</b></div>
+      <div class="tick-item">PLATFORM <b class="to">DEGEN LAUNCHPAD X1</b></div>
+      <div class="tick-item">NO PRESALE <b class="tg">NO VC</b></div>
+      <div class="tick-item">NFT SALES <b class="tc">90% TO LP</b></div>
+      <div class="tick-item">GEIGER NODE <b class="tp">10% DEV RNG</b></div>
+      <div class="tick-item">COLLECTION <b class="tgo">500 NFTS</b></div>
+      <div class="tick-item">MYTHIC TIER <b class="tp">30 UNIQUE</b></div>
+      <div class="tick-item">NAMED AFTER <b class="tc">REAL X1 PROTOCOL</b></div>
     </div>
   </div>
 </div>
 
-<div class="stats">
-  <div class="stat"><span class="stat-n">P85</span><span class="stat-l">PERCENTILE METHOD</span></div>
-  <div class="stat"><span class="stat-n">≥97%</span><span class="stat-l">VOTE CREDITS REQ.</span></div>
-  <div class="stat"><span class="stat-n">≤10%</span><span class="stat-l">MAX COMMISSION</span></div>
-  <div class="stat"><span class="stat-n">∞</span><span class="stat-l">EPOCHS — DYNAMIC</span></div>
-</div>
-
-<!-- PROTOCOL -->
-<div class="wrap" id="protocol">
-  <div class="stag">REAL BLOCKCHAIN IMPLEMENTATION</div>
-  <h2 class="sh">WHAT IS<br><span class="bl">CAPYBARA?</span></h2>
-  <p class="sb">Project Capybara is a real, live implementation on the X1 Network. It is the delegation program's fair stake threshold system — the engine that determines which validators qualify for Foundation delegation every epoch.</p>
-
-  <div class="notice">
-    <p>
-      <b>Project Capybara is a real protocol deployed on X1 blockchain mainnet.</b> It was specified by Jack Levin (Cyphereus Prime) on May 1st.<br><br>
-      <span class="sep">$CAPPY is a separate community meme coin.</span> It takes its name and spirit from the protocol but has no official connection to it. The community made a meme because the name was too good. That's the whole story.
-    </p>
-  </div>
-
-  <div class="lore">
-    <p>
-      Without a fair threshold, the delegation program could be <span class="hi">gamed</span>. Validators with tiny self-stake could receive outsized Foundation delegation — earning rewards far disproportionate to their actual skin in the game.<br><br>
-      Capybara <span class="hi">closes that exploit.</span> Every epoch it recalculates the 85th percentile of all active validator self-stakes and sets that as the minimum bar. Only validators with real capital on the line qualify. Dynamic. Transparent. Verifiable on-chain.
-    </p>
-  </div>
-
-  <div class="quote">
-    <p class="q-text">"The p85 method ensures the threshold is always representative of real validator commitment — not a static number that becomes stale as the network evolves."</p>
-    <div class="q-auth">// JACK LEVIN — CYPHEREUS PRIME — MAY 1ST SPECIFICATION</div>
+<!-- MYTHIC IMAGE STRIP -->
+<div class="myth-strip">
+  <div class="myth-strip-inner">
+    <img class="myth-img" src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/traits/background/forest_tech.png" alt="" onerror="this.style.display='none'">
+    <!-- Repeating color blocks as fallback strip -->
+    <div style="width:160px;height:160px;background:linear-gradient(135deg,rgba(0,229,255,0.15),rgba(192,64,255,0.15));display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:3rem;color:rgba(0,229,255,0.3)">🌊</div>
+    <div style="width:160px;height:160px;background:linear-gradient(135deg,rgba(255,106,0,0.15),rgba(255,34,68,0.15));display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:3rem;color:rgba(255,106,0,0.4)">🌋</div>
+    <div style="width:160px;height:160px;background:linear-gradient(135deg,rgba(0,255,136,0.12),rgba(0,229,255,0.08));display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:3rem;color:rgba(0,255,136,0.4)">🌿</div>
+    <div style="width:160px;height:160px;background:linear-gradient(135deg,rgba(192,64,255,0.15),rgba(0,229,255,0.1));display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:3rem;color:rgba(192,64,255,0.5)">🚀</div>
+    <div style="width:160px;height:160px;background:linear-gradient(135deg,rgba(255,201,64,0.12),rgba(255,106,0,0.1));display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:3rem;color:rgba(255,201,64,0.5)">🏜️</div>
+    <div style="width:160px;height:160px;background:linear-gradient(135deg,rgba(0,229,255,0.12),rgba(255,255,255,0.06));display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:3rem;color:rgba(0,229,255,0.4)">❄️</div>
+    <div style="width:160px;height:160px;background:linear-gradient(135deg,rgba(0,229,255,0.1),rgba(192,64,255,0.1));display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:3rem;color:rgba(255,255,255,0.2)">🏙️</div>
+    <div style="width:160px;height:160px;background:linear-gradient(135deg,rgba(0,229,255,0.15),rgba(0,255,136,0.1));display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:3rem;color:rgba(0,229,255,0.4)">⛰️</div>
+    <div style="width:160px;height:160px;background:linear-gradient(135deg,rgba(0,229,255,0.15),rgba(192,64,255,0.15));display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:3rem;color:rgba(0,229,255,0.3)">🌊</div>
+    <div style="width:160px;height:160px;background:linear-gradient(135deg,rgba(255,106,0,0.15),rgba(255,34,68,0.15));display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:3rem;color:rgba(255,106,0,0.4)">🌋</div>
+    <div style="width:160px;height:160px;background:linear-gradient(135deg,rgba(0,255,136,0.12),rgba(0,229,255,0.08));display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:3rem;color:rgba(0,255,136,0.4)">🌿</div>
+    <div style="width:160px;height:160px;background:linear-gradient(135deg,rgba(192,64,255,0.15),rgba(0,229,255,0.1));display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:3rem;color:rgba(192,64,255,0.5)">🚀</div>
+    <div style="width:160px;height:160px;background:linear-gradient(135deg,rgba(255,201,64,0.12),rgba(255,106,0,0.1));display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:3rem;color:rgba(255,201,64,0.5)">🏜️</div>
+    <div style="width:160px;height:160px;background:linear-gradient(135deg,rgba(0,229,255,0.12),rgba(255,255,255,0.06));display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:3rem;color:rgba(0,229,255,0.4)">❄️</div>
+    <div style="width:160px;height:160px;background:linear-gradient(135deg,rgba(0,229,255,0.1),rgba(192,64,255,0.1));display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:3rem;color:rgba(255,255,255,0.2)">🏙️</div>
+    <div style="width:160px;height:160px;background:linear-gradient(135deg,rgba(0,229,255,0.15),rgba(0,255,136,0.1));display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:3rem;color:rgba(0,229,255,0.4)">⛰️</div>
   </div>
 </div>
 
-<div class="sep-line"></div>
-
-<!-- MECHANISM -->
-<div class="full" id="mechanism" style="background:var(--black2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
-<div class="full-inner">
-  <div class="stag">HOW IT WORKS</div>
-  <h2 class="sh">THE EPOCH<br><span class="bl">MECHANISM</span></h2>
-  <p class="sb">Four steps. Every epoch. Fully automatic. Unstoppable.</p>
-  <div class="steps">
-    <div class="step"><div class="step-n">01</div><div class="step-t">COLLECT</div><p class="step-b">Every epoch, Capybara collects self-stake amounts from all active validators currently running on X1.</p></div>
-    <div class="step"><div class="step-n">02</div><div class="step-t">CALCULATE</div><p class="step-b">Computes the 85th percentile (p85) of the complete stake distribution. This becomes the threshold.</p></div>
-    <div class="step"><div class="step-n">03</div><div class="step-t">THRESHOLD</div><p class="step-b">Validators with self-stake ≥ the p85 value pass this check and become eligible for Foundation delegation.</p></div>
-    <div class="step"><div class="step-n">04</div><div class="step-t">RECALIBRATE</div><p class="step-b">Repeats every epoch as stake amounts shift. Never static — always live and representative.</p></div>
-  </div>
-  <div class="term">
-    <span class="tc">// capybara_runtime — epoch execution loop</span><br><br>
-    <span class="tk">fn</span> <span class="tv">run_epoch</span>(<span class="tk">validators</span>: Vec&lt;Validator&gt;) {<br>
-    &nbsp;&nbsp;<span class="tk">let</span> stakes = collect_self_stakes(<span class="tk">&amp;</span>validators);<br>
-    &nbsp;&nbsp;<span class="tk">let</span> p85 = percentile(<span class="tk">&amp;</span>stakes, <span class="to">85</span>); <span class="tc">// CAPYBARA</span><br><br>
-    &nbsp;&nbsp;<span class="tk">for</span> v <span class="tk">in</span> validators {<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;<span class="tk">if</span> v.self_stake      <span class="to">&gt;=</span> p85<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tk">&amp;&amp;</span> v.commission     <span class="to">&lt;=</span> <span class="ts">0.10</span><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tk">&amp;&amp;</span> v.vote_credits   <span class="to">&gt;=</span> <span class="ts">0.97</span><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tk">&amp;&amp;</span> v.skip_rate_ok() <span class="tc">// within ±10% avg</span><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="tk">&amp;&amp;</span> v.tachyon_majority() {<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;grant_delegation(<span class="tk">&amp;</span>v);<br>
-    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
-    &nbsp;&nbsp;}<br>
-    } <span class="cur"></span>
-  </div>
-</div>
-</div>
-
-<!-- CRITERIA -->
-<div class="wrap" id="criteria">
-  <div class="stag">FULL DELEGATION CRITERIA</div>
-  <h2 class="sh">ALL FIVE<br><span class="bl">REQUIREMENTS</span></h2>
-  <p class="sb">Capybara handles the stake threshold. Validators must pass all five criteria to receive Foundation delegation.</p>
-  <div class="crit">
-    <div class="ci"><div class="ci-icon">◈</div><div class="ci-name">SELF-STAKE</div><div class="ci-val">P85</div><div class="ci-desc">Must meet or exceed the 85th percentile of all active validator self-stakes. Recalculates every epoch.</div></div>
-    <div class="ci"><div class="ci-icon">◈</div><div class="ci-name">COMMISSION</div><div class="ci-val">≤10%</div><div class="ci-desc">Maximum commission rate. Keeps validator fees fair for delegators and the network.</div></div>
-    <div class="ci"><div class="ci-icon">◈</div><div class="ci-name">VOTE CREDITS</div><div class="ci-val">≥97%</div><div class="ci-desc">Minimum vote credit score. Proves active, reliable participation in consensus.</div></div>
-    <div class="ci"><div class="ci-icon">◈</div><div class="ci-name">SKIP RATE</div><div class="ci-val">±10%</div><div class="ci-desc">Must stay within 10% of network average. Eliminates lagging or unreliable validators.</div></div>
-    <div class="ci"><div class="ci-icon">◈</div><div class="ci-name">TACHYON</div><div class="ci-val">MAJORITY</div><div class="ci-desc">Must run the majority Tachyon version. Network stays on strongest current software.</div></div>
-  </div>
-  <div class="why">
-    <div><div class="why-label">FAIRNESS</div><p class="why-body">No free-riding. Validators must have real capital at risk to receive delegation privileges.</p></div>
-    <div><div class="why-label">SECURITY</div><p class="why-body">Delegation flows only to proven, committed validators. Critical infrastructure stays in trusted hands.</p></div>
-    <div><div class="why-label">DYNAMISM</div><p class="why-body">Threshold auto-adjusts every epoch. As the network evolves, the bar rises with it. Never stale.</p></div>
-    <div><div class="why-label">TRANSPARENCY</div><p class="why-body">The p85 calculation is verifiable on-chain by anyone. Open, auditable, trustless by design.</p></div>
-  </div>
-</div>
-
-<div class="sep-line"></div>
-
-<!-- MEME — clearly its own thing -->
-<div class="meme" id="meme">
+<!-- MEME HERO -->
+<div class="meme-hero" id="meme">
   <div class="meme-inner">
-    <div class="meme-tag">$CAPPY — COMMUNITY MEME COIN</div>
-    <h2 class="meme-title">THE MEME THAT<br><span class="or">TOOK THE NAME</span></h2>
-    <div class="meme-dis">
-      <b>Let's be clear:</b> Project Capybara is a real X1 blockchain protocol. $CAPPY is a community meme coin inspired by it — with zero official connection. We made a meme because the name is legendary. That's it. <b>This is crypto. The capybara guards the chain. We run the meme.</b>
+    <div class="meme-eyebrow">COMMUNITY MEME TOKEN</div>
+    <h2 class="meme-big">
+      <span class="g1">FAIRLY LAUNCHED</span><br>
+      <span class="g2">COMMUNITY DRIVEN</span>
+    </h2>
+    <p style="font-size:.9rem;color:var(--muted);max-width:520px;margin:0 auto 2rem;line-height:1.8;">$CAPPY was fairly launched on Degen Launchpad X1 — no presale, no VC allocation, no insider deals. Pure community meme energy on the best chain. The capybara that guards the X1 blockchain is now the biggest meme on it.</p>
+
+    <div class="launch-box">
+      <div class="launch-grid">
+        <div class="launch-item">
+          <div class="launch-label">LAUNCH PLATFORM</div>
+          <div class="launch-val">DEGEN</div>
+          <div class="launch-desc">Degen Launchpad X1 — fully fair, open to all</div>
+        </div>
+        <div class="launch-item">
+          <div class="launch-label">PRESALE / VC</div>
+          <div class="launch-val" style="color:var(--red)">NONE</div>
+          <div class="launch-desc">Zero insider allocation. Community gets in first.</div>
+        </div>
+        <div class="launch-item">
+          <div class="launch-label">TOKEN</div>
+          <div class="launch-val">$CAPPY</div>
+          <div class="launch-desc">Native to X1 Network. The meme of the chain.</div>
+        </div>
+        <div class="launch-item">
+          <div class="launch-label">MISSION</div>
+          <div class="launch-val" style="font-size:1.1rem;color:var(--gold)">BIGGEST MEME ON X1</div>
+          <div class="launch-desc">Simple. Focused. Unstoppable.</div>
+        </div>
+      </div>
     </div>
-    <p style="font-size:.88rem;color:var(--muted);max-width:480px;margin:0 auto 1rem;line-height:1.8;">Goal: <span style="color:var(--orange);">biggest meme on X1 Network.</span> The capybara that guards the blockchain deserves the crown.</p>
-    <a href="#" class="btn-or">BUY $CAPPY</a>
+
     <div class="meme-cards">
-      <div class="mc"><span class="mc-ico">🛡️</span><div class="mc-t">NAMED AFTER LEGEND</div><p class="mc-d">The real protocol that closed an X1 exploit gave us the greatest meme name in crypto.</p></div>
-      <div class="mc"><span class="mc-ico">⚡</span><div class="mc-t">X1 NATIVE</div><p class="mc-d">Built on the chain that Capybara protects. We belong here.</p></div>
-      <div class="mc"><span class="mc-ico">🏆</span><div class="mc-t">1000 NFT ARMY</div><p class="mc-d">Three tiers. Ten environments. The CAPPY warriors of X1.</p></div>
-      <div class="mc"><span class="mc-ico">🐾</span><div class="mc-t">COMMUNITY FIRST</div><p class="mc-d">No utility fiction. No fake roadmap. Just the best meme on the best chain.</p></div>
+      <div class="mc"><span class="mc-ico">🛡️</span><div class="mc-t c">LEGENDARY NAME</div><p class="mc-d">Named after the real X1 protocol that closed an exploit. No meme has better lore.</p></div>
+      <div class="mc"><span class="mc-ico">⚡</span><div class="mc-t g">X1 NATIVE</div><p class="mc-d">Built on the chain Capybara protects. The meme belongs here.</p></div>
+      <div class="mc"><span class="mc-ico">🎨</span><div class="mc-t p">500 NFT ARMY</div><p class="mc-d">Mythic warriors. Legendary operatives. Common soldiers. All on X1.</p></div>
+      <div class="mc"><span class="mc-ico">🔥</span><div class="mc-t o">COMMUNITY FIRST</div><p class="mc-d">No fake utility. No roadmap fiction. Just the best meme on the best chain.</p></div>
+    </div>
+
+    <div style="margin-top:2rem">
+      <a href="#" class="btn-main">BUY $CAPPY ON DEGEN LAUNCHPAD</a>
     </div>
   </div>
 </div>
 
-<!-- NFTS -->
-<div class="nft-wrap" id="nfts">
-  <div class="stag">NFT COLLECTION</div>
-  <h2 class="sh">1000 CAPPY<br><span class="or">WARRIORS</span></h2>
-  <p class="sb">Three tiers of Capybara warriors across 10 environments. Each one unique. Each one a piece of the X1 universe.</p>
+<div class="sep-line"></div>
+
+<!-- NFT SECTION -->
+<div class="nft-section" id="nfts">
+<div class="nft-inner">
+  <div class="stag pu">NFT COLLECTION</div>
+  <h2 class="sh">500 CAPPY<br><span class="pu">WARRIORS</span></h2>
+  <p class="sb">Three tiers of Capybara warriors across 10 environments. Hand-crafted mythics. Elite legendaries. Atmospheric commons. Each one unique on X1.</p>
+
   <div class="tier-row">
-    <div class="tier">
-      <div class="tier-n c">700</div>
-      <div class="tier-label c">COMMON</div>
-      <p class="tier-desc">Leather tactical harness. No weapon. Calm atmospheric environments. Soldiers exploring the X1 world.</p>
+    <div class="tier c">
+      <div class="tier-n c">350</div>
+      <div class="tier-lbl c">COMMON</div>
+      <p class="tier-desc">Leather tactical harness. No weapon. Calm atmospheric environments. The soldiers exploring the X1 world.</p>
     </div>
-    <div class="tier leg">
-      <div class="tier-n l">250</div>
-      <div class="tier-label l">LEGENDARY</div>
-      <p class="tier-desc">Matte black tek armor with environment-colored circuit lines. Massive glowing weapons. Elite operatives.</p>
+    <div class="tier l">
+      <div class="tier-n l">120</div>
+      <div class="tier-lbl l">LEGENDARY</div>
+      <p class="tier-desc">Matte black tek armor with environment-colored circuit lines. Massive glowing weapons. Elite operatives of X1.</p>
     </div>
-    <div class="tier">
-      <div class="tier-n m">50</div>
-      <div class="tier-label m">MYTHIC</div>
-      <p class="tier-desc">Ancient ornate elemental armor with rune engravings. Apocalyptic worlds. Hand-crafted — each one unique.</p>
+    <div class="tier m">
+      <div class="tier-n m">30</div>
+      <div class="tier-lbl m">MYTHIC</div>
+      <p class="tier-desc">Ancient ornate elemental armor. Apocalyptic worlds. Massive relic weapons. Hand-crafted — every single one unique.</p>
     </div>
   </div>
+
   <div class="env-grid">
     <div class="env">🌿 SWAMP</div><div class="env">🌋 LAVA</div><div class="env">🏙️ CITY</div>
     <div class="env">🌲 FOREST</div><div class="env">🌊 OCEAN</div><div class="env">❄️ SNOW</div>
     <div class="env">🏜️ DESERT</div><div class="env">⛰️ MOUNTAIN</div><div class="env">🚀 SPACE</div>
     <div class="env">🏖️ BEACH</div>
   </div>
+
+  <div class="econ-box">
+    <div class="econ-grid">
+      <div class="econ-item">
+        <div class="econ-pct g">90%</div>
+        <div class="econ-label g">LIQUIDITY POOL</div>
+        <p class="econ-desc">90% of all XNT raised from NFT sales goes directly to the $CAPPY liquidity pool. The chart gets fed. The community benefits.</p>
+      </div>
+      <div class="econ-item">
+        <div class="econ-pct c">10%</div>
+        <div class="econ-label c">GEIGER NODE</div>
+        <p class="econ-desc">10% goes to the developer-controlled Geiger Node — used as the on-chain randomness issuer for trait generation and fair mint mechanics.</p>
+      </div>
+    </div>
+  </div>
+
   <div class="rarity">
-    <b>RARITY MATH —</b> 30 bases × 7 hats × 7 accessories × 6 companions × 5 FX × 4 armor accents =
-    <span class="big"> 176,400 possible combinations</span> for 1,000 unique NFTs on X1 Network.
+    <b>RARITY MATH —</b> 30 bases × 7 hats × 7 accessories × 6 companions × 5 FX × 4 armor accents = <span class="big">176,400 possible combinations</span> for 500 unique NFTs on X1.
   </div>
 </div>
+</div>
 
+<div class="sep-line"></div>
+
+<!-- PROTOCOL — minimal -->
+<div class="proto-section" id="protocol">
+<div class="proto-inner">
+  <div class="stag cy">THE REAL PROTOCOL</div>
+  <h2 class="sh">PROJECT<br><span class="cy">CAPYBARA</span></h2>
+
+  <div class="proto-grid">
+    <div class="proto-left">
+      <div class="notice">
+        <p><b>Project Capybara is a real X1 blockchain protocol</b> — specified by Jack Levin (Cyphereus Prime) on May 1st and deployed to mainnet.<br><br><span class="sep">$CAPPY is a separate community meme.</span> Named after it because the name is legendary. No official connection. The community ran with it.</p>
+      </div>
+      <p style="font-size:.85rem;color:var(--muted);line-height:1.85;margin-bottom:1.5rem">Capybara is the X1 delegation program's fair stake threshold system. Every epoch it calculates the 85th percentile of all active validator self-stakes and sets that as the minimum bar for Foundation delegation — closing the door on any validator trying to game the system with tiny self-stake.</p>
+      <div class="quote">
+        <p class="q-text">"The p85 method ensures the threshold is always representative of real validator commitment — not a static number that becomes stale as the network evolves."</p>
+        <div class="q-auth">// JACK LEVIN — CYPHEREUS PRIME — MAY 1ST</div>
+      </div>
+    </div>
+    <div class="proto-right">
+      <p style="font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;color:var(--muted);margin-bottom:1rem">DELEGATION CRITERIA</p>
+      <div class="crit-list">
+        <div class="crit-item"><div class="crit-val">P85</div><div class="crit-info"><div class="crit-name">SELF-STAKE</div><div class="crit-desc">Must meet 85th percentile of all active validator self-stakes. Recalculates every epoch.</div></div></div>
+        <div class="crit-item"><div class="crit-val">≤10%</div><div class="crit-info"><div class="crit-name">COMMISSION</div><div class="crit-desc">Maximum commission rate. Keeps fees fair for all delegators.</div></div></div>
+        <div class="crit-item"><div class="crit-val">≥97%</div><div class="crit-info"><div class="crit-name">VOTE CREDITS</div><div class="crit-desc">Minimum vote credit score. Proves active consensus participation.</div></div></div>
+        <div class="crit-item"><div class="crit-val">±10%</div><div class="crit-info"><div class="crit-name">SKIP RATE</div><div class="crit-desc">Must stay within 10% of network average. No lagging validators.</div></div></div>
+        <div class="crit-item"><div class="crit-val" style="font-size:.9rem">MAJ.</div><div class="crit-info"><div class="crit-name">TACHYON VERSION</div><div class="crit-desc">Must run majority Tachyon version. Network stays on strongest software.</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- FOOTER -->
 <footer>
-  <div class="f-logo">CAPPY</div>
+  <div class="f-logo">$CAPPY</div>
   <ul class="f-links">
-    <li><a href="#protocol">PROTOCOL</a></li>
-    <li><a href="#mechanism">MECHANISM</a></li>
-    <li><a href="#meme">$CAPPY</a></li>
+    <li><a href="#meme">MEME</a></li>
     <li><a href="#nfts">NFTS</a></li>
+    <li><a href="#protocol">PROTOCOL</a></li>
     <li><a href="https://x1.xyz" target="_blank">X1 NETWORK ↗</a></li>
   </ul>
   <div class="f-meta">
     BLOCKCHAIN UNDER ATTACK<br>
     IMPLEMENT PROJECT CAPYBARA<br>
-    <b>// CYPHEREUS PRIME // X1 NETWORK</b>
+    <b>// CYPHEREUS PRIME // X1</b>
   </div>
 </footer>
 
