@@ -108,11 +108,11 @@ class EnvProfile:
 
 SWAMP = EnvProfile(
     name="swamp",
-    # Character placement (ref_brighter target)
-    width_pct=0.65,
-    bottom_margin_pct=-0.02,
+    # Character placement (v18 locked)
+    width_pct=0.8075,
+    bottom_margin_pct=0.04,
     h_shift=10,
-    foot_sink_pct=0.05,
+    foot_sink_pct=0.0,
     # Ground: water/mud
     ground_type="water",
     shadow_strength=1.0,

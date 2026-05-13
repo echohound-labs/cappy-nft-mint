@@ -1,13 +1,1010 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CAPPY NFT Mint</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PROJECT CAPYBARA — X1 Network</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #00ff88;
+    --green-dim: #00cc6a;
+    --green-dark: #003322;
+    --green-glow: rgba(0,255,136,0.15);
+    --red-alert: #ff3344;
+    --bg: #030a06;
+    --bg2: #060f09;
+    --surface: rgba(0,255,136,0.04);
+    --border: rgba(0,255,136,0.18);
+    --border-bright: rgba(0,255,136,0.5);
+    --text: #c8f5d8;
+    --text-muted: #6a9e7a;
+    --mono: 'Share Tech Mono', monospace;
+    --display: 'Bebas Neue', sans-serif;
+    --body: 'Inter', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* Scanline overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* Grid bg */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background: rgba(3,10,6,0.9);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+  }
+
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--green);
+    letter-spacing: 0.15em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--green); }
+
+  .nav-status {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--green);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .pulse-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(0.8); }
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .hero-alert {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--red-alert);
+    border: 1px solid rgba(255,51,68,0.4);
+    padding: 0.4rem 1.2rem;
+    margin-bottom: 2rem;
+    animation: blink-border 1.5s infinite;
+  }
+
+  @keyframes blink-border {
+    0%, 100% { border-color: rgba(255,51,68,0.4); }
+    50% { border-color: rgba(255,51,68,0.9); }
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+    color: var(--green);
+    margin-bottom: 1rem;
+  }
+
+  .hero-title {
+    font-family: var(--display);
+    font-size: clamp(5rem, 15vw, 12rem);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    color: #fff;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 80px rgba(0,255,136,0.2);
+  }
+
+  .hero-title span {
+    color: var(--green);
+    display: block;
+  }
+
+  .hero-subtitle {
+    font-family: var(--mono);
+    font-size: clamp(0.8rem, 2vw, 1rem);
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    margin-bottom: 3rem;
+    max-width: 600px;
+  }
+
+  .hero-cta-group {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 4rem;
+  }
+
+  .btn-primary {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    color: var(--bg);
+    background: var(--green);
+    border: none;
+    padding: 0.85rem 2.5rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+
+  .btn-primary:hover {
+    background: #fff;
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    color: var(--green);
+    background: transparent;
+    border: 1px solid var(--border-bright);
+    padding: 0.85rem 2.5rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover {
+    background: var(--green-glow);
+    border-color: var(--green);
+  }
+
+  /* TICKER */
+  .ticker {
+    width: 100%;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: rgba(0,255,136,0.03);
+    overflow: hidden;
+    padding: 0.6rem 0;
+    margin-top: 2rem;
+  }
+
+  .ticker-inner {
+    display: flex;
+    gap: 4rem;
+    animation: scroll 30s linear infinite;
+    white-space: nowrap;
+    width: max-content;
+  }
+
+  .ticker-item {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .ticker-item span { color: var(--green); }
+
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .stat-item {
+    padding: 2rem 1.5rem;
+    border-right: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .stat-item:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: var(--display);
+    font-size: 3rem;
+    color: var(--green);
+    line-height: 1;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+  }
+
+  /* SECTIONS */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 5rem 2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--green);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .section-tag::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    background: var(--green);
+  }
+
+  .section-title {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 0.95;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.02em;
+  }
+
+  .section-title em {
+    color: var(--green);
+    font-style: normal;
+  }
+
+  .section-body {
+    font-size: 1rem;
+    color: var(--text-muted);
+    max-width: 680px;
+    line-height: 1.8;
+  }
+
+  /* LORE BLOCK */
+  .lore-block {
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    background: var(--surface);
+    margin: 3rem 0;
+    position: relative;
+  }
+
+  .lore-block::before {
+    content: '// CLASSIFIED TRANSMISSION';
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--red-alert);
+    position: absolute;
+    top: -0.5rem;
+    left: 1rem;
+    background: var(--bg);
+    padding: 0 0.5rem;
+  }
+
+  .lore-text {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    line-height: 1.9;
+    color: var(--text);
+    letter-spacing: 0.02em;
+  }
+
+  .lore-text .highlight {
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  /* HOW IT WORKS */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+
+  .step-card {
+    border: 1px solid var(--border);
+    padding: 2rem 1.5rem;
+    background: var(--surface);
+    position: relative;
+    transition: border-color 0.3s;
+  }
+
+  .step-card:hover { border-color: var(--green); }
+
+  .step-num {
+    font-family: var(--display);
+    font-size: 4rem;
+    color: rgba(0,255,136,0.1);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .step-title {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    color: var(--green);
+    margin-bottom: 0.75rem;
+  }
+
+  .step-body {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* CRITERIA GRID */
+  .criteria-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    border: 1px solid var(--border);
+    margin-top: 3rem;
+    overflow: hidden;
+  }
+
+  .criteria-item {
+    padding: 1.75rem;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    transition: background 0.3s;
+  }
+
+  .criteria-item:hover { background: rgba(0,255,136,0.07); }
+
+  .criteria-icon {
+    font-family: var(--mono);
+    font-size: 1.5rem;
+    color: var(--green);
+    margin-bottom: 0.75rem;
+  }
+
+  .criteria-name {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: var(--green);
+    margin-bottom: 0.5rem;
+  }
+
+  .criteria-val {
+    font-family: var(--display);
+    font-size: 1.8rem;
+    color: #fff;
+    margin-bottom: 0.25rem;
+  }
+
+  .criteria-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  /* TERMINAL */
+  .terminal {
+    background: #000;
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    line-height: 1.9;
+    margin: 3rem 0;
+    position: relative;
+  }
+
+  .terminal::before {
+    content: 'CAPYBARA_RUNTIME.exe';
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .t-comment { color: #445544; }
+  .t-key { color: var(--green); }
+  .t-val { color: #88ddaa; }
+  .t-op { color: #ff9944; }
+  .t-str { color: #ffcc66; }
+  .t-cursor {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background: var(--green);
+    vertical-align: middle;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* MEME / TOKEN SECTION */
+  .meme-section {
+    position: relative;
+    z-index: 1;
+    padding: 5rem 2rem;
+    background: linear-gradient(180deg, transparent, rgba(0,255,136,0.03), transparent);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .meme-inner {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .big-quote {
+    font-family: var(--display);
+    font-size: clamp(2rem, 5vw, 4rem);
+    color: #fff;
+    line-height: 1.1;
+    margin: 2rem 0;
+    letter-spacing: 0.02em;
+  }
+
+  .big-quote em {
+    color: var(--green);
+    font-style: normal;
+  }
+
+  /* TOKEN CARDS */
+  .token-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 3rem auto 0;
+  }
+
+  .token-card {
+    border: 1px solid var(--border);
+    padding: 2rem 1.25rem;
+    background: var(--surface);
+    text-align: center;
+    transition: all 0.3s;
+  }
+
+  .token-card:hover {
+    border-color: var(--green);
+    transform: translateY(-4px);
+  }
+
+  .token-emoji {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+    display: block;
+  }
+
+  .token-title {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: var(--green);
+    margin-bottom: 0.5rem;
+  }
+
+  .token-desc {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* JACK QUOTE */
+  .quote-block {
+    border-left: 3px solid var(--green);
+    padding: 2rem 2.5rem;
+    margin: 3rem 0;
+    background: var(--surface);
+    position: relative;
+  }
+
+  .quote-text {
+    font-family: var(--mono);
+    font-size: 1rem;
+    color: var(--text);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    font-style: italic;
+  }
+
+  .quote-author {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--green);
+  }
+
+  /* FOOTER */
+  footer {
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid var(--border);
+    padding: 3rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .footer-logo {
+    font-family: var(--display);
+    font-size: 2rem;
+    color: var(--green);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-meta {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    line-height: 2;
+    text-align: right;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--green); }
+
+  /* DIVIDER */
+  .divider {
+    position: relative;
+    z-index: 1;
+    border: none;
+    border-top: 1px solid var(--border);
+  }
+
+  /* FULL-WIDTH SECTION BG */
+  .full-section {
+    position: relative;
+    z-index: 1;
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ANIMATIONS */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.7s ease forwards;
+  }
+
+  @keyframes fadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-in:nth-child(1) { animation-delay: 0.1s; }
+  .fade-in:nth-child(2) { animation-delay: 0.2s; }
+  .fade-in:nth-child(3) { animation-delay: 0.3s; }
+  .fade-in:nth-child(4) { animation-delay: 0.4s; }
+
+  @media (max-width: 768px) {
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    .nav-links { display: none; }
+    footer { flex-direction: column; text-align: center; }
+    .footer-meta { text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">PROJECT_CAPYBARA // X1</div>
+  <ul class="nav-links">
+    <li><a href="#what">PROTOCOL</a></li>
+    <li><a href="#how">MECHANISM</a></li>
+    <li><a href="#criteria">CRITERIA</a></li>
+    <li><a href="#token">$CAPPY</a></li>
+    <li><a href="#nfts">NFTS</a></li>
+  </ul>
+  <div class="nav-status">
+    <div class="pulse-dot"></div>
+    EPOCH ACTIVE
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-alert">⚠ BLOCKCHAIN UNDER ATTACK — IMPLEMENT PROJECT CAPYBARA</div>
+  <div class="hero-eyebrow">X1 NETWORK // DELEGATION PROTOCOL</div>
+  <h1 class="hero-title">
+    PROJECT
+    <span>CAPYBARA</span>
+  </h1>
+  <p class="hero-subtitle">THE FAIR STAKE THRESHOLD SYSTEM PROTECTING THE X1 BLOCKCHAIN</p>
+  <div class="hero-cta-group">
+    <a href="#what" class="btn-primary">READ THE PROTOCOL</a>
+    <a href="#token" class="btn-secondary">GET $CAPPY</a>
+  </div>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-inner">
+      <div class="ticker-item">P85 THRESHOLD <span>ACTIVE</span></div>
+      <div class="ticker-item">COMMISSION LIMIT <span>≤10%</span></div>
+      <div class="ticker-item">VOTE CREDITS <span>≥97%</span></div>
+      <div class="ticker-item">TACHYON VERSION <span>MAJORITY</span></div>
+      <div class="ticker-item">SKIP RATE <span>±10% NETWORK AVG</span></div>
+      <div class="ticker-item">EPOCH RECALCULATION <span>DYNAMIC</span></div>
+      <div class="ticker-item">SPECIFIED BY <span>JACK LEVIN (CYPHEREUS PRIME)</span></div>
+      <div class="ticker-item">P85 THRESHOLD <span>ACTIVE</span></div>
+      <div class="ticker-item">COMMISSION LIMIT <span>≤10%</span></div>
+      <div class="ticker-item">VOTE CREDITS <span>≥97%</span></div>
+      <div class="ticker-item">TACHYON VERSION <span>MAJORITY</span></div>
+      <div class="ticker-item">SKIP RATE <span>±10% NETWORK AVG</span></div>
+      <div class="ticker-item">EPOCH RECALCULATION <span>DYNAMIC</span></div>
+      <div class="ticker-item">SPECIFIED BY <span>JACK LEVIN (CYPHEREUS PRIME)</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item fade-in">
+    <span class="stat-num">P85</span>
+    <span class="stat-label">THRESHOLD METHOD</span>
+  </div>
+  <div class="stat-item fade-in">
+    <span class="stat-num">97%</span>
+    <span class="stat-label">MIN VOTE CREDITS</span>
+  </div>
+  <div class="stat-item fade-in">
+    <span class="stat-num">10%</span>
+    <span class="stat-label">MAX COMMISSION</span>
+  </div>
+  <div class="stat-item fade-in">
+    <span class="stat-num">∞</span>
+    <span class="stat-label">EPOCHS DYNAMIC</span>
+  </div>
+</div>
+
+<!-- WHAT IS IT -->
+<section id="what">
+  <div class="section-tag">PROTOCOL BRIEF</div>
+  <h2 class="section-title">WHAT IS<br><em>CAPYBARA?</em></h2>
+  <p class="section-body">
+    Capybara is the X1 Network's fair stake threshold system — the immune system of the delegation program. It calculates the 85th percentile of all active validators' self-stake amounts each epoch, setting the minimum stake required to qualify for Foundation delegation.
+  </p>
+
+  <div class="lore-block">
+    <p class="lore-text">
+      Without a fair threshold, the delegation program could be <span class="highlight">gamed</span>. Validators with tiny self-stake could receive outsized Foundation delegation — earning rewards disproportionate to their actual skin in the game.<br><br>
+      Capybara <span class="highlight">ends that.</span> It ensures only validators with real capital at risk receive delegation privileges. No free rides. No exploits. Only commitment gets rewarded.
+    </p>
+  </div>
+
+  <div class="quote-block">
+    <p class="quote-text">"The p85 method ensures the threshold is always representative of real validator commitment — not a static number that becomes stale as the network evolves."</p>
+    <div class="quote-author">// JACK LEVIN (CYPHEREUS PRIME) — MAY 1ST SPECIFICATION</div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<div class="full-section" id="how">
+  <section style="padding-top: 5rem; padding-bottom: 5rem;">
+    <div class="section-tag">MECHANISM</div>
+    <h2 class="section-title">HOW IT<br><em>WORKS</em></h2>
+    <p class="section-body">Four steps. Every epoch. Automatic. Unstoppable.</p>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-title">COLLECT</div>
+        <p class="step-body">Every epoch, Capybara collects self-stake amounts from all active validators on the X1 network.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-title">CALCULATE</div>
+        <p class="step-body">The system calculates the 85th percentile (p85) of that full stake distribution.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-title">THRESHOLD</div>
+        <p class="step-body">Validators with self-stake ≥ the p85 value become eligible for Foundation delegation.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <div class="step-title">RECALIBRATE</div>
+        <p class="step-body">Re-evaluates each epoch as stake amounts shift. The threshold is never static — always live.</p>
+      </div>
+    </div>
+
+    <div class="terminal">
+      <span class="t-comment">// capybara_runtime.rs — epoch execution</span><br><br>
+      <span class="t-key">fn</span> <span class="t-val">run_epoch</span>(<span class="t-key">validators</span>: Vec&lt;Validator&gt;) {<br>
+      &nbsp;&nbsp;<span class="t-key">let</span> stakes = collect_self_stakes(<span class="t-key">&amp;</span>validators);<br>
+      &nbsp;&nbsp;<span class="t-key">let</span> p85 = calculate_percentile(<span class="t-key">&amp;</span>stakes, <span class="t-op">85</span>);<br><br>
+      &nbsp;&nbsp;<span class="t-key">for</span> v <span class="t-key">in</span> validators {<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-key">if</span> v.self_stake <span class="t-op">&gt;=</span> p85<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-key">&amp;&amp;</span> v.commission <span class="t-op">&lt;=</span> <span class="t-str">0.10</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-key">&amp;&amp;</span> v.vote_credits <span class="t-op">&gt;=</span> <span class="t-str">0.97</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-key">&amp;&amp;</span> v.skip_rate_ok()<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-key">&amp;&amp;</span> v.running_tachyon_majority() {<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;delegate(<span class="t-key">&amp;</span>v); <span class="t-comment">// ELIGIBLE</span><br>
+      &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+      &nbsp;&nbsp;}<br>
+      } <span class="t-cursor"></span>
+    </div>
+  </section>
+</div>
+
+<!-- CRITERIA -->
+<section id="criteria">
+  <div class="section-tag">FULL CRITERIA</div>
+  <h2 class="section-title">DELEGATION<br><em>REQUIREMENTS</em></h2>
+  <p class="section-body">Capybara handles the stake side. But validators must meet all five criteria to receive Foundation delegation.</p>
+
+  <div class="criteria-grid">
+    <div class="criteria-item">
+      <div class="criteria-icon">◈</div>
+      <div class="criteria-name">SELF-STAKE</div>
+      <div class="criteria-val">P85</div>
+      <div class="criteria-desc">Must meet or exceed the 85th percentile of all active validator self-stakes. Recalculates every epoch.</div>
+    </div>
+    <div class="criteria-item">
+      <div class="criteria-icon">◈</div>
+      <div class="criteria-name">COMMISSION</div>
+      <div class="criteria-val">≤10%</div>
+      <div class="criteria-desc">Maximum commission rate allowed. Ensures validators aren't extracting excessive fees from delegators.</div>
+    </div>
+    <div class="criteria-item">
+      <div class="criteria-icon">◈</div>
+      <div class="criteria-name">VOTE CREDITS</div>
+      <div class="criteria-val">≥97%</div>
+      <div class="criteria-desc">Minimum vote credit score required. Proves the validator is actively participating in consensus.</div>
+    </div>
+    <div class="criteria-item">
+      <div class="criteria-icon">◈</div>
+      <div class="criteria-name">SKIP RATE</div>
+      <div class="criteria-val">±10%</div>
+      <div class="criteria-desc">Skip rate must stay within 10% of the network average. No lagging validators getting rewards.</div>
+    </div>
+    <div class="criteria-item">
+      <div class="criteria-icon">◈</div>
+      <div class="criteria-name">TACHYON</div>
+      <div class="criteria-val">MAJORITY</div>
+      <div class="criteria-desc">Must run the majority Tachyon version. Keeps the network on the latest and strongest software.</div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY IT MATTERS -->
+<div class="full-section">
+  <section style="padding-top: 5rem; padding-bottom: 5rem;">
+    <div class="section-tag">SIGNIFICANCE</div>
+    <h2 class="section-title">WHY IT<br><em>MATTERS</em></h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; margin-top: 3rem;">
+      <div>
+        <div style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.2em; color: var(--green); margin-bottom: 0.75rem;">FAIRNESS</div>
+        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.8;">No free-riding on Foundation delegation without real commitment. Capital at risk equals skin in the game.</p>
+      </div>
+      <div>
+        <div style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.2em; color: var(--green); margin-bottom: 0.75rem;">SECURITY</div>
+        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.8;">Delegation flows only to validators with proven financial commitment. The network stays in trusted hands.</p>
+      </div>
+      <div>
+        <div style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.2em; color: var(--green); margin-bottom: 0.75rem;">DYNAMISM</div>
+        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.8;">The threshold auto-adjusts every epoch. Never a stale static number. Always reflecting the real network state.</p>
+      </div>
+      <div>
+        <div style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.2em; color: var(--green); margin-bottom: 0.75rem;">TRANSPARENCY</div>
+        <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.8;">Anyone can verify the p85 calculation on-chain. Open, auditable, trustless by design.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- TOKEN / MEME SECTION -->
+<div class="meme-section" id="token">
+  <div class="meme-inner">
+    <div class="section-tag" style="justify-content: center;">$CAPPY MEME TOKEN</div>
+    <div class="big-quote">
+      THE BIGGEST MEME<br>ON <em>X1 NETWORK</em>
+    </div>
+    <p style="font-size: 0.95rem; color: var(--text-muted); max-width: 560px; margin: 0 auto 2rem; line-height: 1.8;">
+      Project Capybara isn't just a protocol. It's a movement. $CAPPY is the meme token born from the implementation that saved the X1 blockchain — and it's here to take over.
+    </p>
+    <div class="hero-cta-group">
+      <a href="#" class="btn-primary">BUY $CAPPY</a>
+      <a href="#nfts" class="btn-secondary">VIEW NFTS</a>
+    </div>
+
+    <div class="token-grid">
+      <div class="token-card">
+        <span class="token-emoji">🛡️</span>
+        <div class="token-title">BORN FROM THE PROTOCOL</div>
+        <p class="token-desc">Not just a meme. A meme with actual lore — the implementation that defended X1 from exploitation.</p>
+      </div>
+      <div class="token-card">
+        <span class="token-emoji">⚡</span>
+        <div class="token-title">X1 NATIVE</div>
+        <p class="token-desc">Built on X1 Network. The chain Capybara protects is the chain $CAPPY lives on.</p>
+      </div>
+      <div class="token-card">
+        <span class="token-emoji">🏆</span>
+        <div class="token-title">BACKED BY NFTS</div>
+        <p class="token-desc">1000 CAPPY NFTs. 3 tiers. 10 environments. The Capybara warriors of the X1 universe.</p>
+      </div>
+      <div class="token-card">
+        <span class="token-emoji">🌐</span>
+        <div class="token-title">COMMUNITY FIRST</div>
+        <p class="token-desc">The goal is simple: biggest meme on X1. The capybara that guards the chain deserves the crown.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NFT SECTION -->
+<section id="nfts">
+  <div class="section-tag">NFT COLLECTION</div>
+  <h2 class="section-title">1000 CAPPY<br><em>WARRIORS</em></h2>
+  <p class="section-body">Three tiers of Capybara warriors defending the X1 Network across 10 environments. Each one a unique soldier in the blockchain wars.</p>
+
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; border: 1px solid var(--border); margin-top: 3rem; overflow: hidden;">
+    <div style="padding: 2.5rem 2rem; background: var(--surface); border-right: 1px solid var(--border); text-align: center;">
+      <div style="font-family: var(--display); font-size: 3.5rem; color: #888; margin-bottom: 0.5rem;">700</div>
+      <div style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.2em; color: #888; margin-bottom: 1rem;">COMMON</div>
+      <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.7;">Leather tactical harness. No weapon. Calm atmospheric environments. The soldiers exploring the X1 world.</p>
+    </div>
+    <div style="padding: 2.5rem 2rem; background: rgba(0,255,136,0.05); border-right: 1px solid var(--border); text-align: center; border-top: 3px solid var(--green);">
+      <div style="font-family: var(--display); font-size: 3.5rem; color: var(--green); margin-bottom: 0.5rem;">250</div>
+      <div style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.2em; color: var(--green); margin-bottom: 1rem;">LEGENDARY</div>
+      <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.7;">Sleek matte black tek armor. Massive glowing weapons. Environment-colored circuit lines. Elite operatives defending X1.</p>
+    </div>
+    <div style="padding: 2.5rem 2rem; background: var(--surface); text-align: center;">
+      <div style="font-family: var(--display); font-size: 3.5rem; color: #ffaa44; margin-bottom: 0.5rem;">50</div>
+      <div style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.2em; color: #ffaa44; margin-bottom: 1rem;">MYTHIC</div>
+      <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.7;">Ancient ornate elemental armor. Massive elemental weapons. Apocalyptic backgrounds. Hand-crafted. Each one unique.</p>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem; margin-top: 2rem;">
+    <div style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--text-muted); padding: 0.75rem 1rem; border: 1px solid var(--border); text-align: center;">🌿 SWAMP</div>
+    <div style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--text-muted); padding: 0.75rem 1rem; border: 1px solid var(--border); text-align: center;">🌋 LAVA</div>
+    <div style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--text-muted); padding: 0.75rem 1rem; border: 1px solid var(--border); text-align: center;">🏙️ CITY</div>
+    <div style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--text-muted); padding: 0.75rem 1rem; border: 1px solid var(--border); text-align: center;">🌲 FOREST</div>
+    <div style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--text-muted); padding: 0.75rem 1rem; border: 1px solid var(--border); text-align: center;">🌊 OCEAN</div>
+    <div style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--text-muted); padding: 0.75rem 1rem; border: 1px solid var(--border); text-align: center;">❄️ SNOW</div>
+    <div style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--text-muted); padding: 0.75rem 1rem; border: 1px solid var(--border); text-align: center;">🏜️ DESERT</div>
+    <div style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--text-muted); padding: 0.75rem 1rem; border: 1px solid var(--border); text-align: center;">⛰️ MOUNTAIN</div>
+    <div style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--text-muted); padding: 0.75rem 1rem; border: 1px solid var(--border); text-align: center;">🚀 SPACE</div>
+    <div style="font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em; color: var(--text-muted); padding: 0.75rem 1rem; border: 1px solid var(--border); text-align: center;">🏖️ BEACH</div>
+  </div>
+
+  <div style="margin-top: 2rem; padding: 1.5rem; border: 1px solid var(--border); background: var(--surface); font-family: var(--mono); font-size: 0.8rem; color: var(--text-muted); line-height: 1.9;">
+    <span style="color: var(--green);">RARITY MATH:</span> 30 bases × 7 hats × 7 accessories × 6 companions × 5 FX × 4 armor accents = <span style="color: #fff;">176,400 possible combinations</span> for 1,000 unique NFTs on X1 Network.
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">CAPPY</div>
+  <ul class="footer-links">
+    <li><a href="#what">PROTOCOL</a></li>
+    <li><a href="#token">$CAPPY</a></li>
+    <li><a href="#nfts">NFTS</a></li>
+    <li><a href="https://x1.xyz" target="_blank">X1 NETWORK ↗</a></li>
+  </ul>
+  <div class="footer-meta">
+    BLOCKCHAIN UNDER ATTACK<br>
+    IMPLEMENT PROJECT CAPYBARA<br>
+    <span style="color: var(--green);">// CYPHEREUS PRIME // MAY 1ST</span>
+  </div>
+</footer>
+
+</body>
 </html>
