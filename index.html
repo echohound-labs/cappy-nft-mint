@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>$CAPPY — X1 Network</title>
+<title>$CAPY — X1 Network</title>
 <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -13,7 +13,8 @@
   --green:#00ff88;--green-dim:rgba(0,255,136,0.1);
   --orange:#ff6a00;--orange-dim:rgba(255,106,0,0.1);
   --purple:#c040ff;--purple-dim:rgba(192,64,255,0.1);
-  --gold:#ffc940;--red:#ff2244;
+  --gold:#ffc940;--gold-dim:rgba(255,201,64,0.1);
+  --red:#ff2244;
   --white:#e0f0ff;--muted:#4a6a7a;
   --border:rgba(0,229,255,0.13);--border2:rgba(0,229,255,0.3);
   --mono:'Share Tech Mono',monospace;--display:'Bebas Neue',sans-serif;--body:'Inter',sans-serif;
@@ -38,8 +39,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:7rem 2rem 2rem;overflow:hidden}
 .orb1{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(192,64,255,0.07) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
 .orb2{position:absolute;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,255,0.05) 0%,transparent 70%);top:20%;left:10%;pointer-events:none}
-.orb3{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,106,0,0.05) 0%,transparent 70%);bottom:20%;right:10%;pointer-events:none}
-
+.orb3{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,106,0,0.04) 0%,transparent 70%);bottom:20%;right:10%;pointer-events:none}
 .alert-bar{position:relative;z-index:2;font-family:var(--mono);font-size:.68rem;letter-spacing:.2em;color:var(--red);border:1px solid rgba(255,34,68,.4);padding:.4rem 1.4rem;margin-bottom:2rem;animation:flash 1.5s infinite}
 @keyframes flash{0%,100%{border-color:rgba(255,34,68,.2)}50%{border-color:rgba(255,34,68,.9)}}
 .hero-tag{position:relative;z-index:2;font-family:var(--mono);font-size:.65rem;letter-spacing:.35em;color:var(--muted);margin-bottom:1rem}
@@ -50,8 +50,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .btn-row{position:relative;z-index:2;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-bottom:4rem}
 .btn-main{font-family:var(--mono);font-size:.72rem;letter-spacing:.15em;background:linear-gradient(90deg,var(--cyan),var(--purple));color:var(--black);border:none;padding:.85rem 2.5rem;text-decoration:none;display:inline-block;font-weight:500;transition:all .2s;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)}
 .btn-main:hover{transform:translateY(-2px);filter:brightness(1.15)}
+.btn-soon{font-family:var(--mono);font-size:.72rem;letter-spacing:.15em;background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,.15);padding:.85rem 2.5rem;text-decoration:none;display:inline-block;cursor:default}
 .btn-ghost{font-family:var(--mono);font-size:.72rem;letter-spacing:.15em;background:transparent;color:var(--purple);border:1px solid rgba(192,64,255,.4);padding:.85rem 2.5rem;text-decoration:none;display:inline-block;transition:all .2s}
 .btn-ghost:hover{background:var(--purple-dim);border-color:var(--purple)}
+.btn-gold{font-family:var(--mono);font-size:.72rem;letter-spacing:.15em;background:linear-gradient(90deg,var(--gold),var(--orange));color:var(--black);border:none;padding:.85rem 2.5rem;text-decoration:none;display:inline-block;font-weight:500;transition:all .2s;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)}
+.btn-gold:hover{transform:translateY(-2px);filter:brightness(1.15)}
 
 /* TICKER */
 .ticker{position:relative;z-index:2;width:100%;overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(0,229,255,0.02);padding:.5rem 0}
@@ -61,34 +64,35 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .tc{color:var(--cyan)}.tg{color:var(--green)}.tp{color:var(--purple)}.to{color:var(--orange)}.tgo{color:var(--gold)}
 @keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-/* ── MYTHIC IMAGE STRIP ── */
+/* MYTHIC STRIP */
 .myth-strip{position:relative;z-index:1;overflow:hidden;border-top:1px solid rgba(192,64,255,.2);border-bottom:1px solid rgba(0,229,255,.15);background:var(--black2)}
 .myth-strip-track{display:flex;width:max-content;animation:stripscroll 50s linear infinite}
 .myth-strip-track:hover{animation-play-state:paused}
 .myth-img-wrap{position:relative;width:220px;height:220px;overflow:hidden;flex-shrink:0}
 .myth-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.3) brightness(.85);transition:all .4s}
 .myth-img-wrap:hover img{filter:saturate(1.6) brightness(1);transform:scale(1.05)}
-.myth-img-wrap .env-tag{position:absolute;bottom:0;left:0;right:0;font-family:var(--mono);font-size:.55rem;letter-spacing:.15em;padding:.4rem .6rem;background:rgba(4,5,10,.75);backdrop-filter:blur(4px)}
-.myth-img-wrap .env-tag.cy{color:var(--cyan);border-top:1px solid rgba(0,229,255,.3)}
-.myth-img-wrap .env-tag.pu{color:var(--purple);border-top:1px solid rgba(192,64,255,.3)}
-.myth-img-wrap .env-tag.go{color:var(--gold);border-top:1px solid rgba(255,201,64,.3)}
-.myth-img-wrap .env-tag.gr{color:var(--green);border-top:1px solid rgba(0,255,136,.3)}
-.myth-img-wrap .env-tag.or{color:var(--orange);border-top:1px solid rgba(255,106,0,.3)}
+.myth-img-wrap .env-tag{position:absolute;bottom:0;left:0;right:0;font-family:var(--mono);font-size:.52rem;letter-spacing:.12em;padding:.35rem .6rem;background:rgba(4,5,10,.8);backdrop-filter:blur(4px)}
+.env-tag.cy{color:var(--cyan);border-top:1px solid rgba(0,229,255,.3)}
+.env-tag.pu{color:var(--purple);border-top:1px solid rgba(192,64,255,.3)}
+.env-tag.go{color:var(--gold);border-top:1px solid rgba(255,201,64,.3)}
+.env-tag.gr{color:var(--green);border-top:1px solid rgba(0,255,136,.3)}
+.env-tag.or{color:var(--orange);border-top:1px solid rgba(255,106,0,.3)}
 @keyframes stripscroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-/* ── MINT PROGRESS ── */
+/* MINT PROGRESS */
 .mint-progress{position:relative;z-index:1;padding:3rem 2rem;border-bottom:1px solid var(--border);background:linear-gradient(180deg,var(--black2),var(--black))}
 .mint-inner{max-width:900px;margin:0 auto}
 .mint-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
+.mint-title-row{display:flex;align-items:baseline;gap:1rem}
 .mint-title{font-family:var(--display);font-size:2.5rem;color:#fff;letter-spacing:.02em}
+.mint-price-badge{font-family:var(--mono);font-size:.65rem;letter-spacing:.15em;color:var(--black);background:var(--cyan);padding:.25rem .75rem;display:inline-block}
 .mint-counts{display:flex;gap:2rem}
-.mint-count{}
 .mc-n{font-family:var(--display);font-size:2rem;color:var(--cyan);line-height:1}
-.mc-l{font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;color:var(--muted)}
+.mc-l{font-family:var(--mono);font-size:.55rem;letter-spacing:.2em;color:var(--muted)}
 .progress-bar-wrap{background:rgba(0,229,255,.08);border:1px solid var(--border);height:12px;border-radius:2px;overflow:hidden;margin-bottom:.75rem}
-.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple),var(--gold));border-radius:2px;transition:width 1s ease;animation:shimmer 2s infinite}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--purple),var(--gold));border-radius:2px;animation:shimmer 2s infinite}
 @keyframes shimmer{0%{filter:brightness(1)}50%{filter:brightness(1.3)}100%{filter:brightness(1)}}
-.progress-labels{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;color:var(--muted)}
+.progress-labels{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.55rem;letter-spacing:.12em;color:var(--muted)}
 .tier-progress{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border:1px solid var(--border);margin-top:1.5rem;overflow:hidden}
 .tp-item{padding:1.25rem 1rem;background:rgba(4,5,10,.7);text-align:center}
 .tp-n{font-family:var(--display);font-size:1.8rem;line-height:1;margin-bottom:.2rem}
@@ -96,57 +100,92 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .tp-bar-wrap{background:rgba(255,255,255,.06);height:4px;border-radius:2px;overflow:hidden;margin:.5rem 0}
 .tp-bar{height:100%;border-radius:2px}
 .tp-bar.c{background:var(--muted)}.tp-bar.l{background:var(--cyan)}.tp-bar.m{background:var(--purple)}
-.tp-label{font-family:var(--mono);font-size:.55rem;letter-spacing:.18em;color:var(--muted)}
+.tp-label{font-family:var(--mono);font-size:.52rem;letter-spacing:.18em;color:var(--muted)}
+.mint-btn-row{display:flex;gap:1rem;justify-content:center;margin-top:2rem;flex-wrap:wrap}
 
-/* ── GALLERY ── */
+/* XNT TRACKER */
+.xnt-section{position:relative;z-index:1;padding:4rem 2rem;border-bottom:1px solid var(--border);background:var(--black2)}
+.xnt-inner{max-width:900px;margin:0 auto}
+.xnt-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;border:1px solid var(--border);margin-top:2rem;overflow:hidden}
+.xnt-stat{padding:1.75rem 1.25rem;background:rgba(4,5,10,.7);text-align:center;border-right:1px solid var(--border)}
+.xnt-stat:last-child{border-right:none}
+.xnt-n{font-family:var(--display);font-size:2.5rem;line-height:1;margin-bottom:.25rem}
+.xnt-n.g{color:var(--green)}.xnt-n.c{color:var(--cyan)}.xnt-n.go{color:var(--gold)}.xnt-n.p{color:var(--purple)}
+.xnt-l{font-family:var(--mono);font-size:.55rem;letter-spacing:.2em;color:var(--muted)}
+
+/* LP + BURN LOGS */
+.logs-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem}
+.log-box{border:1px solid var(--border);background:rgba(4,5,10,.6);position:relative}
+.log-box::before{font-family:var(--mono);font-size:.52rem;letter-spacing:.2em;position:absolute;top:-.5rem;left:1rem;background:var(--black2);padding:0 .5rem}
+.log-box.lp::before{content:'// LP ADDITIONS';color:var(--green)}
+.log-box.burn::before{content:'// TOKEN BURNS';color:var(--red)}
+.log-header{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem;border-bottom:1px solid var(--border)}
+.log-total{font-family:var(--display);font-size:1.6rem}
+.log-total.g{color:var(--green)}.log-total.r{color:var(--red)}
+.log-total-label{font-family:var(--mono);font-size:.52rem;letter-spacing:.15em;color:var(--muted)}
+.log-entries{padding:.75rem 0}
+.log-entry{display:flex;justify-content:space-between;align-items:center;padding:.6rem 1.25rem;border-bottom:1px solid rgba(0,229,255,.06);font-family:var(--mono);font-size:.65rem}
+.log-entry:last-child{border-bottom:none}
+.log-date{color:var(--muted)}
+.log-amt.g{color:var(--green)}.log-amt.r{color:var(--red)}
+.log-tx{color:var(--cyan);text-decoration:none;font-size:.55rem;letter-spacing:.1em}
+.log-tx:hover{text-decoration:underline}
+.log-empty{padding:1.5rem 1.25rem;font-family:var(--mono);font-size:.65rem;color:var(--muted);text-align:center}
+
+/* PRIZE SECTION */
+.prize-section{position:relative;z-index:1;padding:5rem 2rem;border-top:2px solid var(--gold);border-bottom:1px solid rgba(255,201,64,.2);background:linear-gradient(180deg,rgba(255,201,64,0.04),transparent)}
+.prize-inner{max-width:1080px;margin:0 auto;text-align:center}
+.prize-tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.35em;color:var(--gold);margin-bottom:1.5rem;display:flex;align-items:center;justify-content:center;gap:.75rem}
+.prize-tag::before,.prize-tag::after{content:'';display:inline-block;width:30px;height:1px;background:var(--gold)}
+.prize-title{font-family:var(--display);font-size:clamp(3rem,8vw,6rem);line-height:.9;margin-bottom:1rem;letter-spacing:.02em}
+.prize-title .go{background:linear-gradient(90deg,var(--gold),var(--orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.prize-sub{font-size:.92rem;color:var(--muted);max-width:580px;margin:0 auto 1rem;line-height:1.8}
+.prize-how{font-family:var(--mono);font-size:.72rem;color:var(--gold);letter-spacing:.1em;margin-bottom:2.5rem;border:1px solid rgba(255,201,64,.25);padding:.75rem 1.5rem;display:inline-block;background:rgba(255,201,64,.04)}
+
+/* PRIZE GRID */
+.prize-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;margin:0 auto;max-width:1000px}
+.prize-card{position:relative;overflow:hidden;cursor:pointer;border:1px solid rgba(255,201,64,.2);transition:all .3s}
+.prize-card:hover{border-color:var(--gold);transform:scale(1.04);z-index:10}
+.prize-card img{width:100%;aspect-ratio:1;object-fit:cover;display:block;filter:saturate(1.3) brightness(.8);transition:all .4s}
+.prize-card:hover img{filter:saturate(1.6) brightness(1)}
+.prize-badge{position:absolute;top:.5rem;right:.5rem;font-family:var(--mono);font-size:.5rem;letter-spacing:.12em;padding:.2rem .5rem;background:rgba(255,201,64,.3);color:var(--gold);border:1px solid rgba(255,201,64,.5)}
+.prize-glow{position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,201,64,0.12),transparent);pointer-events:none;opacity:0;transition:opacity .3s}
+.prize-card:hover .prize-glow{opacity:1}
+.prize-env{position:absolute;bottom:0;left:0;right:0;padding:.4rem .6rem;background:rgba(4,5,10,.85);font-family:var(--mono);font-size:.5rem;letter-spacing:.12em;color:var(--gold);border-top:1px solid rgba(255,201,64,.3);transform:translateY(100%);transition:transform .3s}
+.prize-card:hover .prize-env{transform:translateY(0)}
+
+.prize-claim{margin-top:2.5rem;padding:1.5rem 2rem;border:1px solid rgba(255,201,64,.3);background:rgba(255,201,64,.04);display:inline-block;max-width:560px}
+.prize-claim-title{font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;color:var(--gold);margin-bottom:.5rem}
+.prize-claim-text{font-size:.84rem;color:var(--muted);line-height:1.7}
+.prize-claim-text a{color:var(--gold);text-decoration:none}
+.prize-claim-text a:hover{text-decoration:underline}
+
+/* LIVE GALLERY */
 .gallery-section{position:relative;z-index:1;border-top:1px solid rgba(192,64,255,.2);padding:5rem 2rem}
 .gallery-inner{max-width:1100px;margin:0 auto}
 .stag{font-family:var(--mono);font-size:.58rem;letter-spacing:.35em;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
 .stag::before{content:'';display:inline-block;width:16px;height:1px}
 .stag.cy{color:var(--cyan)}.stag.cy::before{background:var(--cyan)}
 .stag.pu{color:var(--purple)}.stag.pu::before{background:var(--purple)}
-.stag.or{color:var(--orange)}.stag.or::before{background:var(--orange)}
 .stag.gr{color:var(--green)}.stag.gr::before{background:var(--green)}
+.stag.go{color:var(--gold)}.stag.go::before{background:var(--gold)}
 .sh{font-family:var(--display);font-size:clamp(2.5rem,6vw,5rem);line-height:.92;color:#fff;margin-bottom:1.5rem;letter-spacing:.02em}
 .sh .cy{color:var(--cyan)}.sh .pu{color:var(--purple)}.sh .go{color:var(--gold)}.sh .gr{color:var(--green)}
 .sb{font-size:.92rem;color:var(--muted);max-width:620px;line-height:1.85}
-
-/* gallery filter tabs */
-.gallery-tabs{display:flex;gap:.5rem;margin:2rem 0 1.5rem;flex-wrap:wrap}
-.gtab{font-family:var(--mono);font-size:.65rem;letter-spacing:.15em;padding:.5rem 1.25rem;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s}
-.gtab:hover,.gtab.active{color:var(--cyan);border-color:var(--cyan);background:var(--cyan-dim)}
-.gtab.active-pu{color:var(--purple);border-color:var(--purple);background:var(--purple-dim)}
-.gtab.active-or{color:var(--orange);border-color:var(--orange);background:var(--orange-dim)}
-
-/* showcase grid — mythics from github */
-.showcase-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;border:1px solid var(--border);overflow:hidden;margin-bottom:3rem}
-.nft-card{position:relative;overflow:hidden;background:var(--black2);cursor:pointer;transition:all .3s}
-.nft-card:hover{z-index:10;transform:scale(1.03)}
-.nft-card img{width:100%;aspect-ratio:1;object-fit:cover;display:block;filter:saturate(1.2);transition:filter .3s}
-.nft-card:hover img{filter:saturate(1.5) brightness(1.05)}
-.nft-card-info{position:absolute;bottom:0;left:0;right:0;padding:.75rem;background:linear-gradient(transparent,rgba(4,5,10,.9));transform:translateY(60%);transition:transform .3s}
-.nft-card:hover .nft-card-info{transform:translateY(0)}
-.nft-card-name{font-family:var(--mono);font-size:.65rem;letter-spacing:.1em;margin-bottom:.2rem}
-.nft-card-name.cy{color:var(--cyan)}.nft-card-name.pu{color:var(--purple)}.nft-card-name.go{color:var(--gold)}.nft-card-name.gr{color:var(--green)}.nft-card-name.or{color:var(--orange)}
-.nft-card-tier{font-family:var(--mono);font-size:.5rem;letter-spacing:.18em;color:var(--muted)}
-.mythic-badge{position:absolute;top:.5rem;right:.5rem;font-family:var(--mono);font-size:.5rem;letter-spacing:.15em;padding:.2rem .5rem;background:rgba(192,64,255,.25);color:var(--purple);border:1px solid rgba(192,64,255,.4)}
-
-/* live minted gallery placeholder */
-.minted-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1px;border:1px solid var(--border);overflow:hidden}
-.minted-slot{aspect-ratio:1;background:rgba(4,5,10,.8);display:flex;flex-direction:column;align-items:center;justify-content:center;border-right:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
-.minted-slot.filled{cursor:pointer}
+.minted-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1px;border:1px solid var(--border);overflow:hidden;margin-top:1.5rem}
+.minted-slot{aspect-ratio:1;background:rgba(4,5,10,.8);display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
 .minted-slot.filled img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
-.minted-slot.empty .slot-n{font-family:var(--display);font-size:1.5rem;color:rgba(0,229,255,.1)}
-.minted-slot.empty .slot-l{font-family:var(--mono);font-size:.5rem;letter-spacing:.12em;color:rgba(0,229,255,.15);margin-top:.25rem}
-.minted-slot.empty::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(0,229,255,0.015) 10px,rgba(0,229,255,0.015) 11px)}
-.cid-label{position:absolute;bottom:0;left:0;right:0;font-family:var(--mono);font-size:.45rem;letter-spacing:.08em;color:var(--cyan);background:rgba(4,5,10,.8);padding:.25rem .4rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0;transition:opacity .3s}
+.minted-slot.filled{cursor:pointer}
+.minted-slot.filled:hover img{filter:brightness(1.1)}
+.minted-slot.empty .slot-n{font-family:var(--display);font-size:1.4rem;color:rgba(0,229,255,.08)}
+.minted-slot.empty .slot-l{font-family:var(--mono);font-size:.48rem;letter-spacing:.12em;color:rgba(0,229,255,.12);margin-top:.2rem}
+.minted-slot.empty::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(0,229,255,0.012) 10px,rgba(0,229,255,0.012) 11px)}
+.cid-label{position:absolute;bottom:0;left:0;right:0;font-family:var(--mono);font-size:.42rem;letter-spacing:.08em;color:var(--cyan);background:rgba(4,5,10,.85);padding:.25rem .4rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0;transition:opacity .3s}
 .minted-slot.filled:hover .cid-label{opacity:1}
-
-/* wallet section */
-.wallet-section{background:rgba(0,229,255,.03);border:1px solid var(--border);padding:1.5rem;margin-top:2rem}
-.wallet-section::before{content:'// YOUR WALLET';display:block;font-family:var(--mono);font-size:.55rem;letter-spacing:.2em;color:var(--cyan);margin-bottom:1rem;padding-bottom:.75rem;border-bottom:1px solid var(--border)}
-.wallet-connect-msg{font-family:var(--mono);font-size:.75rem;color:var(--muted);text-align:center;padding:2rem}
-.wallet-connect-msg span{color:var(--cyan)}
+.wallet-section{background:rgba(0,229,255,.03);border:1px solid var(--border);padding:1.25rem 1.5rem;margin-top:1.5rem}
+.wallet-section::before{content:'// YOUR CAPY NFTS';display:block;font-family:var(--mono);font-size:.52rem;letter-spacing:.2em;color:var(--cyan);margin-bottom:.75rem;padding-bottom:.6rem;border-bottom:1px solid var(--border)}
+.wallet-msg{font-family:var(--mono);font-size:.72rem;color:var(--muted);text-align:center;padding:1.5rem}
+.wallet-msg span{color:var(--cyan)}
 
 /* MEME SECTION */
 .meme-section{position:relative;z-index:1;padding:5rem 2rem;border-top:1px solid rgba(255,106,0,.2);background:linear-gradient(180deg,rgba(255,106,0,.03),transparent)}
@@ -157,47 +196,51 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .meme-big .g1{background:linear-gradient(90deg,var(--orange),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .meme-big .g2{background:linear-gradient(90deg,var(--purple),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .launch-box{border:1px solid rgba(0,255,136,.25);background:rgba(0,255,136,.03);padding:1.75rem 2rem;margin:2rem auto;max-width:700px;text-align:left;position:relative}
-.launch-box::before{content:'// FAIR LAUNCH';font-family:var(--mono);font-size:.55rem;letter-spacing:.2em;color:var(--green);position:absolute;top:-.5rem;left:1rem;background:var(--black);padding:0 .5rem}
+.launch-box::before{content:'// FAIR LAUNCH';font-family:var(--mono);font-size:.52rem;letter-spacing:.2em;color:var(--green);position:absolute;top:-.5rem;left:1rem;background:var(--black);padding:0 .5rem}
 .launch-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
-.launch-label{font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;color:var(--muted);margin-bottom:.3rem}
-.launch-val{font-family:var(--display);font-size:1.6rem;color:var(--green);line-height:1}
-.launch-desc{font-size:.75rem;color:var(--muted);line-height:1.6;margin-top:.2rem}
+.launch-label{font-family:var(--mono);font-size:.55rem;letter-spacing:.2em;color:var(--muted);margin-bottom:.3rem}
+.launch-val{font-family:var(--display);font-size:1.5rem;color:var(--green);line-height:1}
+.launch-desc{font-size:.74rem;color:var(--muted);line-height:1.6;margin-top:.2rem}
 .meme-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;border:1px solid var(--border);margin-top:2.5rem;overflow:hidden}
 .mc{padding:1.5rem 1.25rem;background:rgba(4,5,10,.8);border-right:1px solid var(--border);text-align:center;transition:background .25s}
 .mc:hover{background:rgba(192,64,255,.05)}
 .mc-ico{font-size:1.75rem;margin-bottom:.6rem;display:block}
-.mc-t{font-family:var(--mono);font-size:.62rem;letter-spacing:.15em;margin-bottom:.4rem}
+.mc-t{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;margin-bottom:.4rem}
 .mc-t.c{color:var(--cyan)}.mc-t.g{color:var(--green)}.mc-t.p{color:var(--purple)}.mc-t.o{color:var(--orange)}
-.mc-d{font-size:.78rem;color:var(--muted);line-height:1.6}
+.mc-d{font-size:.76rem;color:var(--muted);line-height:1.6}
 
-/* NFT ECONOMICS */
+/* ECONOMICS */
 .econ-section{position:relative;z-index:1;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--black2);padding:4rem 2rem}
 .econ-inner{max-width:900px;margin:0 auto}
-.econ-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2rem}
-.econ-item{border:1px solid var(--border);padding:2rem;background:rgba(4,5,10,.6);position:relative}
-.econ-pct{font-family:var(--display);font-size:4rem;line-height:1;margin-bottom:.25rem}
-.econ-pct.g{color:var(--green)}.econ-pct.c{color:var(--cyan)}
-.econ-label{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;margin-bottom:.5rem}
-.econ-label.g{color:var(--green)}.econ-label.c{color:var(--cyan)}
-.econ-desc{font-size:.82rem;color:var(--muted);line-height:1.7}
+.econ-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border:1px solid var(--border);margin-top:2rem;overflow:hidden}
+.econ-item{padding:2rem 1.5rem;background:rgba(4,5,10,.7);text-align:center;border-right:1px solid var(--border)}
+.econ-item:last-child{border-right:none}
+.econ-pct{font-family:var(--display);font-size:3.5rem;line-height:1;margin-bottom:.25rem}
+.econ-pct.g{color:var(--green)}.econ-pct.c{color:var(--cyan)}.econ-pct.go{color:var(--gold)}
+.econ-label{font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;margin-bottom:.5rem}
+.econ-label.g{color:var(--green)}.econ-label.c{color:var(--cyan)}.econ-label.go{color:var(--gold)}
+.econ-desc{font-size:.78rem;color:var(--muted);line-height:1.6}
+.econ-math{margin-top:1.5rem;padding:1.25rem;border:1px solid var(--border);background:rgba(4,5,10,.5);font-family:var(--mono);font-size:.7rem;color:var(--muted);line-height:2;text-align:center}
+.econ-math b{color:var(--cyan);font-weight:400}
+.econ-math .big{color:#fff}
 
 /* PROTOCOL */
 .proto-section{position:relative;z-index:1;border-top:1px solid var(--border);padding:5rem 2rem}
 .proto-inner{max-width:1080px;margin:0 auto}
 .proto-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
 .notice{border-left:2px solid var(--cyan);padding:1.25rem 1.5rem;background:rgba(0,229,255,.04);margin-bottom:2rem}
-.notice p{font-family:var(--mono);font-size:.78rem;line-height:1.9;color:var(--muted)}
+.notice p{font-family:var(--mono);font-size:.76rem;line-height:1.9;color:var(--muted)}
 .notice p b{color:var(--cyan);font-weight:400}
 .notice p .sep{color:var(--orange)}
 .crit-list{display:flex;flex-direction:column;gap:.6rem;margin-top:1.5rem}
-.crit-item{display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;border:1px solid var(--border);background:rgba(4,5,10,.6);transition:border-color .2s}
+.crit-item{display:flex;align-items:center;gap:1rem;padding:.9rem 1.25rem;border:1px solid var(--border);background:rgba(4,5,10,.6);transition:border-color .2s}
 .crit-item:hover{border-color:var(--cyan)}
-.crit-val{font-family:var(--display);font-size:1.4rem;color:var(--cyan);min-width:58px}
-.crit-name{font-family:var(--mono);font-size:.58rem;letter-spacing:.15em;color:var(--cyan);margin-bottom:.12rem}
-.crit-desc{font-size:.74rem;color:var(--muted);line-height:1.5}
+.crit-val{font-family:var(--display);font-size:1.3rem;color:var(--cyan);min-width:55px}
+.crit-name{font-family:var(--mono);font-size:.56rem;letter-spacing:.15em;color:var(--cyan);margin-bottom:.1rem}
+.crit-desc{font-size:.72rem;color:var(--muted);line-height:1.5}
 .quote{border-left:2px solid var(--purple);padding:1.5rem 1.75rem;background:rgba(192,64,255,.04);margin-top:2rem}
-.q-text{font-family:var(--mono);font-size:.8rem;color:var(--white);line-height:1.9;font-style:italic;margin-bottom:.6rem}
-.q-auth{font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;color:var(--purple)}
+.q-text{font-family:var(--mono);font-size:.78rem;color:var(--white);line-height:1.9;font-style:italic;margin-bottom:.6rem}
+.q-auth{font-family:var(--mono);font-size:.55rem;letter-spacing:.2em;color:var(--purple)}
 
 /* FOOTER */
 footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2.5rem 2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;background:rgba(4,5,10,.98)}
@@ -205,27 +248,31 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2.
 .f-links{display:flex;gap:1.75rem;list-style:none}
 .f-links a{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;color:var(--muted);text-decoration:none;transition:color .2s}
 .f-links a:hover{color:var(--cyan)}
-.f-meta{font-family:var(--mono);font-size:.58rem;letter-spacing:.12em;color:var(--muted);line-height:2;text-align:right}
+.f-meta{font-family:var(--mono);font-size:.56rem;letter-spacing:.12em;color:var(--muted);line-height:2;text-align:right}
 .f-meta b{color:var(--purple);font-weight:400}
 .sep-line{position:relative;z-index:1;height:1px;background:linear-gradient(90deg,transparent,rgba(192,64,255,.3),rgba(0,229,255,.3),transparent)}
 
 @media(max-width:900px){
-  .proto-grid,.econ-grid,.launch-grid{grid-template-columns:1fr}
+  .proto-grid,.launch-grid{grid-template-columns:1fr}
+  .econ-grid{grid-template-columns:1fr}
+  .prize-grid{grid-template-columns:repeat(2,1fr)}
+  .xnt-stats{grid-template-columns:repeat(2,1fr)}
+  .logs-grid{grid-template-columns:1fr}
   .nav-links{display:none}
+  .tier-progress{grid-template-columns:1fr}
   footer{flex-direction:column;text-align:center}
   .f-meta{text-align:center}
-  .myth-img-wrap{width:160px;height:160px}
-  .mint-header{flex-direction:column;align-items:flex-start}
 }
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="nav-logo">$CAPPY</div>
+  <div class="nav-logo">$CAPY</div>
   <ul class="nav-links">
     <li><a href="#collection">COLLECTION</a></li>
-    <li><a href="#meme">$CAPPY</a></li>
+    <li><a href="#prize">🏆 PRIZE</a></li>
+    <li><a href="#meme">$CAPY</a></li>
     <li><a href="#protocol">PROTOCOL</a></li>
   </ul>
   <div class="live"><div class="dot"></div>LIVE ON X1</div>
@@ -237,61 +284,60 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2.
   <div class="alert-bar">⚠ BLOCKCHAIN UNDER ATTACK — IMPLEMENT PROJECT CAPYBARA</div>
   <div class="hero-tag">X1 NETWORK // COMMUNITY MEME</div>
   <h1 class="hero-title">
-    <span class="t1">$CAPPY</span>
+    <span class="t1">$CAPY</span>
     <span class="t2">X1</span>
   </h1>
   <p class="hero-sub">THE CAPYBARA THAT GUARDS THE BLOCKCHAIN<br>NOW GUARDS YOUR PORTFOLIO</p>
   <div class="btn-row">
-    <a href="#" class="btn-main">BUY $CAPPY</a>
+    <a href="#" class="btn-main">BUY $CAPY</a>
+    <a href="#prize" class="btn-gold">🏆 WIN 50 XNT</a>
     <a href="#collection" class="btn-ghost">VIEW COLLECTION</a>
   </div>
   <div class="ticker">
     <div class="tick-inner">
-      <div class="tick-item">$CAPPY <b class="tg">FAIRLY LAUNCHED</b></div>
+      <div class="tick-item">$CAPY <b class="tg">FAIRLY LAUNCHED</b></div>
       <div class="tick-item">PLATFORM <b class="to">DEGEN LAUNCHPAD X1</b></div>
-      <div class="tick-item">NO PRESALE <b class="tg">NO VC</b></div>
-      <div class="tick-item">NFT SALES <b class="tc">90% TO LP</b></div>
-      <div class="tick-item">GEIGER NODE <b class="tp">10% DEV RNG</b></div>
+      <div class="tick-item">MINT PRICE <b class="tc">10 XNT</b></div>
+      <div class="tick-item">90% OF MINT <b class="tg">GOES TO LP</b></div>
+      <div class="tick-item">10% OF MINT <b class="tp">GEIGER NODE</b></div>
+      <div class="tick-item">MINT A FEATURED MYTHIC <b class="tgo">WIN 50 XNT</b></div>
       <div class="tick-item">500 NFTS <b class="tgo">30 MYTHIC</b></div>
       <div class="tick-item">STORAGE <b class="tc">LIGHTHOUSE IPFS</b></div>
-      <div class="tick-item">NAMED AFTER <b class="tc">REAL X1 PROTOCOL</b></div>
-      <div class="tick-item">$CAPPY <b class="tg">FAIRLY LAUNCHED</b></div>
+      <div class="tick-item">$CAPY <b class="tg">FAIRLY LAUNCHED</b></div>
       <div class="tick-item">PLATFORM <b class="to">DEGEN LAUNCHPAD X1</b></div>
-      <div class="tick-item">NO PRESALE <b class="tg">NO VC</b></div>
-      <div class="tick-item">NFT SALES <b class="tc">90% TO LP</b></div>
-      <div class="tick-item">GEIGER NODE <b class="tp">10% DEV RNG</b></div>
+      <div class="tick-item">MINT PRICE <b class="tc">10 XNT</b></div>
+      <div class="tick-item">90% OF MINT <b class="tg">GOES TO LP</b></div>
+      <div class="tick-item">10% OF MINT <b class="tp">GEIGER NODE</b></div>
+      <div class="tick-item">MINT A FEATURED MYTHIC <b class="tgo">WIN 50 XNT</b></div>
       <div class="tick-item">500 NFTS <b class="tgo">30 MYTHIC</b></div>
       <div class="tick-item">STORAGE <b class="tc">LIGHTHOUSE IPFS</b></div>
-      <div class="tick-item">NAMED AFTER <b class="tc">REAL X1 PROTOCOL</b></div>
     </div>
   </div>
 </div>
 
-<!-- MYTHIC IMAGE STRIP -->
+<!-- MYTHIC STRIP -->
 <div class="myth-strip">
   <div class="myth-strip-track">
-    <!-- First pass -->
-    <div class="myth-img-wrap"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_city.png" alt="Mythic City"><div class="env-tag cy">CITY // MYTHIC</div></div>
-    <div class="myth-img-wrap"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_space.png" alt="Mythic Space"><div class="env-tag pu">SPACE // MYTHIC</div></div>
-    <div class="myth-img-wrap"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_ocean.png" alt="Mythic Ocean"><div class="env-tag cy">OCEAN // MYTHIC</div></div>
-    <div class="myth-img-wrap"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_lava.png" alt="Mythic Lava"><div class="env-tag or">LAVA // MYTHIC</div></div>
-    <div class="myth-img-wrap"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_snow.png" alt="Mythic Snow"><div class="env-tag cy">SNOW // MYTHIC</div></div>
-    <div class="myth-img-wrap"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_desert.png" alt="Mythic Desert"><div class="env-tag go">DESERT // MYTHIC</div></div>
-    <div class="myth-img-wrap"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_forrest.png" alt="Mythic Forest"><div class="env-tag gr">FOREST // MYTHIC</div></div>
-    <div class="myth-img-wrap"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_mountain.png" alt="Mythic Mountain"><div class="env-tag cy">MOUNTAIN // MYTHIC</div></div>
-    <div class="myth-img-wrap"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythincal_swamp.png" alt="Mythic Swamp"><div class="env-tag gr">SWAMP // MYTHIC</div></div>
-    <div class="myth-img-wrap"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_beach.png" alt="Mythic Beach"><div class="env-tag cy">BEACH // MYTHIC</div></div>
-    <!-- Second pass for seamless loop -->
-    <div class="myth-img-wrap"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_city.png" alt="Mythic City"><div class="env-tag cy">CITY // MYTHIC</div></div>
-    <div class="myth-img-wrap"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_space.png" alt="Mythic Space"><div class="env-tag pu">SPACE // MYTHIC</div></div>
-    <div class="myth-img-wrap"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_ocean.png" alt="Mythic Ocean"><div class="env-tag cy">OCEAN // MYTHIC</div></div>
-    <div class="myth-img-wrap"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_lava.png" alt="Mythic Lava"><div class="env-tag or">LAVA // MYTHIC</div></div>
-    <div class="myth-img-wrap"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_snow.png" alt="Mythic Snow"><div class="env-tag cy">SNOW // MYTHIC</div></div>
-    <div class="myth-img-wrap"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_desert.png" alt="Mythic Desert"><div class="env-tag go">DESERT // MYTHIC</div></div>
-    <div class="myth-img-wrap"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_forrest.png" alt="Mythic Forest"><div class="env-tag gr">FOREST // MYTHIC</div></div>
-    <div class="myth-img-wrap"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_mountain.png" alt="Mythic Mountain"><div class="env-tag cy">MOUNTAIN // MYTHIC</div></div>
-    <div class="myth-img-wrap"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythincal_swamp.png" alt="Mythic Swamp"><div class="env-tag gr">SWAMP // MYTHIC</div></div>
-    <div class="myth-img-wrap"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_beach.png" alt="Mythic Beach"><div class="env-tag cy">BEACH // MYTHIC</div></div>
+    <div class="myth-img-wrap"><img src="/mythical_city.png" alt="Mythic City"><div class="env-tag cy">CITY // MYTHIC</div></div>
+    <div class="myth-img-wrap"><img src="/mythical_space.png" alt="Mythic Space"><div class="env-tag pu">SPACE // MYTHIC</div></div>
+    <div class="myth-img-wrap"><img src="/mythical_ocean.png" alt="Mythic Ocean"><div class="env-tag cy">OCEAN // MYTHIC</div></div>
+    <div class="myth-img-wrap"><img src="/mythical_lava.png" alt="Mythic Lava"><div class="env-tag or">LAVA // MYTHIC</div></div>
+    <div class="myth-img-wrap"><img src="/mythical_snow.png" alt="Mythic Snow"><div class="env-tag cy">SNOW // MYTHIC</div></div>
+    <div class="myth-img-wrap"><img src="/mythical_desert.png" alt="Mythic Desert"><div class="env-tag go">DESERT // MYTHIC</div></div>
+    <div class="myth-img-wrap"><img src="/mythical_forrest.png" alt="Mythic Forest"><div class="env-tag gr">FOREST // MYTHIC</div></div>
+    <div class="myth-img-wrap"><img src="/mythical_mountain.png" alt="Mythic Mountain"><div class="env-tag cy">MOUNTAIN // MYTHIC</div></div>
+    <div class="myth-img-wrap"><img src="/mythincal_swamp.png" alt="Mythic Swamp"><div class="env-tag gr">SWAMP // MYTHIC</div></div>
+    <div class="myth-img-wrap"><img src="/mythical_beach.png" alt="Mythic Beach"><div class="env-tag cy">BEACH // MYTHIC</div></div>
+    <div class="myth-img-wrap"><img src="/mythical_city.png" alt="Mythic City"><div class="env-tag cy">CITY // MYTHIC</div></div>
+    <div class="myth-img-wrap"><img src="/mythical_space.png" alt="Mythic Space"><div class="env-tag pu">SPACE // MYTHIC</div></div>
+    <div class="myth-img-wrap"><img src="/mythical_ocean.png" alt="Mythic Ocean"><div class="env-tag cy">OCEAN // MYTHIC</div></div>
+    <div class="myth-img-wrap"><img src="/mythical_lava.png" alt="Mythic Lava"><div class="env-tag or">LAVA // MYTHIC</div></div>
+    <div class="myth-img-wrap"><img src="/mythical_snow.png" alt="Mythic Snow"><div class="env-tag cy">SNOW // MYTHIC</div></div>
+    <div class="myth-img-wrap"><img src="/mythical_desert.png" alt="Mythic Desert"><div class="env-tag go">DESERT // MYTHIC</div></div>
+    <div class="myth-img-wrap"><img src="/mythical_forrest.png" alt="Mythic Forest"><div class="env-tag gr">FOREST // MYTHIC</div></div>
+    <div class="myth-img-wrap"><img src="/mythical_mountain.png" alt="Mythic Mountain"><div class="env-tag cy">MOUNTAIN // MYTHIC</div></div>
+    <div class="myth-img-wrap"><img src="/mythincal_swamp.png" alt="Mythic Swamp"><div class="env-tag gr">SWAMP // MYTHIC</div></div>
+    <div class="myth-img-wrap"><img src="/mythical_beach.png" alt="Mythic Beach"><div class="env-tag cy">BEACH // MYTHIC</div></div>
   </div>
 </div>
 
@@ -299,75 +345,108 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2.
 <div class="mint-progress">
   <div class="mint-inner">
     <div class="mint-header">
-      <div class="mint-title">MINT PROGRESS</div>
+      <div class="mint-title-row">
+        <div class="mint-title">MINT PROGRESS</div>
+        <div class="mint-price-badge">10 XNT / MINT</div>
+      </div>
       <div class="mint-counts">
-        <div class="mint-count"><div class="mc-n" id="minted-count">0</div><div class="mc-l">MINTED</div></div>
-        <div class="mint-count"><div class="mc-n" style="color:var(--muted)">500</div><div class="mc-l">TOTAL</div></div>
-        <div class="mint-count"><div class="mc-n" style="color:var(--green)" id="remaining-count">500</div><div class="mc-l">REMAINING</div></div>
+        <div><div class="mc-n" id="minted-count">0</div><div class="mc-l">MINTED</div></div>
+        <div><div class="mc-n" style="color:var(--muted)">500</div><div class="mc-l">TOTAL</div></div>
+        <div><div class="mc-n" style="color:var(--green)" id="remaining-count">500</div><div class="mc-l">REMAINING</div></div>
       </div>
     </div>
-    <div class="progress-bar-wrap">
-      <div class="progress-bar-fill" id="main-progress" style="width:0%"></div>
-    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="main-progress" style="width:0%"></div></div>
     <div class="progress-labels">
       <span>0 MINTED</span>
       <span id="pct-label">0% COMPLETE</span>
       <span>500 TOTAL</span>
     </div>
     <div class="tier-progress">
-      <div class="tp-item">
-        <div class="tp-n c" id="common-count">0 / 350</div>
-        <div class="tp-bar-wrap"><div class="tp-bar c" id="common-bar" style="width:0%"></div></div>
-        <div class="tp-label">COMMON</div>
+      <div class="tp-item"><div class="tp-n c" id="common-count">0 / 350</div><div class="tp-bar-wrap"><div class="tp-bar c" id="common-bar" style="width:0%"></div></div><div class="tp-label">COMMON</div></div>
+      <div class="tp-item"><div class="tp-n l" id="legend-count">0 / 120</div><div class="tp-bar-wrap"><div class="tp-bar l" id="legend-bar" style="width:0%"></div></div><div class="tp-label">LEGENDARY</div></div>
+      <div class="tp-item"><div class="tp-n m" id="mythic-count">0 / 30</div><div class="tp-bar-wrap"><div class="tp-bar m" id="mythic-bar" style="width:0%"></div></div><div class="tp-label">MYTHIC</div></div>
+    </div>
+    <div class="mint-btn-row">
+      <span class="btn-soon">MINT COMING SOON</span>
+      <a href="https://t.me/CAPYX1" target="_blank" class="btn-ghost">JOIN TELEGRAM ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- XNT TRACKER -->
+<div class="xnt-section">
+  <div class="xnt-inner">
+    <div class="stag gr">XNT RAISED — LIVE TRACKER</div>
+    <h2 class="sh">WHERE THE<br><span class="gr">XNT GOES</span></h2>
+    <div class="xnt-stats">
+      <div class="xnt-stat"><div class="xnt-n go" id="total-raised">0</div><div class="xnt-l">TOTAL XNT RAISED</div></div>
+      <div class="xnt-stat"><div class="xnt-n g" id="lp-total">0</div><div class="xnt-l">XNT ADDED TO LP</div></div>
+      <div class="xnt-stat"><div class="xnt-n c" id="geiger-total">0</div><div class="xnt-l">XNT TO GEIGER NODE</div></div>
+      <div class="xnt-stat"><div class="xnt-n p" id="burned-total">0</div><div class="xnt-l">$CAPY BURNED</div></div>
+    </div>
+    <div class="logs-grid">
+      <div class="log-box lp">
+        <div class="log-header">
+          <div><div class="log-total g" id="lp-log-total">0 XNT</div><div class="log-total-label">TOTAL ADDED TO LP</div></div>
+        </div>
+        <div class="log-entries" id="lp-log">
+          <div class="log-empty">NO LP ADDITIONS YET — UPDATES POST-MINT</div>
+        </div>
       </div>
-      <div class="tp-item">
-        <div class="tp-n l" id="legend-count">0 / 120</div>
-        <div class="tp-bar-wrap"><div class="tp-bar l" id="legend-bar" style="width:0%"></div></div>
-        <div class="tp-label">LEGENDARY</div>
-      </div>
-      <div class="tp-item">
-        <div class="tp-n m" id="mythic-count">0 / 30</div>
-        <div class="tp-bar-wrap"><div class="tp-bar m" id="mythic-bar" style="width:0%"></div></div>
-        <div class="tp-label">MYTHIC</div>
+      <div class="log-box burn">
+        <div class="log-header">
+          <div><div class="log-total r" id="burn-log-total">0 $CAPY</div><div class="log-total-label">TOTAL BURNED</div></div>
+        </div>
+        <div class="log-entries" id="burn-log">
+          <div class="log-empty">NO BURNS YET — UPDATES POST-MINT</div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- COLLECTION GALLERY -->
+<!-- PRIZE SECTION -->
+<div class="prize-section" id="prize">
+  <div class="prize-inner">
+    <div class="prize-tag">🏆 MYSTERY PRIZE</div>
+    <h2 class="prize-title"><span class="go">MINT A FEATURED</span><br>MYTHIC WIN 50 XNT</h2>
+    <p class="prize-sub">These 10 Mythic CAPYs are hidden somewhere inside the 500 mint collection. Mint one of the featured Mythics below and win 50 XNT from the treasury — paid directly by the developer.</p>
+    <div class="prize-how">10 FEATURED MYTHICS // 50 XNT EACH // DM TO CLAIM // t.me/CAPYX1</div>
+
+    <div class="prize-grid">
+      <div class="prize-card"><img src="/mythical_city.png" alt="City Mythic"><div class="prize-badge">50 XNT</div><div class="prize-glow"></div><div class="prize-env">CITY // NEON GOD BLADE</div></div>
+      <div class="prize-card"><img src="/mythical_space.png" alt="Space Mythic"><div class="prize-badge">50 XNT</div><div class="prize-glow"></div><div class="prize-env">SPACE // CELESTIAL SPEAR</div></div>
+      <div class="prize-card"><img src="/mythical_ocean.png" alt="Ocean Mythic"><div class="prize-badge">50 XNT</div><div class="prize-glow"></div><div class="prize-env">OCEAN // TRIDENT</div></div>
+      <div class="prize-card"><img src="/mythical_lava.png" alt="Lava Mythic"><div class="prize-badge">50 XNT</div><div class="prize-glow"></div><div class="prize-env">LAVA // MAGMA SWORD</div></div>
+      <div class="prize-card"><img src="/mythical_snow.png" alt="Snow Mythic"><div class="prize-badge">50 XNT</div><div class="prize-glow"></div><div class="prize-env">SNOW // ICE LANCE</div></div>
+      <div class="prize-card"><img src="/mythical_desert.png" alt="Desert Mythic"><div class="prize-badge">50 XNT</div><div class="prize-glow"></div><div class="prize-env">DESERT // SANDSTONE BLADE</div></div>
+      <div class="prize-card"><img src="/mythical_forrest.png" alt="Forest Mythic"><div class="prize-badge">50 XNT</div><div class="prize-glow"></div><div class="prize-env">FOREST // SPIRIT BLADE</div></div>
+      <div class="prize-card"><img src="/mythical_mountain.png" alt="Mountain Mythic"><div class="prize-badge">50 XNT</div><div class="prize-glow"></div><div class="prize-env">MOUNTAIN // WAR AXE</div></div>
+      <div class="prize-card"><img src="/mythincal_swamp.png" alt="Swamp Mythic"><div class="prize-badge">50 XNT</div><div class="prize-glow"></div><div class="prize-env">SWAMP // VINE SPEAR</div></div>
+      <div class="prize-card"><img src="/mythical_beach.png" alt="Beach Mythic"><div class="prize-badge">50 XNT</div><div class="prize-glow"></div><div class="prize-env">BEACH // CORAL BLADE</div></div>
+    </div>
+
+    <div class="prize-claim">
+      <div class="prize-claim-title">HOW TO CLAIM YOUR PRIZE</div>
+      <p class="prize-claim-text">If you mint one of the 10 featured Mythics above, DM the developer on Telegram with proof of your mint. Prize of 50 XNT will be sent directly from the treasury wallet.<br><br>
+      <a href="https://t.me/CAPYX1" target="_blank">→ t.me/CAPYX1</a></p>
+    </div>
+
+    <div style="margin-top:2rem">
+      <a href="https://t.me/CAPYX1" target="_blank" class="btn-gold">JOIN TELEGRAM TO CLAIM ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- LIVE GALLERY -->
 <div class="gallery-section" id="collection">
   <div class="gallery-inner">
-    <div class="stag pu">NFT COLLECTION</div>
-    <h2 class="sh">500 CAPPY<br><span class="pu">WARRIORS</span></h2>
-    <p class="sb">30 hand-crafted Mythics. 120 Legendary operatives. 350 Common soldiers. All stored on Lighthouse IPFS. All on X1.</p>
-
-    <!-- SHOWCASE — github images -->
-    <div class="stag cy" style="margin-top:3rem">MYTHIC TIER // 30 UNIQUE</div>
-    <div class="showcase-grid">
-      <div class="nft-card"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_city.png" alt="Mythic City"><div class="mythic-badge">MYTHIC</div><div class="nft-card-info"><div class="nft-card-name cy">CAPPY // CITY</div><div class="nft-card-tier">MYTHIC // NEON GOD BLADE</div></div></div>
-      <div class="nft-card"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_space.png" alt="Mythic Space"><div class="mythic-badge">MYTHIC</div><div class="nft-card-info"><div class="nft-card-name pu">CAPPY // SPACE</div><div class="nft-card-tier">MYTHIC // CELESTIAL SPEAR</div></div></div>
-      <div class="nft-card"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_ocean.png" alt="Mythic Ocean"><div class="mythic-badge">MYTHIC</div><div class="nft-card-info"><div class="nft-card-name cy">CAPPY // OCEAN</div><div class="nft-card-tier">MYTHIC // TRIDENT</div></div></div>
-      <div class="nft-card"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_lava.png" alt="Mythic Lava"><div class="mythic-badge">MYTHIC</div><div class="nft-card-info"><div class="nft-card-name or">CAPPY // LAVA</div><div class="nft-card-tier">MYTHIC // MAGMA SWORD</div></div></div>
-      <div class="nft-card"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_snow.png" alt="Mythic Snow"><div class="mythic-badge">MYTHIC</div><div class="nft-card-info"><div class="nft-card-name cy">CAPPY // SNOW</div><div class="nft-card-tier">MYTHIC // ICE LANCE</div></div></div>
-      <div class="nft-card"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_desert.png" alt="Mythic Desert"><div class="mythic-badge">MYTHIC</div><div class="nft-card-info"><div class="nft-card-name go">CAPPY // DESERT</div><div class="nft-card-tier">MYTHIC // SANDSTONE BLADE</div></div></div>
-      <div class="nft-card"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_forrest.png" alt="Mythic Forest"><div class="mythic-badge">MYTHIC</div><div class="nft-card-info"><div class="nft-card-name gr">CAPPY // FOREST</div><div class="nft-card-tier">MYTHIC // SPIRIT BLADE</div></div></div>
-      <div class="nft-card"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_mountain.png" alt="Mythic Mountain"><div class="mythic-badge">MYTHIC</div><div class="nft-card-info"><div class="nft-card-name cy">CAPPY // MOUNTAIN</div><div class="nft-card-tier">MYTHIC // WAR AXE</div></div></div>
-      <div class="nft-card"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythincal_swamp.png" alt="Mythic Swamp"><div class="mythic-badge">MYTHIC</div><div class="nft-card-info"><div class="nft-card-name gr">CAPPY // SWAMP</div><div class="nft-card-tier">MYTHIC // VINE SPEAR</div></div></div>
-      <div class="nft-card"><img src="https://raw.githubusercontent.com/echohound-labs/cappy-nft-mint/main/public/mythical_beach.png" alt="Mythic Beach"><div class="mythic-badge">MYTHIC</div><div class="nft-card-info"><div class="nft-card-name cy">CAPPY // BEACH</div><div class="nft-card-tier">MYTHIC // CORAL BLADE</div></div></div>
-    </div>
-
-    <!-- LIVE MINTED GALLERY -->
-    <div class="stag gr" style="margin-top:3rem">LIVE MINTS // LIGHTHOUSE IPFS</div>
-    <h3 style="font-family:var(--display);font-size:2rem;color:#fff;margin-bottom:.5rem;letter-spacing:.02em">MINTED <span style="color:var(--green)">COLLECTION</span></h3>
-    <p style="font-size:.82rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.7">Each minted CAPPY is stored decentrally on Lighthouse IPFS. Slots populate as NFTs are minted on X1. Hover to see the CID.</p>
-
-    <div class="minted-grid" id="minted-gallery">
-      <!-- Populated by JS — empty slots shown pre-mint -->
-    </div>
-
-    <!-- WALLET / YOUR MINTS -->
-    <div class="wallet-section" style="margin-top:2rem">
-      <div class="wallet-connect-msg">Connect your X1 wallet to view <span>your CAPPY NFTs</span></div>
+    <div class="stag pu">LIVE MINTED COLLECTION</div>
+    <h2 class="sh">MINTED<br><span class="pu">CAPYS</span></h2>
+    <p class="sb">Each minted CAPY appears here as it's minted. Images stored decentrally on Lighthouse IPFS. Hover to see the CID.</p>
+    <div class="minted-grid" id="minted-gallery"></div>
+    <div class="wallet-section">
+      <div class="wallet-msg">Connect your X1 wallet to view <span>your CAPY NFTs</span></div>
     </div>
   </div>
 </div>
@@ -379,64 +458,75 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2.
   <div class="meme-inner">
     <div class="meme-eyebrow">COMMUNITY MEME TOKEN</div>
     <h2 class="meme-big"><span class="g1">FAIRLY LAUNCHED</span><br><span class="g2">COMMUNITY DRIVEN</span></h2>
-    <p style="font-size:.9rem;color:var(--muted);max-width:520px;margin:0 auto 2rem;line-height:1.8;">$CAPPY launched fairly on Degen Launchpad X1 — no presale, no VC, no insider allocation. Pure community meme energy on the best chain. Named after the real protocol that defended X1.</p>
+    <p style="font-size:.9rem;color:var(--muted);max-width:520px;margin:0 auto 2rem;line-height:1.8;">$CAPY launched fairly on Degen Launchpad X1 — no presale, no VC, no insider allocation. Pure community meme energy on the best chain. Named after the real protocol that defended the X1 blockchain.</p>
     <div class="launch-box">
       <div class="launch-grid">
         <div><div class="launch-label">LAUNCH PLATFORM</div><div class="launch-val">DEGEN</div><div class="launch-desc">Degen Launchpad X1 — fully fair, open to everyone</div></div>
         <div><div class="launch-label">PRESALE / VC</div><div class="launch-val" style="color:var(--red)">NONE</div><div class="launch-desc">Zero insider allocation. Community gets in equally.</div></div>
-        <div><div class="launch-label">TOKEN</div><div class="launch-val">$CAPPY</div><div class="launch-desc">Native to X1 Network. The meme of the chain.</div></div>
-        <div><div class="launch-label">MISSION</div><div class="launch-val" style="font-size:1rem;color:var(--gold);padding-top:.4rem">BIGGEST MEME ON X1</div><div class="launch-desc">Simple. Focused. Unstoppable.</div></div>
+        <div><div class="launch-label">MINT PRICE</div><div class="launch-val">10 XNT</div><div class="launch-desc">Per CAPY NFT. 500 total available to mint.</div></div>
+        <div><div class="launch-label">MISSION</div><div class="launch-val" style="font-size:.95rem;color:var(--gold);padding-top:.4rem">BIGGEST MEME ON X1</div><div class="launch-desc">Simple. Focused. Unstoppable.</div></div>
       </div>
     </div>
     <div class="meme-cards">
       <div class="mc"><span class="mc-ico">🛡️</span><div class="mc-t c">LEGENDARY NAME</div><p class="mc-d">Named after the real X1 protocol. No meme has better lore.</p></div>
-      <div class="mc"><span class="mc-ico">⚡</span><div class="mc-t g">X1 NATIVE</div><p class="mc-d">Built on the chain Capybara protects. The meme belongs here.</p></div>
-      <div class="mc"><span class="mc-ico">🎨</span><div class="mc-t p">500 NFT ARMY</div><p class="mc-d">Mythics. Legendaries. Commons. All on X1 Network.</p></div>
-      <div class="mc"><span class="mc-ico">🔥</span><div class="mc-t o">COMMUNITY FIRST</div><p class="mc-d">No fake utility. No roadmap fiction. Just vibes and the best meme.</p></div>
+      <div class="mc"><span class="mc-ico">⚡</span><div class="mc-t g">X1 NATIVE</div><p class="mc-d">Built on the chain Capybara protects. We belong here.</p></div>
+      <div class="mc"><span class="mc-ico">🏆</span><div class="mc-t p">WIN 50 XNT</div><p class="mc-d">Mint a featured Mythic. Claim your prize. DM to collect.</p></div>
+      <div class="mc"><span class="mc-ico">🔥</span><div class="mc-t o">COMMUNITY FIRST</div><p class="mc-d">No fake utility. No roadmap fiction. Pure meme energy.</p></div>
     </div>
-    <div style="margin-top:2rem"><a href="#" class="btn-main">BUY $CAPPY ON DEGEN LAUNCHPAD</a></div>
+    <div style="margin-top:2rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+      <a href="#" class="btn-main">BUY $CAPY ON DEGEN LAUNCHPAD</a>
+      <a href="https://t.me/CAPYX1" target="_blank" class="btn-ghost">JOIN TELEGRAM ↗</a>
+    </div>
   </div>
 </div>
 
-<!-- NFT ECONOMICS -->
+<!-- ECONOMICS -->
 <div class="econ-section">
   <div class="econ-inner">
-    <div class="stag gr">NFT SALE ECONOMICS</div>
-    <h2 class="sh">WHERE THE<br><span class="gr">XNT GOES</span></h2>
-    <p class="sb">100% of NFT sale proceeds are allocated transparently. No dev wallet dumps. No hidden allocations.</p>
+    <div class="stag gr">MINT ECONOMICS — FULLY TRANSPARENT</div>
+    <h2 class="sh">10 XNT MINT<br><span class="gr">BREAKDOWN</span></h2>
+    <p class="sb" style="margin-bottom:0">Every single XNT from every mint is allocated transparently. No hidden wallets.</p>
     <div class="econ-grid">
       <div class="econ-item">
-        <div class="econ-pct g">90%</div>
-        <div class="econ-label g">LIQUIDITY POOL</div>
-        <p class="econ-desc">90% of all XNT raised from NFT sales goes directly into the $CAPPY liquidity pool. The chart gets fed. The community benefits. Full stop.</p>
+        <div class="econ-pct go">10 XNT</div>
+        <div class="econ-label go">MINT PRICE</div>
+        <p class="econ-desc">Total cost per CAPY NFT mint on X1 Network.</p>
       </div>
       <div class="econ-item">
-        <div class="econ-pct c">10%</div>
-        <div class="econ-label c">GEIGER NODE</div>
-        <p class="econ-desc">10% funds the developer-controlled Geiger Node — the on-chain randomness oracle used for provably fair trait generation and mint mechanics on X1.</p>
+        <div class="econ-pct g">9 XNT</div>
+        <div class="econ-label g">90% → LP</div>
+        <p class="econ-desc">9 XNT per mint goes directly to the $CAPY liquidity pool. The chart gets fed with every single mint.</p>
       </div>
+      <div class="econ-item">
+        <div class="econ-pct c">1 XNT</div>
+        <div class="econ-label c">10% → GEIGER NODE</div>
+        <p class="econ-desc">1 XNT per mint funds the Geiger Node — the on-chain randomness oracle that powers provably fair trait generation.</p>
+      </div>
+    </div>
+    <div class="econ-math">
+      IF ALL 500 MINT: &nbsp;<b>4,500 XNT</b> → LP &nbsp;|&nbsp; <b>500 XNT</b> → GEIGER NODE &nbsp;|&nbsp; <span class="big">5,000 XNT TOTAL RAISED</span>
     </div>
   </div>
 </div>
 
 <div class="sep-line"></div>
 
-<!-- PROTOCOL — minimal -->
+<!-- PROTOCOL -->
 <div class="proto-section" id="protocol">
   <div class="proto-inner">
     <div class="stag cy">THE REAL PROTOCOL</div>
     <h2 class="sh">PROJECT<br><span class="cy">CAPYBARA</span></h2>
     <div class="proto-grid">
       <div>
-        <div class="notice"><p><b>Project Capybara is a real X1 blockchain protocol</b> — specified by Jack Levin (Cyphereus Prime) on May 1st and deployed to mainnet.<br><br><span class="sep">$CAPPY is a separate community meme.</span> Named after it because the name is legendary. No official connection. The community ran with it.</p></div>
+        <div class="notice"><p><b>Project Capybara is a real X1 blockchain protocol</b> — specified by Jack Levin (Cyphereus Prime) on May 1st and deployed to mainnet.<br><br><span class="sep">$CAPY is a separate community meme.</span> Named after it because the name is legendary. No official connection. The community ran with it.</p></div>
         <p style="font-size:.84rem;color:var(--muted);line-height:1.85;margin-bottom:1.5rem">Capybara is X1's delegation fair stake threshold system. Every epoch it calculates the 85th percentile of all active validator self-stakes — closing the door on validators trying to game Foundation delegation with tiny self-stake.</p>
         <div class="quote"><p class="q-text">"The p85 method ensures the threshold is always representative of real validator commitment — not a static number that becomes stale as the network evolves."</p><div class="q-auth">// JACK LEVIN — CYPHEREUS PRIME — MAY 1ST</div></div>
       </div>
       <div>
-        <p style="font-family:var(--mono);font-size:.55rem;letter-spacing:.2em;color:var(--muted);margin-bottom:1rem">DELEGATION CRITERIA</p>
+        <p style="font-family:var(--mono);font-size:.52rem;letter-spacing:.2em;color:var(--muted);margin-bottom:1rem">DELEGATION CRITERIA</p>
         <div class="crit-list">
           <div class="crit-item"><div class="crit-val">P85</div><div><div class="crit-name">SELF-STAKE</div><div class="crit-desc">Must meet 85th percentile of all active validator self-stakes. Recalculates every epoch.</div></div></div>
-          <div class="crit-item"><div class="crit-val">≤10%</div><div><div class="crit-name">COMMISSION</div><div class="crit-desc">Maximum commission rate. Keeps fees fair for all delegators.</div></div></div>
+          <div class="crit-item"><div class="crit-val">≤10%</div><div><div class="crit-name">COMMISSION</div><div class="crit-desc">Maximum commission rate. Keeps fees fair for delegators.</div></div></div>
           <div class="crit-item"><div class="crit-val">≥97%</div><div><div class="crit-name">VOTE CREDITS</div><div class="crit-desc">Minimum vote credit score. Proves active consensus participation.</div></div></div>
           <div class="crit-item"><div class="crit-val">±10%</div><div><div class="crit-name">SKIP RATE</div><div class="crit-desc">Must stay within 10% of network average.</div></div></div>
           <div class="crit-item"><div class="crit-val" style="font-size:.85rem">MAJ.</div><div><div class="crit-name">TACHYON VERSION</div><div class="crit-desc">Must run majority Tachyon version. Network stays strongest.</div></div></div>
@@ -447,18 +537,20 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2.
 </div>
 
 <footer>
-  <div class="f-logo">$CAPPY</div>
+  <div class="f-logo">$CAPY</div>
   <ul class="f-links">
     <li><a href="#collection">COLLECTION</a></li>
-    <li><a href="#meme">$CAPPY</a></li>
+    <li><a href="#prize">🏆 PRIZE</a></li>
+    <li><a href="#meme">$CAPY</a></li>
     <li><a href="#protocol">PROTOCOL</a></li>
+    <li><a href="https://t.me/CAPYX1" target="_blank">TELEGRAM ↗</a></li>
     <li><a href="https://x1.xyz" target="_blank">X1 NETWORK ↗</a></li>
   </ul>
   <div class="f-meta">BLOCKCHAIN UNDER ATTACK<br>IMPLEMENT PROJECT CAPYBARA<br><b>// CYPHEREUS PRIME // X1</b></div>
 </footer>
 
 <script>
-// ── MINT PROGRESS (set real numbers here when contract is live) ──
+// ── MINT PROGRESS — update these numbers as mints happen ──
 const MINTED = 0;
 const TOTAL = 500;
 const COMMON_MINTED = 0, COMMON_TOTAL = 350;
@@ -476,16 +568,45 @@ document.getElementById('common-bar').style.width = (COMMON_MINTED/COMMON_TOTAL*
 document.getElementById('legend-bar').style.width = (LEGEND_MINTED/LEGEND_TOTAL*100) + '%';
 document.getElementById('mythic-bar').style.width = (MYTHIC_MINTED/MYTHIC_TOTAL*100) + '%';
 
-// ── MINTED GALLERY (populate with Lighthouse CIDs when minted) ──
-// Format: { id: 1, cid: 'bafyXXXX...', tier: 'mythic' }
-const MINTED_NFTS = [
-  // Add entries here as NFTs are minted e.g.:
-  // { id: 1, cid: 'bafybeig...', tier: 'legendary' },
-];
+// ── XNT TRACKER — update as XNT is raised ──
+const TOTAL_XNT_RAISED = MINTED * 10;
+const TOTAL_LP = MINTED * 9;
+const TOTAL_GEIGER = MINTED * 1;
+const TOTAL_BURNED = 0; // update manually
+document.getElementById('total-raised').textContent = TOTAL_XNT_RAISED + ' XNT';
+document.getElementById('lp-total').textContent = TOTAL_LP + ' XNT';
+document.getElementById('geiger-total').textContent = TOTAL_GEIGER + ' XNT';
+document.getElementById('burned-total').textContent = TOTAL_BURNED + ' $CAPY';
+
+// ── LP LOG — add entries as LP is added ──
+// Format: { date: '2025-05-13', amount: '450 XNT', tx: '0xABC...' }
+const LP_ENTRIES = [];
+
+// ── BURN LOG — add entries as burns happen ──
+// Format: { date: '2025-05-13', amount: '10,000 $CAPY', tx: '0xABC...' }
+const BURN_ENTRIES = [];
+
+function renderLog(entries, containerId, totalId, color, suffix) {
+  const container = document.getElementById(containerId);
+  const totalEl = document.getElementById(totalId);
+  if (entries.length === 0) return;
+  container.innerHTML = '';
+  entries.forEach(e => {
+    const el = document.createElement('div');
+    el.className = 'log-entry';
+    el.innerHTML = `<span class="log-date">${e.date}</span><span class="log-amt ${color}">${e.amount}</span><a class="log-tx" href="https://explorer.x1-testnet.xen.network/tx/${e.tx}" target="_blank">TX ↗</a>`;
+    container.appendChild(el);
+  });
+}
+renderLog(LP_ENTRIES, 'lp-log', 'lp-log-total', 'g', 'XNT');
+renderLog(BURN_ENTRIES, 'burn-log', 'burn-log-total', 'r', '$CAPY');
+
+// ── MINTED GALLERY — add CIDs as NFTs are minted ──
+// Format: { id: 1, cid: 'bafybeig...', tier: 'legendary' }
+const MINTED_NFTS = [];
 
 const gallery = document.getElementById('minted-gallery');
-const GALLERY_SLOTS = 20; // show first 20 slots
-
+const GALLERY_SLOTS = 20;
 for (let i = 0; i < GALLERY_SLOTS; i++) {
   const slot = document.createElement('div');
   const nft = MINTED_NFTS[i];
@@ -493,16 +614,16 @@ for (let i = 0; i < GALLERY_SLOTS; i++) {
     slot.className = 'minted-slot filled';
     const img = document.createElement('img');
     img.src = 'https://gateway.lighthouse.storage/ipfs/' + nft.cid;
-    img.alt = 'CAPPY #' + nft.id;
+    img.alt = 'CAPY #' + nft.id;
     img.style.cssText = 'width:100%;height:100%;object-fit:cover;position:absolute;inset:0';
     const cid = document.createElement('div');
     cid.className = 'cid-label';
-    cid.textContent = 'CID: ' + nft.cid.substring(0, 20) + '...';
+    cid.textContent = 'CID: ' + nft.cid.substring(0,20) + '...';
     slot.appendChild(img);
     slot.appendChild(cid);
   } else {
     slot.className = 'minted-slot empty';
-    slot.innerHTML = '<div class="slot-n">' + (i + 1) + '</div><div class="slot-l">UNMINTED</div>';
+    slot.innerHTML = '<div class="slot-n">' + (i+1) + '</div><div class="slot-l">UNMINTED</div>';
   }
   gallery.appendChild(slot);
 }
