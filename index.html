@@ -297,17 +297,21 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2.
     <div class="tick-inner">
       <div class="tick-item">$CAPY <b class="tg">FAIRLY LAUNCHED</b></div>
       <div class="tick-item">PLATFORM <b class="to">DEGEN LAUNCHPAD X1</b></div>
-      <div class="tick-item">MINT PRICE <b class="tc">10 XNT</b></div>
-      <div class="tick-item">90% OF MINT <b class="tg">GOES TO LP</b></div>
-      <div class="tick-item">10% OF MINT <b class="tp">GEIGER NODE</b></div>
+      <div class="tick-item">WAVE 1 — 150 MINTS <b class="tg">@ 10 XNT</b></div>
+      <div class="tick-item">WAVE 2 — 150 MINTS <b class="tgo">@ 12 XNT</b></div>
+      <div class="tick-item">WAVE 3 — 200 MINTS <b class="to">@ 15 XNT</b></div>
+      <div class="tick-item">90% OF EVERY MINT <b class="tg">GOES TO LP</b></div>
+      <div class="tick-item">10% OF EVERY MINT <b class="tp">GEIGER NODE</b></div>
       <div class="tick-item">MINT A FEATURED MYTHIC <b class="tgo">WIN 50 XNT</b></div>
       <div class="tick-item">500 NFTS <b class="tgo">30 MYTHIC</b></div>
       <div class="tick-item">STORAGE <b class="tc">LIGHTHOUSE IPFS</b></div>
       <div class="tick-item">$CAPY <b class="tg">FAIRLY LAUNCHED</b></div>
       <div class="tick-item">PLATFORM <b class="to">DEGEN LAUNCHPAD X1</b></div>
-      <div class="tick-item">MINT PRICE <b class="tc">10 XNT</b></div>
-      <div class="tick-item">90% OF MINT <b class="tg">GOES TO LP</b></div>
-      <div class="tick-item">10% OF MINT <b class="tp">GEIGER NODE</b></div>
+      <div class="tick-item">WAVE 1 — 150 MINTS <b class="tg">@ 10 XNT</b></div>
+      <div class="tick-item">WAVE 2 — 150 MINTS <b class="tgo">@ 12 XNT</b></div>
+      <div class="tick-item">WAVE 3 — 200 MINTS <b class="to">@ 15 XNT</b></div>
+      <div class="tick-item">90% OF EVERY MINT <b class="tg">GOES TO LP</b></div>
+      <div class="tick-item">10% OF EVERY MINT <b class="tp">GEIGER NODE</b></div>
       <div class="tick-item">MINT A FEATURED MYTHIC <b class="tgo">WIN 50 XNT</b></div>
       <div class="tick-item">500 NFTS <b class="tgo">30 MYTHIC</b></div>
       <div class="tick-item">STORAGE <b class="tc">LIGHTHOUSE IPFS</b></div>
@@ -347,7 +351,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2.
     <div class="mint-header">
       <div class="mint-title-row">
         <div class="mint-title">MINT PROGRESS</div>
-        <div class="mint-price-badge">10 XNT / MINT</div>
+        <div class="mint-price-badge">FROM 10 XNT / MINT</div>
       </div>
       <div class="mint-counts">
         <div><div class="mc-n" id="minted-count">0</div><div class="mc-l">MINTED</div></div>
@@ -361,10 +365,32 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2.
       <span id="pct-label">0% COMPLETE</span>
       <span>500 TOTAL</span>
     </div>
-    <div class="tier-progress">
-      <div class="tp-item"><div class="tp-n c" id="common-count">0 / 350</div><div class="tp-bar-wrap"><div class="tp-bar c" id="common-bar" style="width:0%"></div></div><div class="tp-label">COMMON</div></div>
-      <div class="tp-item"><div class="tp-n l" id="legend-count">0 / 120</div><div class="tp-bar-wrap"><div class="tp-bar l" id="legend-bar" style="width:0%"></div></div><div class="tp-label">LEGENDARY</div></div>
-      <div class="tp-item"><div class="tp-n m" id="mythic-count">0 / 30</div><div class="tp-bar-wrap"><div class="tp-bar m" id="mythic-bar" style="width:0%"></div></div><div class="tp-label">MYTHIC</div></div>
+    <!-- WAVE PRICING -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border:1px solid var(--border);margin-top:1.5rem;overflow:hidden">
+      <div style="padding:1.25rem 1rem;background:rgba(0,255,136,0.06);text-align:center;border-right:1px solid var(--border);border-top:2px solid var(--green)">
+        <div style="font-family:var(--display);font-size:2rem;color:var(--green);line-height:1">10 XNT</div>
+        <div style="font-family:var(--mono);font-size:.52rem;letter-spacing:.18em;color:var(--green);margin:.3rem 0">WAVE 1</div>
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--muted)">FIRST 150 MINTS</div>
+        <div class="tp-bar-wrap" style="margin-top:.75rem"><div class="tp-bar" id="wave1-bar" style="width:0%;background:var(--green)"></div></div>
+        <div style="font-family:var(--mono);font-size:.52rem;color:var(--muted);margin-top:.25rem" id="wave1-count">0 / 150</div>
+      </div>
+      <div style="padding:1.25rem 1rem;background:rgba(255,201,64,0.06);text-align:center;border-right:1px solid var(--border);border-top:2px solid var(--gold)">
+        <div style="font-family:var(--display);font-size:2rem;color:var(--gold);line-height:1">12 XNT</div>
+        <div style="font-family:var(--mono);font-size:.52rem;letter-spacing:.18em;color:var(--gold);margin:.3rem 0">WAVE 2</div>
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--muted)">NEXT 150 MINTS</div>
+        <div class="tp-bar-wrap" style="margin-top:.75rem"><div class="tp-bar" id="wave2-bar" style="width:0%;background:var(--gold)"></div></div>
+        <div style="font-family:var(--mono);font-size:.52rem;color:var(--muted);margin-top:.25rem" id="wave2-count">0 / 150</div>
+      </div>
+      <div style="padding:1.25rem 1rem;background:rgba(255,106,0,0.06);text-align:center;border-top:2px solid var(--orange)">
+        <div style="font-family:var(--display);font-size:2rem;color:var(--orange);line-height:1">15 XNT</div>
+        <div style="font-family:var(--mono);font-size:.52rem;letter-spacing:.18em;color:var(--orange);margin:.3rem 0">WAVE 3</div>
+        <div style="font-family:var(--mono);font-size:.6rem;color:var(--muted)">FINAL 200 MINTS</div>
+        <div class="tp-bar-wrap" style="margin-top:.75rem"><div class="tp-bar" id="wave3-bar" style="width:0%;background:var(--orange)"></div></div>
+        <div style="font-family:var(--mono);font-size:.52rem;color:var(--muted);margin-top:.25rem" id="wave3-count">0 / 200</div>
+      </div>
+    </div>
+    <div style="font-family:var(--mono);font-size:.62rem;color:var(--muted);text-align:center;margin-top:.75rem;letter-spacing:.1em">
+      MINT EARLY = LOWEST PRICE // PRICE INCREASES AS WAVES FILL
     </div>
     <div class="mint-btn-row">
       <span class="btn-soon">MINT COMING SOON</span>
@@ -463,7 +489,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2.
       <div class="launch-grid">
         <div><div class="launch-label">LAUNCH PLATFORM</div><div class="launch-val">DEGEN</div><div class="launch-desc">Degen Launchpad X1 — fully fair, open to everyone</div></div>
         <div><div class="launch-label">PRESALE / VC</div><div class="launch-val" style="color:var(--red)">NONE</div><div class="launch-desc">Zero insider allocation. Community gets in equally.</div></div>
-        <div><div class="launch-label">MINT PRICE</div><div class="launch-val">10 XNT</div><div class="launch-desc">Per CAPY NFT. 500 total available to mint.</div></div>
+        <div><div class="launch-label">MINT PRICE</div><div class="launch-val">10–15 XNT</div><div class="launch-desc">Wave pricing: 10 / 12 / 15 XNT. Mint early for the best price.</div></div>
         <div><div class="launch-label">MISSION</div><div class="launch-val" style="font-size:.95rem;color:var(--gold);padding-top:.4rem">BIGGEST MEME ON X1</div><div class="launch-desc">Simple. Focused. Unstoppable.</div></div>
       </div>
     </div>
@@ -484,27 +510,47 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2.
 <div class="econ-section">
   <div class="econ-inner">
     <div class="stag gr">MINT ECONOMICS — FULLY TRANSPARENT</div>
-    <h2 class="sh">10 XNT MINT<br><span class="gr">BREAKDOWN</span></h2>
-    <p class="sb" style="margin-bottom:0">Every single XNT from every mint is allocated transparently. No hidden wallets.</p>
-    <div class="econ-grid">
-      <div class="econ-item">
-        <div class="econ-pct go">10 XNT</div>
-        <div class="econ-label go">MINT PRICE</div>
-        <p class="econ-desc">Total cost per CAPY NFT mint on X1 Network.</p>
+    <h2 class="sh">TIERED MINT<br><span class="gr">PRICING</span></h2>
+    <p class="sb" style="margin-bottom:0">Mint early for the lowest price. Every wave increases. 90% of every mint goes to LP — regardless of wave.</p>
+    <!-- WAVE PRICING TABLE -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;border:1px solid var(--border);margin-top:2rem;overflow:hidden">
+      <div style="padding:2rem 1.5rem;background:rgba(0,255,136,0.05);text-align:center;border-right:1px solid var(--border);border-top:2px solid var(--green)">
+        <div style="font-family:var(--mono);font-size:.58rem;letter-spacing:.25em;color:var(--green);margin-bottom:.5rem">WAVE 1</div>
+        <div style="font-family:var(--display);font-size:3.5rem;color:var(--green);line-height:1;margin-bottom:.25rem">10 XNT</div>
+        <div style="font-family:var(--mono);font-size:.62rem;color:var(--muted);margin-bottom:1rem">FIRST 150 MINTS</div>
+        <div style="font-size:.78rem;color:var(--muted);line-height:1.7">9 XNT → LP<br>1 XNT → Geiger Node<br><span style="color:var(--green)">Total wave: 1,500 XNT</span></div>
       </div>
-      <div class="econ-item">
-        <div class="econ-pct g">9 XNT</div>
-        <div class="econ-label g">90% → LP</div>
-        <p class="econ-desc">9 XNT per mint goes directly to the $CAPY liquidity pool. The chart gets fed with every single mint.</p>
+      <div style="padding:2rem 1.5rem;background:rgba(255,201,64,0.05);text-align:center;border-right:1px solid var(--border);border-top:2px solid var(--gold)">
+        <div style="font-family:var(--mono);font-size:.58rem;letter-spacing:.25em;color:var(--gold);margin-bottom:.5rem">WAVE 2</div>
+        <div style="font-family:var(--display);font-size:3.5rem;color:var(--gold);line-height:1;margin-bottom:.25rem">12 XNT</div>
+        <div style="font-family:var(--mono);font-size:.62rem;color:var(--muted);margin-bottom:1rem">NEXT 150 MINTS</div>
+        <div style="font-size:.78rem;color:var(--muted);line-height:1.7">10.8 XNT → LP<br>1.2 XNT → Geiger Node<br><span style="color:var(--gold)">Total wave: 1,800 XNT</span></div>
       </div>
-      <div class="econ-item">
-        <div class="econ-pct c">1 XNT</div>
-        <div class="econ-label c">10% → GEIGER NODE</div>
-        <p class="econ-desc">1 XNT per mint funds the Geiger Node — the on-chain randomness oracle that powers provably fair trait generation.</p>
+      <div style="padding:2rem 1.5rem;background:rgba(255,106,0,0.05);text-align:center;border-top:2px solid var(--orange)">
+        <div style="font-family:var(--mono);font-size:.58rem;letter-spacing:.25em;color:var(--orange);margin-bottom:.5rem">WAVE 3</div>
+        <div style="font-family:var(--display);font-size:3.5rem;color:var(--orange);line-height:1;margin-bottom:.25rem">15 XNT</div>
+        <div style="font-family:var(--mono);font-size:.62rem;color:var(--muted);margin-bottom:1rem">FINAL 200 MINTS</div>
+        <div style="font-size:.78rem;color:var(--muted);line-height:1.7">13.5 XNT → LP<br>1.5 XNT → Geiger Node<br><span style="color:var(--orange)">Total wave: 3,000 XNT</span></div>
       </div>
     </div>
-    <div class="econ-math">
-      IF ALL 500 MINT: &nbsp;<b>4,500 XNT</b> → LP &nbsp;|&nbsp; <b>500 XNT</b> → GEIGER NODE &nbsp;|&nbsp; <span class="big">5,000 XNT TOTAL RAISED</span>
+    <!-- TOTAL MATH -->
+    <div style="border:1px solid var(--border);background:rgba(4,5,10,.6);padding:1.5rem 2rem;margin-top:1px;display:grid;grid-template-columns:repeat(4,1fr);gap:1px;text-align:center">
+      <div style="padding:.75rem">
+        <div style="font-family:var(--display);font-size:1.8rem;color:var(--cyan)">6,300</div>
+        <div style="font-family:var(--mono);font-size:.52rem;letter-spacing:.15em;color:var(--muted)">TOTAL XNT IF SOLD OUT</div>
+      </div>
+      <div style="padding:.75rem;border-left:1px solid var(--border)">
+        <div style="font-family:var(--display);font-size:1.8rem;color:var(--green)">5,670</div>
+        <div style="font-family:var(--mono);font-size:.52rem;letter-spacing:.15em;color:var(--muted)">XNT TO LP (90%)</div>
+      </div>
+      <div style="padding:.75rem;border-left:1px solid var(--border)">
+        <div style="font-family:var(--display);font-size:1.8rem;color:var(--cyan)">630</div>
+        <div style="font-family:var(--mono);font-size:.52rem;letter-spacing:.15em;color:var(--muted)">XNT TO GEIGER (10%)</div>
+      </div>
+      <div style="padding:.75rem;border-left:1px solid var(--border)">
+        <div style="font-family:var(--display);font-size:1.8rem;color:var(--gold)">500 XNT</div>
+        <div style="font-family:var(--mono);font-size:.52rem;letter-spacing:.15em;color:var(--muted)">MAX PRIZE POOL</div>
+      </div>
     </div>
   </div>
 </div>
@@ -550,32 +596,46 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:2.
 </footer>
 
 <script>
-// ── MINT PROGRESS — update these numbers as mints happen ──
+// ── MINT PROGRESS — update MINTED as mints happen ──
 const MINTED = 0;
 const TOTAL = 500;
-const COMMON_MINTED = 0, COMMON_TOTAL = 350;
-const LEGEND_MINTED = 0, LEGEND_TOTAL = 120;
-const MYTHIC_MINTED = 0, MYTHIC_TOTAL = 30;
+const WAVE1_MAX = 150, WAVE1_PRICE = 10;
+const WAVE2_MAX = 150, WAVE2_PRICE = 12;
+const WAVE3_MAX = 200, WAVE3_PRICE = 15;
+
+// Wave counts
+const wave1 = Math.min(MINTED, WAVE1_MAX);
+const wave2 = Math.min(Math.max(MINTED - WAVE1_MAX, 0), WAVE2_MAX);
+const wave3 = Math.min(Math.max(MINTED - WAVE1_MAX - WAVE2_MAX, 0), WAVE3_MAX);
+
+// Current wave price
+function getCurrentPrice() {
+  if (MINTED < WAVE1_MAX) return WAVE1_PRICE;
+  if (MINTED < WAVE1_MAX + WAVE2_MAX) return WAVE2_PRICE;
+  return WAVE3_PRICE;
+}
 
 document.getElementById('minted-count').textContent = MINTED;
 document.getElementById('remaining-count').textContent = TOTAL - MINTED;
 document.getElementById('pct-label').textContent = Math.round(MINTED/TOTAL*100) + '% COMPLETE';
 document.getElementById('main-progress').style.width = (MINTED/TOTAL*100) + '%';
-document.getElementById('common-count').textContent = COMMON_MINTED + ' / ' + COMMON_TOTAL;
-document.getElementById('legend-count').textContent = LEGEND_MINTED + ' / ' + LEGEND_TOTAL;
-document.getElementById('mythic-count').textContent = MYTHIC_MINTED + ' / ' + MYTHIC_TOTAL;
-document.getElementById('common-bar').style.width = (COMMON_MINTED/COMMON_TOTAL*100) + '%';
-document.getElementById('legend-bar').style.width = (LEGEND_MINTED/LEGEND_TOTAL*100) + '%';
-document.getElementById('mythic-bar').style.width = (MYTHIC_MINTED/MYTHIC_TOTAL*100) + '%';
 
-// ── XNT TRACKER — update as XNT is raised ──
-const TOTAL_XNT_RAISED = MINTED * 10;
-const TOTAL_LP = MINTED * 9;
-const TOTAL_GEIGER = MINTED * 1;
-const TOTAL_BURNED = 0; // update manually
-document.getElementById('total-raised').textContent = TOTAL_XNT_RAISED + ' XNT';
-document.getElementById('lp-total').textContent = TOTAL_LP + ' XNT';
-document.getElementById('geiger-total').textContent = TOTAL_GEIGER + ' XNT';
+// Wave bars
+document.getElementById('wave1-bar').style.width = (wave1/WAVE1_MAX*100) + '%';
+document.getElementById('wave2-bar').style.width = (wave2/WAVE2_MAX*100) + '%';
+document.getElementById('wave3-bar').style.width = (wave3/WAVE3_MAX*100) + '%';
+document.getElementById('wave1-count').textContent = wave1 + ' / ' + WAVE1_MAX;
+document.getElementById('wave2-count').textContent = wave2 + ' / ' + WAVE2_MAX;
+document.getElementById('wave3-count').textContent = wave3 + ' / ' + WAVE3_MAX;
+
+// XNT raised calc with tiered pricing
+const xntRaised = (wave1 * WAVE1_PRICE) + (wave2 * WAVE2_PRICE) + (wave3 * WAVE3_PRICE);
+const xntLP = Math.round(xntRaised * 0.9 * 10) / 10;
+const xntGeiger = Math.round(xntRaised * 0.1 * 10) / 10;
+const TOTAL_BURNED = 0;
+document.getElementById('total-raised').textContent = xntRaised + ' XNT';
+document.getElementById('lp-total').textContent = xntLP + ' XNT';
+document.getElementById('geiger-total').textContent = xntGeiger + ' XNT';
 document.getElementById('burned-total').textContent = TOTAL_BURNED + ' $CAPY';
 
 // ── LP LOG — add entries as LP is added ──
