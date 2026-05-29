@@ -577,6 +577,29 @@ function MintSection({ mintState, onSuccess }) {
   );
 }
 
+function MyNFTCard({ nft }) {
+  const [imgUrl, setImgUrl] = useState(null);
+  useEffect(() => {
+    if (!nft.id) return;
+    fetch(`/api/metadata/${nft.id}`)
+      .then(r => r.json())
+      .then(data => {
+        if (data.image) setImgUrl(`https://gateway.lighthouse.storage/ipfs/${data.image.replace('ipfs://','')}`);
+      }).catch(()=>{});
+  }, [nft.id]);
+
+  return (
+    <div style={{aspectRatio:'1',background:'rgba(4,5,10,.8)',position:'relative',overflow:'hidden',borderRight:'1px solid var(--border)',borderBottom:'1px solid var(--border)',cursor:'pointer'}}
+      onClick={() => window.open(`${C.explorer}/address/${nft.mint}`, '_blank')}>
+      {imgUrl && <img src={imgUrl} alt={`CAPY #${nft.id}`} style={{width:'100%',height:'100%',objectFit:'cover',position:'absolute',inset:0}} />}
+      <div style={{position:'absolute',bottom:0,left:0,right:0,background:'rgba(4,5,10,.85)',padding:'.4rem .6rem',borderTop:`1px solid ${nft.tier.color}`}}>
+        <div style={{fontFamily:'var(--display)',fontSize:'1rem',color:nft.tier.color,lineHeight:1}}>#{nft.id}</div>
+        <div style={{fontFamily:'var(--mono)',fontSize:'.45rem',letterSpacing:'.12em',color:nft.tier.color}}>{nft.tier.name}</div>
+      </div>
+    </div>
+  );
+}
+
 function GallerySection({ mintedNFTs }) {
   const wallet = useWallet();
   const { connection } = useConnection();
@@ -654,14 +677,7 @@ function GallerySection({ mintedNFTs }) {
               </div>
               <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(150px,1fr))',gap:'1px',border:'1px solid var(--border)',overflow:'hidden'}}>
                 {myNfts.map(nft => (
-                  <div key={nft.mint} style={{aspectRatio:'1',background:'rgba(4,5,10,.8)',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'1rem',borderRight:'1px solid var(--border)',borderBottom:'1px solid var(--border)'}}>
-                    <div style={{fontFamily:'var(--display)',fontSize:'1.5rem',color:nft.tier.color,lineHeight:1}}>#{nft.id}</div>
-                    <div style={{fontFamily:'var(--mono)',fontSize:'.5rem',letterSpacing:'.15em',color:nft.tier.color,marginTop:'.25rem'}}>{nft.tier.name}</div>
-                    <a href={`${C.explorer}/address/${nft.mint}`} target="_blank" rel="noopener noreferrer"
-                      style={{fontFamily:'var(--mono)',fontSize:'.45rem',color:'var(--cyan)',marginTop:'.5rem',letterSpacing:'.1em'}}>
-                      VIEW ↗
-                    </a>
-                  </div>
+                  <MyNFTCard key={nft.mint} nft={nft} />
                 ))}
               </div>
             </div>
