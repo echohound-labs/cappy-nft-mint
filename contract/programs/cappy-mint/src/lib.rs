@@ -28,7 +28,7 @@ pub const MINT_AUTHORITY: Pubkey = pubkey!("2EMbtMasbwBW4MA3pwqNtQguDJLh5k3GuQ3h
 pub const LP_TREASURY: Pubkey = pubkey!("GZuBHE3fQCQ6eSTLMwWKrK15CjtWfA58BmxdtWwG5mJJ"); 
 
 pub const BASE_URI: &str = "https://capy-nft-mint.vercel.app/api/metadata/";
-pub const GEIGER_PROGRAM: Pubkey = pubkey!("BxUNg2yo5371BQMZPkfcxdCptFRDHkhvEXNM1QNPBRYU");
+pub const GEIGER_PROGRAM: Pubkey = pubkey!("2dQf9uaCzXewrDNLttmtzQmc3SmqfAHz3qahKQjtGQyY");
 
 // Tier boundaries (token numbers are 1-indexed in metadata, 0-indexed in contract)
 pub const MYTHIC_MAX: u32 = 30;    // tokens 1-30
