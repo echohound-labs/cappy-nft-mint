@@ -34,7 +34,7 @@ const CONFIG = {
     lpTreasury: 'GZuBHE3fQCQ6eSTLMwWKrK15CjtWfA58BmxdtWwG5mJJ',
     oracleOperator: 'HGFisVbULNKqogtPuGTfcHG9y6i5nboZabYwifkiiodo',
     geiger: '2dQf9uaCzXewrDNLttmtzQmc3SmqfAHz3qahKQjtGQyY',
-    explorer: 'https://explorer.x1-testnet.xen.network',
+    explorer: 'https://explorer.x1.xyz/?cluster=testnet',
   },
   mainnet: {
     rpc: 'https://rpc.mainnet.x1.xyz',
@@ -348,6 +348,23 @@ function useCapyMint(connection, wallet, onSuccess) {
 
 function MintReveal({ token, txSig, onClose }) {
   if (!token) return null;
+  const [imgUrl, setImgUrl] = useState(null);
+  const [metaName, setMetaName] = useState(null);
+
+  useEffect(() => {
+    if (!token.id) return;
+    fetch(`/api/metadata/${token.id}`)
+      .then(r => r.json())
+      .then(data => {
+        setMetaName(data.name);
+        if (data.image) {
+          const cid = data.image.replace('ipfs://', '');
+          setImgUrl(`https://gateway.lighthouse.storage/ipfs/${cid}`);
+        }
+      })
+      .catch(() => {});
+  }, [token.id]);
+
   const tierColors = {
     Mythic: 'var(--purple)',
     Legendary: 'var(--cyan)',
@@ -368,12 +385,24 @@ function MintReveal({ token, txSig, onClose }) {
         <div style={{fontFamily:'var(--mono)',fontSize:'.6rem',letterSpacing:'.25em',color,marginBottom:'1rem'}}>
           ✅ MINTED SUCCESSFULLY
         </div>
+        {imgUrl && (
+          <img src={imgUrl} alt={`CAPY #${token.id}`} style={{
+            width:'200px',height:'200px',objectFit:'cover',
+            border:`1px solid ${color}`,marginBottom:'1rem',
+            display:'block',margin:'0 auto 1rem'
+          }} />
+        )}
         <div style={{fontFamily:'var(--display)',fontSize:'3.5rem',color,lineHeight:1,marginBottom:'.5rem'}}>
           CAPY #{token.id}
         </div>
-        <div style={{fontFamily:'var(--mono)',fontSize:'.7rem',letterSpacing:'.2em',color,marginBottom:'2rem'}}>
+        <div style={{fontFamily:'var(--mono)',fontSize:'.7rem',letterSpacing:'.2em',color,marginBottom:'.5rem'}}>
           {token.tier.name.toUpperCase()} TIER
         </div>
+        {metaName && (
+          <div style={{fontFamily:'var(--mono)',fontSize:'.6rem',color:'var(--muted)',marginBottom:'1.5rem',letterSpacing:'.1em'}}>
+            {metaName}
+          </div>
+        )}
         <div style={{fontFamily:'var(--mono)',fontSize:'.6rem',color:'var(--muted)',marginBottom:'1.5rem'}}>
           MINT: {short(token.mint)}
         </div>
