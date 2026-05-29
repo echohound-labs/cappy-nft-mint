@@ -164,9 +164,11 @@ function useMyNFTs(connection, publicKey) {
             const uriLen = data.readUInt32LE(offset); offset += 4;
             const uri = data.slice(offset, offset + uriLen).toString('utf8').replace(/\0+$/, '');
             if (symbol === 'CAPY' || name.startsWith('Capy')) {
+              // Extract token ID from URI (e.g. .../metadata/92.json)
+              const uriMatch = uri.match(/\/(\d+)\.json$/);
               const numMatch = name.match(/#(\d+)/);
-              const tokenId = numMatch ? parseInt(numMatch[1]) : 0;
-              capyNfts.push({ mint: mint.toBase58(), name, uri, tokenId, tier: getTier(tokenId) });
+              const tokenId = uriMatch ? parseInt(uriMatch[1]) : numMatch ? parseInt(numMatch[1]) : 0;
+              capyNfts.push({ mint: mint.toBase58(), name, uri, id: tokenId, tokenId, tier: getTier(tokenId) });
             }
           } catch(e) { continue; }
         }
