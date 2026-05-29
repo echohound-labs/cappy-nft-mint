@@ -1,0 +1,27 @@
+{
+  "name": "Capy: City — Original — Shadow",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmckrL1b3FUXpXgpU1pnWXNzG9uPvtM9xb2n3voj59DbsA",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "City"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Original"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Shadow"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

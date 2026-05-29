@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Mountain — Frozen Blizzard — Void",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmeFdcwZ5MtmgZJ8paWRRJeKFxKpnVAJ57QerSVfax2nwY",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Mountain"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Frozen Blizzard"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Void"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Snow — Original — Shadow",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmQGbA3W3jk5md7GvJQFKYrRXaDM7AzEovcPEx3PrsA1FD",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Snow"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Original"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Shadow"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

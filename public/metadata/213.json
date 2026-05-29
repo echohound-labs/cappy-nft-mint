@@ -1,0 +1,27 @@
+{
+  "name": "Capy: City — Blood Red Moon — Inferno",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmYtiHSo9s1EAp4xFVwAA3AXgbPrxsXAQ9XpNiUckahxep",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "City"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Blood Red Moon"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Inferno"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

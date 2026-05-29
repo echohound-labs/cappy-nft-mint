@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Beach — Night — Frost",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmcYU7znM1MW3VswEjgBFNdcsJE1RbUmTMdoW9n77Py1yd",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Beach"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Night"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Frost"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

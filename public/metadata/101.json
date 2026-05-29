@@ -1,0 +1,35 @@
+{
+  "name": "Capy: Mountain — Storm",
+  "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmZux4gYTA5tXRGjqveiB9zptAY794v64R7YhsMKeZdYE1",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Legendary"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Mountain"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Thunder Peak"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Thunder Hammer Cannon"
+    },
+    {
+      "trait_type": "Weapon Type",
+      "value": "Hammer"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Storm"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

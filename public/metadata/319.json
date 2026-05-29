@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Lava — Golden Eruption — Original",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmQm4ztedvCiP4eWYBPkq3yooW5WVTLXkPnKAvR8cwdhAS",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Lava"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Golden Eruption"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Original"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

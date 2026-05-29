@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Snow — Blizzard — Inferno",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmbVmVQe3wmAjNmfKtuoe7bwEPVAsvhmq4UhKjdebyKKJ7",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Snow"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Blizzard"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Inferno"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

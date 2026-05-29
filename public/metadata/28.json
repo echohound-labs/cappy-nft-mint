@@ -1,0 +1,43 @@
+{
+  "name": "Capy Warrior #28",
+  "description": "The Toxic Swamp does not welcome visitors. Its waters glow with poison, its trees drip with venom, and the air itself is a weapon. One Capy Warrior wades through it all without hesitation — toxic plasma spear raised, glowing green in the murk — at home in a world that would kill anything less.",
+  "image": "ipfs://QmSxwqTGB33dRFXeiXCwohu4jiHVRYSS2PhwKFCf1MRJ66",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Mythic"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Swamp"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Toxic Swamp"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Spear"
+    },
+    {
+      "trait_type": "Weapon Type",
+      "value": "Spear"
+    },
+    {
+      "trait_type": "Cape",
+      "value": "No"
+    },
+    {
+      "trait_type": "Pose",
+      "value": "Standard"
+    },
+    {
+      "trait_type": "Ritual Circle",
+      "value": "Absent"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

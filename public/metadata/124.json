@@ -1,0 +1,35 @@
+{
+  "name": "Capy: Snow — Blood",
+  "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmTn4fBtwJwd4g32VPSzM7w7JvR2d8WigbzS14LUoYGRa6",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Legendary"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Snow"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Frozen Tundra"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Cryo Gatling"
+    },
+    {
+      "trait_type": "Weapon Type",
+      "value": "Cannon"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Blood"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

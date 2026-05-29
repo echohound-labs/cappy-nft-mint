@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Swamp — Dawn Mist — Original",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://Qme7qGB2UgU7tE5kMQr9j4d2V62XzAiCzqYSTzvP8Nd3V1",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Swamp"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Dawn Mist"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Original"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

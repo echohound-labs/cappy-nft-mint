@@ -1,0 +1,43 @@
+{
+  "name": "Capy Warrior #11",
+  "description": "The Moonlight Cathedral stands where no cathedral should — deep in an ancient forest, where vines and roots have claimed the stone. Under a full moon that floods the canopy with silver light, a Capy Warrior draws back an Ancient Bow, the arrow already crackling with green energy. They never miss.",
+  "image": "ipfs://QmWpuScKkpnuLBnZgMZBJ89qxsME62YyzVcqo9k2t5UdLc",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Mythic"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Forest"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Moonlight Cathedral"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Bow"
+    },
+    {
+      "trait_type": "Weapon Type",
+      "value": "Bow"
+    },
+    {
+      "trait_type": "Cape",
+      "value": "No"
+    },
+    {
+      "trait_type": "Pose",
+      "value": "Action"
+    },
+    {
+      "trait_type": "Ritual Circle",
+      "value": "Present"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

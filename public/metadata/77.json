@@ -1,0 +1,35 @@
+{
+  "name": "Capy: Forest — Storm",
+  "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmNMnhjMTiuyZCG4noqPF1FrkdzKLM1Tqjp7rc1nLbdQHY",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Legendary"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Forest"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Dark Forest"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Bio Pulse Cannon"
+    },
+    {
+      "trait_type": "Weapon Type",
+      "value": "Cannon"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Storm"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

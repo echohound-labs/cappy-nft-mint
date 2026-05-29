@@ -1,0 +1,35 @@
+{
+  "name": "Capy: Swamp — Original",
+  "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmfKFPytKikz1M1eUsqk5YX5m94GRXKCeFfQwy73EKnm5q",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Legendary"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Swamp"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Toxic Depths"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Toxic Plasma Cannon"
+    },
+    {
+      "trait_type": "Weapon Type",
+      "value": "Cannon"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Original"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

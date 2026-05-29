@@ -1,0 +1,43 @@
+{
+  "name": "Capy Warrior #25",
+  "description": "The alert came through on every screen at once: BLOCKCHAIN UNDER ATTACK. IMPLEMENT PROJECT CAPYBARA. While systems scrambled and operators panicked, one Capy Warrior was already in position — Celestial Spear in hand, standing in the breach between what the blockchain was and what the enemy wanted it to become.",
+  "image": "ipfs://QmccknBkKqfJncF5taCdmkU4oKaygs6rLJ2HeZRj1yZNR6",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Mythic"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Space"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Blockchain Under Attack"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Spear"
+    },
+    {
+      "trait_type": "Weapon Type",
+      "value": "Spear"
+    },
+    {
+      "trait_type": "Cape",
+      "value": "No"
+    },
+    {
+      "trait_type": "Pose",
+      "value": "Standard"
+    },
+    {
+      "trait_type": "Ritual Circle",
+      "value": "Absent"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

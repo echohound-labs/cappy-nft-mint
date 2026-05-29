@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Lava — Original — Inferno",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmPQqzeXPX9hNKBx8jppZYQERZ4nHcwUW66KwqrURXEyR1",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Lava"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Original"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Inferno"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

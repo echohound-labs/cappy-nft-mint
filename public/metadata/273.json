@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Forest — Dawn — Void",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmPcvKtYnh3WNcw9jAk7HRmQbvwcf6w9JFeKV6Sxjzav5m",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Forest"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Dawn"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Void"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

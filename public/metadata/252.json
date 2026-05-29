@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Desert — Solar Flare — Void",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmRumy7n6gHA9bq4REMpRHzDykPkSzbmjtM78s22ANNqzf",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Desert"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Solar Flare"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Void"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Forest — Dawn — Inferno",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmWixJBddeAtfgH4WhjEcXqe5URKe24Whqti3vwaMfNF4h",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Forest"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Dawn"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Inferno"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

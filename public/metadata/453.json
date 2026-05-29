@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Space — Black Hole — Crimson",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmehMYYpUtZo9sKw1cVbVqvmASxY8ZeVsXKWbCgshoQMEv",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Space"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Black Hole"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Crimson"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

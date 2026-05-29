@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Desert — Original — Gold",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmP9My2gAQR7n5Z6wLtyfuUY9k88Ub6JGUhiXf5msu3cz6",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Desert"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Original"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Gold"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

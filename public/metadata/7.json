@@ -1,0 +1,43 @@
+{
+  "name": "Capy Warrior #7",
+  "description": "The desert sun had turned apocalyptic — a burning red wound in a sky choked with ash and falling rock. Ancient pillars crumbled around them, palm trees bent in the scorching wind. Yet one Capy Warrior stood unmoved, blade gleaming with solar fire, facing the end of the world without flinching.",
+  "image": "ipfs://QmXNVrBXiXkyKLKJTCUCWu88jKVUrZeEoS3UMVTxVrfsVE",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Mythic"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Desert"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Apocalyptic Sunset"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Blade"
+    },
+    {
+      "trait_type": "Weapon Type",
+      "value": "Blade"
+    },
+    {
+      "trait_type": "Cape",
+      "value": "No"
+    },
+    {
+      "trait_type": "Pose",
+      "value": "Standard"
+    },
+    {
+      "trait_type": "Ritual Circle",
+      "value": "Absent"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

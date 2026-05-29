@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Space — Red Alert — Crimson",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmeD2WgKaTAE2teGkqcbk7kxrs78oUpHxujiAvhN9E4hpw",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Space"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Red Alert"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Crimson"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

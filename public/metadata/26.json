@@ -1,0 +1,43 @@
+{
+  "name": "Capy Warrior #26",
+  "description": "Red Alert. The station is compromised. The blockchain is under attack and the cosmos itself hangs in the balance. Draped in a starfield cape that trails like a galaxy, one Capy Warrior stands at the center of the crisis — Cosmic Scythe drawn, the weight of the entire network resting on a single warrior's shoulders.",
+  "image": "ipfs://QmUme3sexxgESrQZqZvJtanus914SjZaSAYSRjJXXQQzfQ",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Mythic"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Space"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Red Alert Station"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Scythe"
+    },
+    {
+      "trait_type": "Weapon Type",
+      "value": "Scythe"
+    },
+    {
+      "trait_type": "Cape",
+      "value": "Yes"
+    },
+    {
+      "trait_type": "Pose",
+      "value": "Standard"
+    },
+    {
+      "trait_type": "Ritual Circle",
+      "value": "Present"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

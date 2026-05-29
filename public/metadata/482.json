@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Swamp — Blood Moon — Gold",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmeMUKa4KrwYQ87NNxfbShbPyaEgq2j6QeHtb1S2VrukbY",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Swamp"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Blood Moon"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Gold"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

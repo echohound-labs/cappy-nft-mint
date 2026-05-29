@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Desert — Sandstorm — Crimson",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmYd857SfHL8v8b9esDNuPFSWesvvbFBj3MLqQ8wLmqDuQ",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Desert"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Sandstorm"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Crimson"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

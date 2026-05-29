@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Ocean — Frozen Arctic — Frost",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmV7CafxJNWYhDYnxve7yP1N8sDeJNYughv5ZaU8SYjweR",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Ocean"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Frozen Arctic"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Frost"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

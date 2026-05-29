@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Snow — Blood Moon — Original",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmPPrtnVMyPYnamW9C3f5jVTYRP61DX3EJ3vXENZYS15dh",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Snow"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Blood Moon"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Original"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

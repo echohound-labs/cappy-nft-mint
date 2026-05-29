@@ -1,0 +1,35 @@
+{
+  "name": "Capy: Lava — Blood",
+  "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmPj9EeDVyJoTgsss5vreVt6LcoD7yaDeUb5Pgkh7CA9Nd",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Legendary"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Lava"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Volcanic Realm"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Thermal Lance"
+    },
+    {
+      "trait_type": "Weapon Type",
+      "value": "Lance"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Blood"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

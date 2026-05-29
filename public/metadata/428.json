@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Snow — Frozen Dawn — Frost",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmNsZzd8aymGofKtP35nNGj8U7heuXDDaiMchxwLP1mWha",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Snow"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Frozen Dawn"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Frost"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

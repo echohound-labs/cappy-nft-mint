@@ -1,0 +1,43 @@
+{
+  "name": "Capy Warrior #30",
+  "description": "The Ancient Tree had stood for ten thousand years — until the night it finally fell. As the colossal trunk crashed through the swamp and the earth shook, one Capy Warrior was there to witness it. They did not mourn the tree. They claimed its power, forging a Root Hammer from its oldest wood, and carried its legend forward.",
+  "image": "ipfs://QmYuGt9HzgQiCiuF8UqYWfBG8VSJRRfx2QacYK539EVCfT",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Mythic"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Swamp"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Ancient Tree Collapse"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Hammer"
+    },
+    {
+      "trait_type": "Weapon Type",
+      "value": "Hammer"
+    },
+    {
+      "trait_type": "Cape",
+      "value": "No"
+    },
+    {
+      "trait_type": "Pose",
+      "value": "Standard"
+    },
+    {
+      "trait_type": "Ritual Circle",
+      "value": "Present"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

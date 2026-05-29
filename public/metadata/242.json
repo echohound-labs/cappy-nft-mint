@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Desert — Blood Moon — Original",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmRskt5ohs5uMzjeYnHGUpRq1Vn3RUgdLM8ZUvnrzpdA5s",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Desert"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Blood Moon"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Original"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

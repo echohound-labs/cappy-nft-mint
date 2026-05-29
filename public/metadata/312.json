@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Lava — Blood Moon — Original",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmbK2sQ9VRQNFG4zqfVdyEPeMkgNhEktn8CsG4YtSGVKi8",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Lava"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Blood Moon"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Original"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

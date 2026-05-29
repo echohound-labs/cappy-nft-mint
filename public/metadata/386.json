@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Ocean — Blood Tide — Frost",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmbCdK2ehMba8QscV5hEMr6QM22QoG5A8VYwZ6vuoWehVF",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Ocean"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Blood Tide"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Frost"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

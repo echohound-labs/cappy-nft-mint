@@ -1,0 +1,43 @@
+{
+  "name": "Capy Warrior #5",
+  "description": "When the neon lights of the city began to collapse inward, something ancient was unleashed. A Capy Warrior draped in a billowing dark cape swept through the chaos, wielding a Neon Scythe that cut through both steel and shadow. The city fell. The warrior did not.",
+  "image": "ipfs://QmZa2J88ENNj3ArC1rvZKmLeBFKYZ1HmZuiKiuf6eKfqBj",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Mythic"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "City"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Neon Collapse"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Scythe"
+    },
+    {
+      "trait_type": "Weapon Type",
+      "value": "Scythe"
+    },
+    {
+      "trait_type": "Cape",
+      "value": "Yes"
+    },
+    {
+      "trait_type": "Pose",
+      "value": "Standard"
+    },
+    {
+      "trait_type": "Ritual Circle",
+      "value": "Present"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

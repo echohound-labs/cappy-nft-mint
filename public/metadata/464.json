@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Space — Supernova — Shadow",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmZRezLxbdoK2z1PLv2xBo8sfb1bbraoqh8Z4cjRi5Zui9",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Space"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Supernova"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Shadow"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

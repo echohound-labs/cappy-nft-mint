@@ -1,0 +1,35 @@
+{
+  "name": "Capy: Space — Original",
+  "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmV8WEttufz4BnceWkXuCAjcetwtX1ccmQpe3RWThML6cv",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Legendary"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Space"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Battle Station"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Void Cannon"
+    },
+    {
+      "trait_type": "Weapon Type",
+      "value": "Cannon"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Original"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

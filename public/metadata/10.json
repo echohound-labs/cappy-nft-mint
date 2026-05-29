@@ -1,0 +1,43 @@
+{
+  "name": "Capy Warrior #10",
+  "description": "Deep in the bioluminescent forest where glowing mushrooms light the way and ancient trees twist toward a crescent moon, one Capy Warrior walks alone. Their blade pulses with bio-electric energy harvested from the forest itself. In this place where nature speaks, only the worthy can hear it.",
+  "image": "ipfs://QmaHfMJyhBUCVTfTYX91YRkEhvVq8DK7m15chZXjGz9iS5",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Mythic"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Forest"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Bioluminescent Night"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Blade"
+    },
+    {
+      "trait_type": "Weapon Type",
+      "value": "Blade"
+    },
+    {
+      "trait_type": "Cape",
+      "value": "No"
+    },
+    {
+      "trait_type": "Pose",
+      "value": "Standard"
+    },
+    {
+      "trait_type": "Ritual Circle",
+      "value": "Absent"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

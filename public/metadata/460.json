@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Space — Supernova — Crimson",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmUikCproJAkuS5EZfvuArMo9H7XwiF87X4DqRmReWujzK",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Space"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Supernova"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Crimson"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

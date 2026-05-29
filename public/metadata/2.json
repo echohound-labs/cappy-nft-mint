@@ -1,0 +1,43 @@
+{
+  "name": "Capy Warrior #2",
+  "description": "As the Rising Temple emerged from the depths of the storm sea, one warrior was already waiting. The ancient structure had not been seen in a thousand years — and yet here stood a Capy Warrior, spear raised, ritual circle glowing beneath their feet, as if they had summoned it themselves.",
+  "image": "ipfs://Qma5SUQpN8xNpAX1rfUqjU1eaWzffjXAKGGYyr4MgXagN6",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Mythic"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Beach"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Rising Temple"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Spear"
+    },
+    {
+      "trait_type": "Weapon Type",
+      "value": "Spear"
+    },
+    {
+      "trait_type": "Cape",
+      "value": "No"
+    },
+    {
+      "trait_type": "Pose",
+      "value": "Standard"
+    },
+    {
+      "trait_type": "Ritual Circle",
+      "value": "Present"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

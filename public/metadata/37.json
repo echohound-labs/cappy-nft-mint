@@ -1,0 +1,35 @@
+{
+  "name": "Capy: Beach — Toxic",
+  "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmSCXuq2sB74VgRqP56KLyDMwhtpD4jnQLaBAXGYLWGjwN",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Legendary"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Beach"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Storm Coast"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Plasma Cannon"
+    },
+    {
+      "trait_type": "Weapon Type",
+      "value": "Cannon"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Toxic"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "name": "Capy Warrior #6",
+  "description": "In the city where digital rain falls like code from a broken sky, one warrior moves between the data streams. Armed with a Digital Spear crackling with electric blue energy, this Capy Warrior doesn't just fight in the digital world — they command it. Every strike rewrites reality.",
+  "image": "ipfs://QmXPy5EhGKgJnpXaLtF4qmDU8TPwUnGKBmNkKmWHVcCS1y",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Mythic"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "City"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Digital Rain"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Spear"
+    },
+    {
+      "trait_type": "Weapon Type",
+      "value": "Spear"
+    },
+    {
+      "trait_type": "Cape",
+      "value": "No"
+    },
+    {
+      "trait_type": "Pose",
+      "value": "Action"
+    },
+    {
+      "trait_type": "Ritual Circle",
+      "value": "Present"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

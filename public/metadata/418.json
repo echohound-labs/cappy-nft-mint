@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Snow — Aurora Borealis — Crimson",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmWJCLdi4exNtZ2LHAF39rEUasDZmxN5bcio6T2MBLwnSw",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Snow"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Aurora Borealis"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Crimson"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

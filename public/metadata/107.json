@@ -1,0 +1,35 @@
+{
+  "name": "Capy: Ocean — Frost",
+  "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmRhf7AxyVCXZC4hzeRQZccfdg3XHjkbRPWXrXqFtDEmUR",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Legendary"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Ocean"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Deep Command"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Hydro Cannon"
+    },
+    {
+      "trait_type": "Weapon Type",
+      "value": "Cannon"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Frost"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

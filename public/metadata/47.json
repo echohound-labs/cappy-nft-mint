@@ -1,0 +1,35 @@
+{
+  "name": "Capy: City — Frost",
+  "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmdqUQiNMykeF2d3qqD59mypPGeiAb6xtsdbTn8j5eKKU8",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Legendary"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "City"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Neon City"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Cyber Rail Gun"
+    },
+    {
+      "trait_type": "Weapon Type",
+      "value": "Rail Gun"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Frost"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

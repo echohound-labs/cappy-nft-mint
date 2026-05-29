@@ -1,0 +1,43 @@
+{
+  "name": "Capy Warrior #27",
+  "description": "The Battle Station was designed to be impenetrable. Enemy ships fill the viewport, the blockchain screams under the assault, and every system is in the red. But the station has a secret weapon — one Capy Warrior standing at the ritual circle, Void Hammer crackling with enough energy to end the battle before it truly begins.",
+  "image": "ipfs://QmP47RzBf46mnkiDT9NKoitDjpcaiGNsH4JAe3wd9DzGde",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Mythic"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Space"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Battle Station"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Hammer"
+    },
+    {
+      "trait_type": "Weapon Type",
+      "value": "Hammer"
+    },
+    {
+      "trait_type": "Cape",
+      "value": "No"
+    },
+    {
+      "trait_type": "Pose",
+      "value": "Standard"
+    },
+    {
+      "trait_type": "Ritual Circle",
+      "value": "Present"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

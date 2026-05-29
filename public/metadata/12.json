@@ -1,0 +1,43 @@
+{
+  "name": "Capy Warrior #12",
+  "description": "The forest burned — not from carelessness, but from power too great to contain. As ancient trees became pillars of flame and the sky turned to ember, one Capy Warrior stood at the center of it all, Druid Staff raised high, the fire bending to their will rather than consuming them.",
+  "image": "ipfs://QmXn4orEa2pQ8mqH2Cbq9TPVu4EQzuHU1o7XcUd5qCYXAw",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Mythic"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Forest"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Forest Fire"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Staff"
+    },
+    {
+      "trait_type": "Weapon Type",
+      "value": "Staff"
+    },
+    {
+      "trait_type": "Cape",
+      "value": "No"
+    },
+    {
+      "trait_type": "Pose",
+      "value": "Standard"
+    },
+    {
+      "trait_type": "Ritual Circle",
+      "value": "Present"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

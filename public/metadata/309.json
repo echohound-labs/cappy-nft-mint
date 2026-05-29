@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Lava — Blue Inferno — Frost",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmTYpXsug71ijoGra7av38feDPno1Xtq717uLjfngCtrqb",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Lava"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Blue Inferno"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Frost"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

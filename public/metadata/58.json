@@ -1,0 +1,35 @@
+{
+  "name": "Capy: Desert — Void",
+  "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmWVvxuWWgggiZvNR4uaALfHFyYMwYEsW4aQhFbiy3KzNX",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Legendary"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Desert"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Burning Sands"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Solar Sniper Rifle"
+    },
+    {
+      "trait_type": "Weapon Type",
+      "value": "Rifle"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Void"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Desert — Night — Gold",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://QmbDHTwBdqDPixmtU5A8PhKASq22tfRq8rxkK5U4Ef2XMh",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Desert"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Night"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Gold"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Capy: Swamp — Frozen Swamp — Shadow",
+  "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
+  "image": "ipfs://Qmcg9iugDBv7qBVtkyTrwdCHwJLZX2z9Ba4hawhve7eRSZ",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Common"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Swamp"
+    },
+    {
+      "trait_type": "Scene",
+      "value": "Frozen Swamp"
+    },
+    {
+      "trait_type": "Color Variant",
+      "value": "Shadow"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

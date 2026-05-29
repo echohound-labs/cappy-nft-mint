@@ -1,0 +1,43 @@
+{
+  "name": "Capy Warrior #16",
+  "description": "At the Blizzard Summit where wind and lightning wage eternal war, one Capy Warrior carved their legend into the ice. Clad in fur-lined armor that crackles with frost, they wield a Thunder Axe that splits the storm clouds overhead. The mountain has tested countless warriors. Only this one remains.",
+  "image": "ipfs://QmRHamD16hi1Mjexmw6SqgLEfvsqhCxekaGk3ZDnUJvWE7",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Mythic"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Mountain"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Blizzard Summit"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Axe"
+    },
+    {
+      "trait_type": "Weapon Type",
+      "value": "Axe"
+    },
+    {
+      "trait_type": "Cape",
+      "value": "No"
+    },
+    {
+      "trait_type": "Pose",
+      "value": "Standard"
+    },
+    {
+      "trait_type": "Ritual Circle",
+      "value": "Absent"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}

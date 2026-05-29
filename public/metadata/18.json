@@ -1,0 +1,43 @@
+{
+  "name": "Capy Warrior #18",
+  "description": "When the avalanche came roaring down the mountain, it met something it could not move. A Capy Warrior in the combat stance of a thousand battles, Rune Sword blazing blue across the stone, held their ground as a wall of snow and rock crashed around them. The mountain yielded. The warrior did not.",
+  "image": "ipfs://QmNryZViCPbH1KVhk2yBJNjkZPAa7s9yf5ThacsLQAZuA7",
+  "attributes": [
+    {
+      "trait_type": "Tier",
+      "value": "Mythic"
+    },
+    {
+      "trait_type": "Environment",
+      "value": "Mountain"
+    },
+    {
+      "trait_type": "Background",
+      "value": "Avalanche"
+    },
+    {
+      "trait_type": "Weapon",
+      "value": "Sword"
+    },
+    {
+      "trait_type": "Weapon Type",
+      "value": "Sword"
+    },
+    {
+      "trait_type": "Cape",
+      "value": "No"
+    },
+    {
+      "trait_type": "Pose",
+      "value": "Action"
+    },
+    {
+      "trait_type": "Ritual Circle",
+      "value": "Present"
+    }
+  ],
+  "collection": {
+    "name": "Capy Warriors",
+    "family": "Capy Warriors"
+  }
+}
