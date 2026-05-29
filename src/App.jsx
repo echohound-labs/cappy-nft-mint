@@ -589,12 +589,17 @@ function MyNFTCard({ nft }) {
   }, [nft.id]);
 
   return (
-    <div style={{aspectRatio:'1',background:'rgba(4,5,10,.8)',position:'relative',overflow:'hidden',borderRight:'1px solid var(--border)',borderBottom:'1px solid var(--border)',cursor:'pointer'}}
+    <div style={{background:'rgba(4,5,10,.8)',borderRight:'1px solid var(--border)',borderBottom:'1px solid var(--border)',cursor:'pointer',overflow:'hidden'}}
       onClick={() => window.open(`${C.explorer}/address/${nft.mint}`, '_blank')}>
-      {imgUrl && <img src={imgUrl} alt={`CAPY #${nft.id}`} style={{width:'100%',height:'100%',objectFit:'cover',position:'absolute',inset:0}} />}
-      <div style={{position:'absolute',bottom:0,left:0,right:0,background:'rgba(4,5,10,.85)',padding:'.4rem .6rem',borderTop:`1px solid ${nft.tier.color}`}}>
-        <div style={{fontFamily:'var(--display)',fontSize:'1rem',color:nft.tier.color,lineHeight:1}}>#{nft.id}</div>
-        <div style={{fontFamily:'var(--mono)',fontSize:'.45rem',letterSpacing:'.12em',color:nft.tier.color}}>{nft.tier.name}</div>
+      <div style={{aspectRatio:'1',position:'relative',overflow:'hidden'}}>
+        {imgUrl
+          ? <img src={imgUrl} alt={`CAPY #${nft.id}`} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}} />
+          : <div style={{width:'100%',height:'100%',display:'flex',alignItems:'center',justifyContent:'center',background:'rgba(4,5,10,.8)'}}><span style={{fontFamily:'var(--display)',fontSize:'2rem',color:'rgba(0,229,255,.1)'}}>🦫</span></div>
+        }
+      </div>
+      <div style={{padding:'.5rem .75rem',borderTop:`1px solid ${nft.tier.color}`,background:'rgba(4,5,10,.95)'}}>
+        <div style={{fontFamily:'var(--display)',fontSize:'1.1rem',color:nft.tier.color,lineHeight:1}}>#{nft.id}</div>
+        <div style={{fontFamily:'var(--mono)',fontSize:'.45rem',letterSpacing:'.12em',color:nft.tier.color,marginTop:'.15rem'}}>{nft.tier.name}</div>
       </div>
     </div>
   );
