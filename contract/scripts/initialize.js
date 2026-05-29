@@ -6,10 +6,9 @@ const path = require("path");
 async function main() {
   const connection = new Connection("https://rpc.testnet.x1.xyz", "confirmed");
 
-  // TODO: Create ~/.config/solana/cappy-mint-authority.json before running
   const walletKeypair = Keypair.fromSecretKey(
     Buffer.from(JSON.parse(fs.readFileSync(
-      path.join(process.env.HOME, ".config/solana/cappy-mint-authority.json")
+      path.join(process.env.HOME, ".config/solana/capy-mint-authority.json")
     )))
   );
 
@@ -17,19 +16,19 @@ async function main() {
   const provider = new anchor.AnchorProvider(connection, wallet, {});
   anchor.setProvider(provider);
 
-  // TODO: Update program ID after deploy
-  const programId = new PublicKey("CAPPYM1NTxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+  const programId = new PublicKey("9TjTjyiz3gpRrTaeGvxi2LTrjjsYmDers7VQVDxo9Zdh");
   const idl = JSON.parse(fs.readFileSync(
-    path.join(__dirname, "../target/idl/cappy_mint.json")
+    path.join(__dirname, "../target/idl/capy_warriors.json")
   ));
-  const program = new anchor.Program(idl, programId, provider);
+
+  const program = new anchor.Program(idl, provider);
 
   const [mintStatePDA] = PublicKey.findProgramAddressSync(
-    [Buffer.from("mint_state")],
+    [Buffer.from("mint_state_v2")],
     programId
   );
 
-  console.log("Cappy Mint State PDA:", mintStatePDA.toBase58());
+  console.log("Mint State PDA:", mintStatePDA.toBase58());
 
   const tx = await program.methods
     .initialize()
@@ -40,7 +39,7 @@ async function main() {
     })
     .rpc();
 
-  console.log("✅ Cappy mint initialized! Tx:", tx);
+  console.log("✅ Initialized! Tx:", tx);
   console.log("Mint State PDA:", mintStatePDA.toBase58());
   console.log("Save this PDA — you need it in the frontend!");
 }

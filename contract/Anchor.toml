@@ -6,17 +6,17 @@ resolution = true
 skip-lint = false
 
 [programs.testnet]
-cappy_mint = "CAPPYM1NTxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+cappy_mint = "9TjTjyiz3gpRrTaeGvxi2LTrjjsYmDers7VQVDxo9Zdh"
 
 [programs.mainnet]
-cappy_mint = "CAPPYM1NTxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+cappy_mint = "9TjTjyiz3gpRrTaeGvxi2LTrjjsYmDers7VQVDxo9Zdh"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
 cluster = "https://rpc.testnet.x1.xyz"
-wallet = "~/.config/solana/cappy-mint-authority.json"
+wallet = "/home/skywalker/.config/solana/cappy-mint-authority.json"
 
 [scripts]
 test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 \"tests/**/*.ts\""
