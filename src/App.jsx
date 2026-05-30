@@ -368,8 +368,10 @@ function MintReveal({ token, txSig, onClose }) {
       .then(data => {
         setMetaName(data.name);
         if (data.image) {
-          const cid = data.image.replace('ipfs://', '');
-          setImgUrl(`https://gateway.lighthouse.storage/ipfs/${cid}`);
+          const imgSrc = data.image.startsWith('ipfs://')
+            ? `https://gateway.lighthouse.storage/ipfs/${data.image.replace('ipfs://', '')}`
+            : data.image;
+          setImgUrl(imgSrc);
         }
       })
       .catch(() => {});
