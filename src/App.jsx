@@ -34,7 +34,7 @@ const CONFIG = {
     lpTreasury: 'GZuBHE3fQCQ6eSTLMwWKrK15CjtWfA58BmxdtWwG5mJJ',
     oracleOperator: 'HGFisVbULNKqogtPuGTfcHG9y6i5nboZabYwifkiiodo',
     geiger: '2dQf9uaCzXewrDNLttmtzQmc3SmqfAHz3qahKQjtGQyY',
-    explorer: 'https://explorer.x1.xyz/?cluster=testnet',
+    explorer: 'https://explorer.x1.xyz',
   },
   mainnet: {
     rpc: 'https://rpc.mainnet.x1.xyz',
@@ -419,7 +419,7 @@ function MintReveal({ token, txSig, onClose }) {
           MINT: {short(token.mint)}
         </div>
         {txSig && (
-          <a href={`${C.explorer}/tx/${txSig}`} target="_blank" rel="noopener noreferrer"
+          <a href={NETWORK === 'testnet' ? `${C.explorer}/tx/${txSig}?cluster=testnet` : `${C.explorer}/tx/${txSig}`} target="_blank" rel="noopener noreferrer"
             style={{fontFamily:'var(--mono)',fontSize:'.65rem',color,letterSpacing:'.1em',display:'block',marginBottom:'2rem'}}>
             VIEW ON EXPLORER ↗
           </a>
@@ -600,7 +600,7 @@ function MyNFTCard({ nft }) {
 
   return (
     <div style={{background:'rgba(4,5,10,.8)',borderRight:'1px solid var(--border)',borderBottom:'1px solid var(--border)',cursor:'pointer',overflow:'hidden'}}
-      onClick={() => window.open(`${C.explorer}/address/${nft.mint}`, '_blank')}>
+      onClick={() => window.open(NETWORK === 'testnet' ? `${C.explorer}/address/${nft.mint}?cluster=testnet` : `${C.explorer}/address/${nft.mint}`, '_blank')}>
       <div style={{aspectRatio:'1',position:'relative',overflow:'hidden'}}>
         {imgUrl
           ? <img src={imgUrl} alt={`CAPY #${nft.id}`} style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}} />
