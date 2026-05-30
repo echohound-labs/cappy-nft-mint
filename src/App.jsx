@@ -319,16 +319,24 @@ function useCapyMint(connection, wallet, onSuccess) {
       const sig2 = await connection.sendRawTransaction(signed2.serialize());
       await connection.confirmTransaction(sig2, 'confirmed');
 
-      // Parse mint number from event logs
-      const txDetails = await connection.getTransaction(sig2, { maxSupportedTransactionVersion: 0 });
-      const logs = txDetails?.meta?.logMessages || [];
-      const progIdx = logs.findLastIndex(l => l.includes(C.program) && l.includes('invoke'));
-      const eventLog = logs.slice(progIdx).find(l => l.startsWith('Program data: '));
+      // Parse token ID from on-chain metadata URI
       let tokenId = 0;
-      if (eventLog) {
-        const decoded = Buffer.from(eventLog.replace('Program data: ', ''), 'base64');
-        tokenId = decoded.readUInt32LE(8);
-      }
+      try {
+        const [metaPDA] = PublicKey.findProgramAddressSync(
+          [Buffer.from('metadata'), METADATA_PROGRAM.toBuffer(), nftMint.toBuffer()],
+          METADATA_PROGRAM
+        );
+        const metaAcc = await connection.getAccountInfo(metaPDA);
+        if (metaAcc) {
+          let off = 65;
+          const nameLen = metaAcc.data.readUInt32LE(off); off += 4 + nameLen;
+          const symLen = metaAcc.data.readUInt32LE(off); off += 4 + symLen;
+          const uriLen = metaAcc.data.readUInt32LE(off); off += 4;
+          const uri = metaAcc.data.slice(off, off + uriLen).toString('utf8').replace(/ +$/, '');
+          const m = uri.match(/\/(\d+)$/);
+          if (m) tokenId = parseInt(m[1]);
+        }
+      } catch(e) {}
 
       setTxSig(sig2);
       setMintedToken({ id: tokenId, tier: getTier(tokenId), mint: nftMint.toBase58() });
