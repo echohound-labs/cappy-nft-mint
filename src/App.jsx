@@ -594,7 +594,7 @@ function MyNFTCard({ nft }) {
     fetch(`/api/metadata/${nft.id}`)
       .then(r => r.json())
       .then(data => {
-        if (data.image) setImgUrl(`https://gateway.lighthouse.storage/ipfs/${data.image.replace('ipfs://','')}`);
+        if (data.image) setImgUrl(data.image.startsWith('ipfs://') ? `https://gateway.lighthouse.storage/ipfs/${data.image.replace('ipfs://','')}` : data.image);
       }).catch(()=>{});
   }, [nft.id]);
 
@@ -631,7 +631,7 @@ function GallerySection({ mintedNFTs }) {
           const res = await fetch(`/api/metadata/${nft.id}`);
           const data = await res.json();
           if (data.image) {
-            const cid = data.image.replace('ipfs://', '');
+            const cid = data.image.startsWith('ipfs://') ? data.image.replace('ipfs://','') : data.image.replace('https://gateway.lighthouse.storage/ipfs/','');
             meta[nft.id] = cid;
           }
         } catch(e) {}
