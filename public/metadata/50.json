@@ -1,7 +1,7 @@
 {
   "name": "Capy: City — Inferno",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "ipfs://Qmdm5RBZPYUNv5JsR5EABxzE292WG46orWmyFN1QoGW3YW",
+  "image": "https://gateway.lighthouse.storage/ipfs/Qmdm5RBZPYUNv5JsR5EABxzE292WG46orWmyFN1QoGW3YW",
   "attributes": [
     {
       "trait_type": "Tier",

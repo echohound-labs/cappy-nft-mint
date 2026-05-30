@@ -1,7 +1,7 @@
 {
   "name": "Capy: Space — Eclipse",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmP5L2e16veUUC7XZ3Z1R7EevfNYWMDFGGSMmncYvqThmn",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmP5L2e16veUUC7XZ3Z1R7EevfNYWMDFGGSMmncYvqThmn",
   "attributes": [
     {
       "trait_type": "Tier",

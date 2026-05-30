@@ -1,7 +1,7 @@
 {
   "name": "Capy: Space — Red Alert — Void",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmXUudvJRC7s56WnNb9LHZyq9Erh67Bg7dnY4zpCydTLnF",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmXUudvJRC7s56WnNb9LHZyq9Erh67Bg7dnY4zpCydTLnF",
   "attributes": [
     {
       "trait_type": "Tier",

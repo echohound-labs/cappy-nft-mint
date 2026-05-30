@@ -1,7 +1,7 @@
 {
   "name": "Capy: Desert — Sandstorm — Inferno",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmTexGwfcNtpRojPFnudh3WiWeSQSbbVNT1KZSoCk5AMKy",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmTexGwfcNtpRojPFnudh3WiWeSQSbbVNT1KZSoCk5AMKy",
   "attributes": [
     {
       "trait_type": "Tier",

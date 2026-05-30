@@ -1,7 +1,7 @@
 {
   "name": "Capy: Swamp — Eclipse",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmUvr8vp3UnUtxKrRVxx1C9XTEEJXomNbDkWaGQrtLAPWV",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmUvr8vp3UnUtxKrRVxx1C9XTEEJXomNbDkWaGQrtLAPWV",
   "attributes": [
     {
       "trait_type": "Tier",

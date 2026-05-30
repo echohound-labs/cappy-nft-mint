@@ -1,7 +1,7 @@
 {
   "name": "Capy: City — Storm",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmbmwyuLPoZvXK8kmpmhPwEN14v4U4nHcQPxEUJ6EiFKDm",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmbmwyuLPoZvXK8kmpmhPwEN14v4U4nHcQPxEUJ6EiFKDm",
   "attributes": [
     {
       "trait_type": "Tier",

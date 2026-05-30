@@ -1,7 +1,7 @@
 {
   "name": "Capy: Ocean — Eclipse",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmfLcEwbwz5u9PS9WB24UFnD84sk6FcbQ36RUHxeRxQXAX",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmfLcEwbwz5u9PS9WB24UFnD84sk6FcbQ36RUHxeRxQXAX",
   "attributes": [
     {
       "trait_type": "Tier",

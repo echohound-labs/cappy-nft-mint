@@ -1,7 +1,7 @@
 {
   "name": "Capy: Lava — Storm",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmUM92cyU2KRUvBaqZ7wSEkDNfT5yZGgznj8xBeLgauBhq",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmUM92cyU2KRUvBaqZ7wSEkDNfT5yZGgznj8xBeLgauBhq",
   "attributes": [
     {
       "trait_type": "Tier",

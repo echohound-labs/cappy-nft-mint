@@ -1,7 +1,7 @@
 {
   "name": "Capy: Snow — Eclipse",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmS37etRwJemuQHcu2nQbqCXjbHBzyraTMu4zkETwxBcSD",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmS37etRwJemuQHcu2nQbqCXjbHBzyraTMu4zkETwxBcSD",
   "attributes": [
     {
       "trait_type": "Tier",

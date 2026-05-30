@@ -1,7 +1,7 @@
 {
   "name": "Capy: Space — Inferno",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmbcDPNtrhp4o8xEuknUXMtpDghiySLCEKPp3sZPkApjQQ",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmbcDPNtrhp4o8xEuknUXMtpDghiySLCEKPp3sZPkApjQQ",
   "attributes": [
     {
       "trait_type": "Tier",

@@ -1,7 +1,7 @@
 {
   "name": "Capy: Lava — Eclipse",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmWfnJJQHyYyQf9HL4PaLHg79BguiSHYhafCZVs95ybNEu",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmWfnJJQHyYyQf9HL4PaLHg79BguiSHYhafCZVs95ybNEu",
   "attributes": [
     {
       "trait_type": "Tier",
