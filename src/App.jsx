@@ -747,12 +747,43 @@ function XNTTracker({ minted }) {
 
 // ── Main App ───────────────────────────────────────────────────────────
 
+function DisclaimerModal({ open, onClose }) {
+  if (!open) return null;
+  return (
+    <div style={{position:"fixed",top:0,left:0,width:"100%",height:"100%",background:"rgba(0,0,0,0.85)",zIndex:9999,display:"flex",alignItems:"center",justifyContent:"center"}} >
+      <div style={{background:"#0a0f1a",border:"1px solid rgba(0,220,255,0.2)",borderRadius:"12px",padding:"2rem",maxWidth:"560px",width:"90%",maxHeight:"80vh",overflowY:"auto"}}>
+        <h2 style={{color:"var(--cyan)",fontFamily:"var(--mono)",marginBottom:"1rem"}}>⚠ DISCLAIMER</h2>
+        <p style={{color:"#aaa",fontSize:".85rem",marginBottom:"1rem"}}><strong>Last updated: May 2026</strong></p>
+        <p style={{color:"#aaa",fontSize:".85rem",marginBottom:"1rem"}}>By accessing this website and participating in the Capy Warriors NFT mint, you acknowledge and agree to the following:</p>
+        <ol style={{color:"#aaa",fontSize:".85rem",lineHeight:1.8,paddingLeft:"1.2rem"}}>
+          <li><strong>No Financial Advice.</strong> Nothing on this website constitutes financial, investment, legal, or tax advice.</li>
+          <li><strong>High Risk.</strong> Cryptocurrency and NFTs are highly volatile and speculative. You may lose all funds spent.</li>
+          <li><strong>No Guarantees.</strong> The project makes no guarantees regarding token value, liquidity, returns, or market performance.</li>
+          <li><strong>Not a Security.</strong> Capy Warriors NFTs are not securities. They are digital collectibles.</li>
+          <li><strong>Random Mint.</strong> Your specific Capy is determined by on-chain randomness from the Geiger Entropy Oracle. Results are final.</li>
+          <li><strong>Regulatory Risk.</strong> Ensure compliance with local laws before participating.</li>
+          <li><strong>Smart Contract Risk.</strong> Smart contracts may contain bugs. Participation is at your own risk.</li>
+          <li><strong>No Refunds.</strong> All mints are final. No refunds once confirmed on-chain.</li>
+          <li><strong>Independent Project.</strong> Capy Warriors is not endorsed by or affiliated with the X1 Network Foundation.</li>
+          <li><strong>Age Requirement.</strong> You must be at least 18 years old to participate.</li>
+          <li><strong>Limitation of Liability.</strong> The creators disclaim all liability for any damages arising from participation.</li>
+        </ol>
+        <p style={{color:"#aaa",fontSize:".85rem",margin:"1rem 0"}}>By clicking "I Agree," you confirm that you have read, understood, and accept all terms above.</p>
+        <button onClick={onClose} style={{background:"var(--cyan)",color:"#000",border:"none",padding:".75rem 2rem",borderRadius:"6px",fontFamily:"var(--mono)",fontWeight:700,cursor:"pointer",width:"100%",fontSize:"1rem"}}>I AGREE — ENTER SITE</button>
+      </div>
+    </div>
+  );
+}
+
 function CapyApp() {
   const { connection } = useConnection();
   const wallet = useWallet();
   const mintState = useMintState(connection);
   const mintedNFTs = useMintedNFTs(connection, mintState.bitmap);
   const [refreshTick, setRefreshTick] = useState(0);
+  const [showDisclaimer, setShowDisclaimer] = useState(true);
+  const [agreed, setAgreed] = useState(false);
+  const handleAgree = () => { setAgreed(true); setShowDisclaimer(false); };
 
   const handleMintSuccess = useCallback(() => {
     setTimeout(() => {
@@ -796,6 +827,7 @@ function CapyApp() {
           <a href="#" className="btn-main">BUY $CAPY</a>
           <a href="#prize" className="btn-gold">🏆 WIN 50 XNT</a>
           <a href="#collection" className="btn-ghost">VIEW COLLECTION</a>
+          <a href="#mint" className="btn-cyan">⚔️ MINT NOW</a>
         </div>
         <div className="ticker">
           <div className="tick-inner">
@@ -1037,6 +1069,7 @@ function CapyApp() {
         </ul>
         <div className="f-meta">BLOCKCHAIN UNDER ATTACK<br />IMPLEMENT PROJECT CAPYBARA<br /><b>// CYPHEREUS PRIME // X1</b></div>
       </footer>
+      <DisclaimerModal open={showDisclaimer} onClose={handleAgree} />
     </div>
   );
 }
