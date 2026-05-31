@@ -34,7 +34,7 @@ const CONFIG = {
     lpTreasury: 'GZuBHE3fQCQ6eSTLMwWKrK15CjtWfA58BmxdtWwG5mJJ',
     oracleOperator: 'HGFisVbULNKqogtPuGTfcHG9y6i5nboZabYwifkiiodo',
     geiger: '2dQf9uaCzXewrDNLttmtzQmc3SmqfAHz3qahKQjtGQyY',
-    explorer: 'https://explorer.x1.xyz',
+    explorer: 'https://explorer.testnet.x1.xyz',
   },
   mainnet: {
     rpc: 'https://rpc.mainnet.x1.xyz',
@@ -43,7 +43,7 @@ const CONFIG = {
     lpTreasury: 'GZuBHE3fQCQ6eSTLMwWKrK15CjtWfA58BmxdtWwG5mJJ',
     oracleOperator: 'HGFisVbULNKqogtPuGTfcHG9y6i5nboZabYwifkiiodo',
     geiger: 'BxUNg2yo5371BQMZPkfcxdCptFRDHkhvEXNM1QNPBRYU',
-    explorer: 'https://explorer.x1.xyz',
+    explorer: 'https://explorer.mainnet.x1.xyz',
   },
 };
 
