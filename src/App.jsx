@@ -338,7 +338,7 @@ function useCapyMint(connection, wallet, onSuccess) {
         }
       } catch(e) {}
 
-      setTxSig(sig2);
+      setTxSig(sig1);
       setMintedToken({ id: tokenId, tier: getTier(tokenId), mint: nftMint.toBase58() });
       setStep('done');
       if (onSuccess) onSuccess();
