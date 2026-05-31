@@ -516,16 +516,20 @@ function MintSection({ mintState, onSuccess }) {
           MINT EARLY = LOWEST PRICE // PRICE INCREASES AS WAVES FILL
         </div>
         {/* Tier Breakdown */}
-        {mintState.bitmap && (
-          <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1px',border:'1px solid var(--border)',marginTop:'1rem',overflow:'hidden'}}>
-            {[{label:'MYTHIC',color:'var(--purple)',total:30,range:[1,30]},{label:'LEGENDARY',color:'var(--gold)',total:120,range:[31,150]},{label:'COMMON',color:'var(--cyan)',total:350,range:[151,500]}].map((t,i) => {
+        {mintState.bitmap && (() => {
+          const tiers = [{label:'MYTHIC',color:'var(--purple)',total:30,start:1,end:30},{label:'LEGENDARY',color:'var(--gold)',total:120,start:31,end:150},{label:'COMMON',color:'var(--cyan)',total:350,start:151,end:500}];
+          return <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1px',border:'1px solid var(--border)',marginTop:'1rem',overflow:'hidden'}}>
+            {tiers.map((t,i) => {
               let count = 0;
-              for(let id=t.range[0];id<=t.range[1];id++){const byte=Math.floor((id-1)/8);const bit=(id-1)%8;const val=mintState.bitmap[byte];if(val&&(val&(1<<bit)))count++;}
-              return <div key={t.label} style={{padding:'1rem',textAlign:'center',borderRight:i<2?'1px solid var(--border)':'none'}}><div style={{fontFamily:'var(--display)',fontSize:'1.5rem',color:t.color}}>{count}</div><div style={{fontFamily:'var(--mono)',fontSize:'.52rem',color:t.color,letterSpacing:'.15em'}}>{t.label}</div><div style={{fontFamily:'var(--mono)',fontSize:'.52rem',color:'var(--muted)'}}>{count} / {t.total} MINTED</div></div>;
+              for(let id=t.start;id<=t.end;id++){const byte=Math.floor((id-1)/8);const bit=(id-1)%8;if((mintState.bitmap[byte] >> bit) % 2 === 1)count++;}
+              return <div key={t.label} style={{padding:'1rem',textAlign:'center',borderRight:i<2?'1px solid var(--border)':'none'}}>
+                <div style={{fontFamily:'var(--display)',fontSize:'1.5rem',color:t.color}}>{count}</div>
+                <div style={{fontFamily:'var(--mono)',fontSize:'.52rem',color:t.color,letterSpacing:'.15em'}}>{t.label}</div>
+                <div style={{fontFamily:'var(--mono)',fontSize:'.52rem',color:'var(--muted)'}}>{count} / {t.total} MINTED</div>
+              </div>;
             })}
-          </div>
-        )}
-        </div>
+          </div>;
+        })()}
 
         {/* Geiger Steps */}
         {step !== 'idle' && step !== 'done' && (
