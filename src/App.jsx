@@ -565,7 +565,7 @@ function MintSection({ mintState, onSuccess }) {
                   ? 'linear-gradient(90deg,var(--cyan),var(--purple))'
                   : 'rgba(0,229,255,.1)',
                 color: step === 'idle' || step === 'done' ? 'var(--black)' : 'var(--muted)',
-                border:'none',padding:'.85rem 2.5rem',cursor: step === 'idle' || step === 'done' ? 'pointer' : 'default',
+                border:'none',padding:'.85rem 4rem',cursor: step === 'idle' || step === 'done' ? 'pointer' : 'default',
                 clipPath:'polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)',
                 fontWeight:500,transition:'all .2s',
               }}
@@ -580,7 +580,6 @@ function MintSection({ mintState, onSuccess }) {
               borderRadius:0,clipPath:'polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)',
             }} />
           )}
-          <a href="https://t.me/CAPYX1" target="_blank" rel="noopener noreferrer" className="btn-ghost">JOIN TELEGRAM ↗</a>
         </div>
       </div>
     </div>
