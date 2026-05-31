@@ -626,7 +626,7 @@ function GallerySection({ mintedNFTs }) {
     if (mintedNFTs.length === 0) return;
     const fetchMeta = async () => {
       const meta = {};
-      for (const nft of mintedNFTs.slice(0, 20)) {
+      for (const nft of mintedNFTs) {
         try {
           const res = await fetch(`/api/metadata/${nft.id}`);
           const data = await res.json();
@@ -649,7 +649,7 @@ function GallerySection({ mintedNFTs }) {
         <p className="sb">Each minted CAPY appears here as it's minted. Images stored decentrally on Lighthouse IPFS. Hover to see details.</p>
 
         <div className="minted-grid">
-          {Array.from({length: 20}, (_, i) => {
+          {Array.from({length: 500}, (_, i) => {
             const nft = mintedNFTs[i];
             if (nft) {
               const cid = nftMeta[nft.id];
