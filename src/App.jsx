@@ -824,7 +824,7 @@ function CapyApp() {
         </h1>
         <p className="hero-sub">THE CAPYBARA THAT GUARDS THE BLOCKCHAIN<br />NOW GUARDS THE MEME</p>
         <div className="btn-row">
-          <a href="#" className="btn-main">BUY $CAPY</a>
+          <a href="https://app.xdex.xyz/swap" target="_blank" rel="noopener noreferrer" className="btn-main">BUY $CAPY</a>
           <a href="#prize" className="btn-gold">🏆 WIN 50 XNT</a>
           <a href="#collection" className="btn-ghost">VIEW COLLECTION</a>
         </div>
