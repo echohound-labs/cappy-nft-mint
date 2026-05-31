@@ -827,7 +827,7 @@ function CapyApp() {
           <a href="#" className="btn-main">BUY $CAPY</a>
           <a href="#prize" className="btn-gold">🏆 WIN 50 XNT</a>
           <a href="#collection" className="btn-ghost">VIEW COLLECTION</a>
-          <a href="#mint" className="btn-cyan">⚔️ MINT NOW</a>
+          <a href="#collection" className="btn-main">⚔️ MINT NOW</a>
         </div>
         <div className="ticker">
           <div className="tick-inner">
