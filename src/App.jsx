@@ -957,7 +957,7 @@ function CapyApp() {
         <div className="btn-row">
           <a href="https://app.xdex.xyz/swap" target="_blank" rel="noopener noreferrer" style={{fontFamily:'var(--mono)',fontSize:'.72rem',letterSpacing:'.15em',background:'linear-gradient(90deg,var(--cyan),var(--purple))',color:'var(--black)',padding:'.85rem 2.5rem',textDecoration:'none',clipPath:'polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)'}}>BUY $CAPY</a>
           <a href="https://x1.ninja/pair/GdKcXA1Q78Bquke5jyZUR1C8YMN6VYT9AUheN1RwKLfe" target="_blank" rel="noopener noreferrer" style={{fontFamily:'var(--mono)',fontSize:'.72rem',letterSpacing:'.15em',background:'linear-gradient(90deg,var(--purple),var(--cyan))',color:'var(--black)',padding:'.85rem 2.5rem',textDecoration:'none',clipPath:'polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)'}}>📊 CHART</a>
-          <a href="#collection" style={{fontFamily:'var(--mono)',fontSize:'.72rem',letterSpacing:'.15em',background:'linear-gradient(90deg,var(--gold),var(--orange))',color:'var(--black)',padding:'.85rem 2.5rem',textDecoration:'none',clipPath:'polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)'}}>VIEW COLLECTION</a>
+          <a href="#collection" style={{fontFamily:'var(--mono)',fontSize:'.72rem',letterSpacing:'.15em',background:'linear-gradient(90deg,#c084fc,var(--gold))',color:'var(--black)',padding:'.85rem 2.5rem',textDecoration:'none',clipPath:'polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)'}}>VIEW COLLECTION</a>
         </div>
         <div className="ticker">
           <div className="tick-inner">
