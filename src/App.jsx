@@ -155,14 +155,17 @@ function MarketBar() {
     const t = setInterval(load, 30000);
     return () => clearInterval(t);
   }, []);
-
+  const items = [['$CAPY',price],['MCAP',mcap],['XNT',xnt],['SUPPLY','1B'],['FAIRLY LAUNCHED','DEGEN LAUNCHPAD X1'],['$CAPY',price],['MCAP',mcap],['XNT',xnt],['SUPPLY','1B'],['FAIRLY LAUNCHED','DEGEN LAUNCHPAD X1']];
   return (
-    <div style={{background:'#00e5ff',minHeight:'40px',marginTop:'65px',padding:'.6rem 2rem',display:'flex',alignItems:'center',justifyContent:'center',gap:'3rem',flexWrap:'wrap',fontFamily:'monospace',fontSize:'.7rem',fontWeight:'bold',letterSpacing:'.1em',color:'#000'}}>
-      <span>$CAPY: {price}</span>
-      <span>MCAP: {mcap}</span>
-      <span>XNT: {xnt}</span>
-      <span>SUPPLY: 1B</span>
-      <span>FAIRLY LAUNCHED — DEGEN LAUNCHPAD X1</span>
+    <div style={{marginTop:'65px',position:'relative',zIndex:2,width:'100%',overflow:'hidden',borderTop:'1px solid var(--border)',borderBottom:'1px solid var(--border)',background:'rgba(0,229,255,0.02)',padding:'.5rem 0'}}>
+      <div style={{display:'flex',gap:'3rem',whiteSpace:'nowrap',width:'max-content',animation:'tick 30s linear infinite'}}>
+        {items.map(([label,val],i) => (
+          <div key={i} style={{display:'flex',alignItems:'center',gap:'.5rem',fontFamily:'var(--mono)',fontSize:'.62rem',letterSpacing:'.1em',color:'var(--muted)'}}>
+            <span>{label}</span>
+            <b style={{color:'var(--cyan)',fontWeight:400}}>{val}</b>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
