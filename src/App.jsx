@@ -166,8 +166,6 @@ function MarketBar() {
     </div>
   );
 }
-  );
-}
 
 function getTier(tokenNumber) {
   if (tokenNumber <= 30) return { name: 'Mythic', color: 'var(--purple)', short: 'M' };
