@@ -959,7 +959,6 @@ function CapyApp() {
         <div className="ticker">
           <div className="tick-inner">
             {[
-            {[
               ['$CAPY', capyPrice],
               ['MCAP', capyMcap],
               ['XNT', capyXnt],
