@@ -945,12 +945,10 @@ function CapyApp() {
       <div className="hero">
         <div className="orb1" /><div className="orb2" /><div className="orb3" />
         <div className="alert-bar">⚠ BLOCKCHAIN UNDER ATTACK — IMPLEMENT PROJECT CAPYBARA</div>
-        <div className="hero-tag">X1 NETWORK // COMMUNITY MEME</div>
         <h1 className="hero-title">
-          <span className="t1">CAPY WARRIORS</span>
-          <span className="t2">X1</span>
+          <span className="t1">X1 CAPY WARRIORS</span>
         </h1>
-        <p className="hero-sub">THE CAPYBARA THAT GUARDS THE BLOCKCHAIN<br />NOW GUARDS THE MEME</p>
+        <p className="hero-sub" style={{color:'var(--cyan)',opacity:.9,fontSize:'.9rem',letterSpacing:'.15em'}}>THE CAPYBARA THAT GUARDS THE BLOCKCHAIN<br />NOW GUARDS THE MEME</p>
         <div style={{fontFamily:'var(--mono)',fontSize:'.55rem',letterSpacing:'.1em',color:'var(--muted)',marginBottom:'1.5rem',display:'flex',alignItems:'center',justifyContent:'center',gap:'.75rem',flexWrap:'wrap'}}>
           <span style={{color:'rgba(255,255,255,0.3)'}}>CA:</span>
           <span style={{color:'var(--cyan)'}}>AnvCcvnY4DLRW42EZBEAb1QeU6Pt9aab3r3D75GtgJUU</span>
