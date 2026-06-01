@@ -121,36 +121,51 @@ function useCapyMarketData() {
 }
 
 function MarketBar() {
-  const data = useCapyMarketData();
-  const fmtUsd = (n) => n == null ? 'LOADING' : n < 0.0001 ? '$' + n.toExponential(3) : '$' + n.toLocaleString(undefined, { minimumFractionDigits: n < 0.01 ? 6 : 4, maximumFractionDigits: n < 0.01 ? 6 : 4 });
+  const [price, setPrice] = useState('...');
+  const [mcap, setMcap] = useState('...');
+  const [xnt, setXnt] = useState('...');
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const call = (account) => fetch('/api/rpc', {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({jsonrpc:'2.0',id:1,method:'getTokenAccountBalance',params:[account]})
+        }).then(r => r.json()).then(d => Number(d?.result?.value?.uiAmount || 0));
+
+        const [capy, xntAmt, xntPool, usdc] = await Promise.all([
+          call('CCd6V4WZZ3qXEZSV4daDxvWRLR2V35WGqjxLupW8Ex88'),
+          call('14rjAEfArCzNFktWQU6MSkgUjAjMkqqGACoNY9xPVyxc'),
+          call('8wvV4HKBDFMLEUkVWp1WPNa5ano99XCm3f9t3troyLb'),
+          call('7iw2adw8Af7x3pY7gj5RwczFXuGjCoX92Gfy3avwXQtg'),
+        ]);
+
+        const xntUsd = usdc / xntPool;
+        const capyXnt = xntAmt / capy;
+        const capyUsd = capyXnt * xntUsd;
+        const mc = capyUsd * 999993336;
+
+        setXnt('$' + xntUsd.toFixed(4));
+        setPrice('$' + capyUsd.toLocaleString(undefined, {minimumFractionDigits:6,maximumFractionDigits:6}));
+        setMcap('$' + Math.round(mc).toLocaleString());
+      } catch(e) { setPrice('ERR'); }
+    }
+    load();
+    const t = setInterval(load, 30000);
+    return () => clearInterval(t);
+  }, []);
+
   return (
-    <div style={{background:'#00e5ff',borderBottom:'2px solid #00e5ff',padding:'.6rem 1rem',display:'grid',gridTemplateColumns:'repeat(5,1fr)',alignItems:'center',fontFamily:'monospace',fontSize:'.65rem',letterSpacing:'.1em',textAlign:'center'}}>
-      <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
-        <span style={{color:'#000000'}}>$CAPY PRICE</span>
-        <span style={{color:'#000000'}}>{fmtUsd(data?.capyUsd)}</span>
-        <span style={{color:'#000000',fontSize:'.7rem'}}>{data ? data.capyXnt.toFixed(8) + ' XNT' : '...'}</span>
-      </div>
-      
-      <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
-        <span style={{color:'#000000'}}>MARKET CAP</span>
-        <span style={{color:'#000000'}}>{data ? '$' + Math.round(data.marketCapUsd).toLocaleString() : '...'}</span>
-      </div>
-      
-      <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
-        <span style={{color:'#000000'}}>XNT</span>
-        <span style={{color:'#000000'}}>{data ? '$' + data.xntUsd.toFixed(4) : '...'}</span>
-      </div>
-      
-      <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
-        <span style={{color:'#000000'}}>SUPPLY</span>
-        <span style={{color:'#000000'}}>1B $CAPY</span>
-      </div>
-      
-      <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
-        <span style={{color:'#000000'}}>⚡ FAIRLY LAUNCHED</span>
-        <span style={{color:'#000000'}}>DEGEN LAUNCHPAD X1</span>
-      </div>
+    <div style={{background:'#00e5ff',padding:'.6rem 2rem',display:'flex',alignItems:'center',justifyContent:'center',gap:'3rem',flexWrap:'wrap',fontFamily:'monospace',fontSize:'.7rem',fontWeight:'bold',letterSpacing:'.1em',color:'#000'}}>
+      <span>$CAPY: {price}</span>
+      <span>MCAP: {mcap}</span>
+      <span>XNT: {xnt}</span>
+      <span>SUPPLY: 1B</span>
+      <span>FAIRLY LAUNCHED — DEGEN LAUNCHPAD X1</span>
     </div>
+  );
+}
   );
 }
 
