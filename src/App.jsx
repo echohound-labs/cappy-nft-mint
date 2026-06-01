@@ -157,7 +157,7 @@ function MarketBar() {
   }, []);
 
   return (
-    <div style={{background:'#00e5ff',padding:'.6rem 2rem',display:'flex',alignItems:'center',justifyContent:'center',gap:'3rem',flexWrap:'wrap',fontFamily:'monospace',fontSize:'.7rem',fontWeight:'bold',letterSpacing:'.1em',color:'#000'}}>
+    <div style={{background:'#00e5ff',minHeight:'40px',padding:'.6rem 2rem',display:'flex',alignItems:'center',justifyContent:'center',gap:'3rem',flexWrap:'wrap',fontFamily:'monospace',fontSize:'.7rem',fontWeight:'bold',letterSpacing:'.1em',color:'#000'}}>
       <span>$CAPY: {price}</span>
       <span>MCAP: {mcap}</span>
       <span>XNT: {xnt}</span>
