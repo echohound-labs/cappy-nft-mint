@@ -155,7 +155,7 @@ function MarketBar() {
     const t = setInterval(load, 30000);
     return () => clearInterval(t);
   }, []);
-  const items = [['$CAPY',price],['MCAP',mcap],['XNT',xnt],['SUPPLY','1B'],['FAIRLY LAUNCHED','DEGEN LAUNCHPAD X1'],['$CAPY',price],['MCAP',mcap],['XNT',xnt],['SUPPLY','1B'],['FAIRLY LAUNCHED','DEGEN LAUNCHPAD X1']];
+  const items = [['$CAPY',price],['MCAP',mcap],['XNT',xnt],['SUPPLY','1B'],['MINT PRICE','10 XNT FLAT'],['500 NFTS','30 MYTHIC'],['120 LEGENDARY','350 COMMON'],['STORAGE','LIGHTHOUSE IPFS'],['RANDOMNESS','GEIGER ENTROPY ORACLE'],['FAIRLY LAUNCHED','DEGEN LAUNCHPAD X1'],['$CAPY',price],['MCAP',mcap],['XNT',xnt],['SUPPLY','1B'],['MINT PRICE','10 XNT FLAT'],['500 NFTS','30 MYTHIC'],['120 LEGENDARY','350 COMMON'],['STORAGE','LIGHTHOUSE IPFS'],['RANDOMNESS','GEIGER ENTROPY ORACLE'],['FAIRLY LAUNCHED','DEGEN LAUNCHPAD X1']];
   return (
     <div style={{marginTop:'65px',position:'relative',zIndex:2,width:'100%',overflow:'hidden',borderTop:'1px solid var(--border)',borderBottom:'1px solid var(--border)',background:'rgba(0,229,255,0.02)',padding:'.5rem 0'}}>
       <div style={{display:'flex',gap:'3rem',whiteSpace:'nowrap',width:'max-content',animation:'tick 30s linear infinite'}}>
