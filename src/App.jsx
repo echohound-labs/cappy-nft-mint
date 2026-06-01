@@ -71,6 +71,88 @@ function getMintsUntilNextWave(minted) {
   return null;
 }
 
+
+// ── Market Cap Tracker ─────────────────────────────────────────────────
+const RPC_URL = 'https://rpc.mainnet.x1.xyz';
+const CAPY_VAULT = 'CCd6V4WZZ3qXEZSV4daDxvWRLR2V35WGqjxLupW8Ex88';
+const XNT_CAPY_VAULT = '14rjAEfArCzNFktWQU6MSkgUjAjMkqqGACoNY9xPVyxc';
+const XNT_USDC_VAULT_XNT = '8wvV4HKBDFMLEUkVWp1WPNa5ano99XCm3f9t3troyLb';
+const XNT_USDC_VAULT_USDC = '7iw2adw8Af7x3pY7gj5RwczFXuGjCoX92Gfy3avwXQtg';
+const CAPY_TOTAL_SUPPLY = 999993336.999;
+
+async function fetchTokenBalance(account) {
+  try {
+    const res = await fetch(RPC_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'getTokenAccountBalance', params: [account] }),
+    });
+    const j = await res.json();
+    return Number(j?.result?.value?.uiAmount || 0);
+  } catch { return null; }
+}
+
+function useCapyMarketData() {
+  const [data, setData] = useState(null);
+  const refresh = useCallback(async () => {
+    try {
+      const [capyAmt, xntAmt, xntPoolAmt, usdcAmt] = await Promise.all([
+        fetchTokenBalance(CAPY_VAULT),
+        fetchTokenBalance(XNT_CAPY_VAULT),
+        fetchTokenBalance(XNT_USDC_VAULT_XNT),
+        fetchTokenBalance(XNT_USDC_VAULT_USDC),
+      ]);
+      if (!capyAmt || !xntAmt || !xntPoolAmt || !usdcAmt) return;
+      const xntUsd = usdcAmt / xntPoolAmt;
+      const capyXnt = xntAmt / capyAmt;
+      const capyUsd = capyXnt * xntUsd;
+      const marketCapUsd = capyUsd * CAPY_TOTAL_SUPPLY;
+      const marketCapXnt = capyXnt * CAPY_TOTAL_SUPPLY;
+      setData({ capyUsd, capyXnt, marketCapUsd, marketCapXnt, xntUsd, capyAmt, xntAmt });
+    } catch {}
+  }, []);
+  useEffect(() => {
+    refresh();
+    const id = setInterval(refresh, 30000);
+    return () => clearInterval(id);
+  }, [refresh]);
+  return data;
+}
+
+function MarketBar() {
+  const data = useCapyMarketData();
+  const fmtUsd = (n) => n == null ? '...' : n < 0.0001 ? '$' + n.toExponential(3) : '$' + n.toLocaleString(undefined, { minimumFractionDigits: n < 0.01 ? 6 : 4, maximumFractionDigits: n < 0.01 ? 6 : 4 });
+  return (
+    <div style={{background:'rgba(0,229,255,0.03)',borderBottom:'1px solid rgba(0,229,255,0.12)',padding:'.6rem 2rem',display:'flex',alignItems:'center',justifyContent:'center',gap:'2rem',flexWrap:'wrap',fontFamily:'var(--mono)',fontSize:'.58rem',letterSpacing:'.15em'}}>
+      <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
+        <span style={{color:'var(--muted)'}}>$CAPY PRICE</span>
+        <span style={{color:'var(--cyan)'}}>{fmtUsd(data?.capyUsd)}</span>
+        <span style={{color:'var(--muted)',fontSize:'.5rem'}}>{data ? data.capyXnt.toFixed(8) + ' XNT' : '...'}</span>
+      </div>
+      <div style={{width:'1px',height:'12px',background:'var(--border)'}} />
+      <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
+        <span style={{color:'var(--muted)'}}>MARKET CAP</span>
+        <span style={{color:'var(--green)'}}>{data ? '$' + Math.round(data.marketCapUsd).toLocaleString() : '...'}</span>
+      </div>
+      <div style={{width:'1px',height:'12px',background:'var(--border)'}} />
+      <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
+        <span style={{color:'var(--muted)'}}>XNT</span>
+        <span style={{color:'var(--gold)'}}>{data ? '$' + data.xntUsd.toFixed(4) : '...'}</span>
+      </div>
+      <div style={{width:'1px',height:'12px',background:'var(--border)'}} />
+      <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
+        <span style={{color:'var(--muted)'}}>SUPPLY</span>
+        <span style={{color:'var(--muted)'}}>1B $CAPY</span>
+      </div>
+      <div style={{width:'1px',height:'12px',background:'var(--border)'}} />
+      <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
+        <span style={{color:'var(--purple)'}}>⚡ FAIRLY LAUNCHED</span>
+        <span style={{color:'var(--muted)'}}>DEGEN LAUNCHPAD X1</span>
+      </div>
+    </div>
+  );
+}
+
 function getTier(tokenNumber) {
   if (tokenNumber <= 30) return { name: 'Mythic', color: 'var(--purple)', short: 'M' };
   if (tokenNumber <= 150) return { name: 'Legendary', color: 'var(--cyan)', short: 'L' };
