@@ -102,8 +102,8 @@ function useCapyMarketData() {
         fetchTokenBalance(XNT_USDC_VAULT_XNT),
         fetchTokenBalance(XNT_USDC_VAULT_USDC),
       ]);
-      console.log('CAPY market data:', {capyAmt, xntAmt, xntPoolAmt, usdcAmt});
-      if (!capyAmt || !xntAmt || !xntPoolAmt || !usdcAmt) return;
+      if (capyAmt == null || xntAmt == null || xntPoolAmt == null || usdcAmt == null) return;
+      if (capyAmt === 0 || xntPoolAmt === 0) return;
       const xntUsd = usdcAmt / xntPoolAmt;
       const capyXnt = xntAmt / capyAmt;
       const capyUsd = capyXnt * xntUsd;
