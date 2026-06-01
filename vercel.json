@@ -8,6 +8,10 @@
       "destination": "/metadata/:id.json"
     },
     {
+      "source": "/api/rpc",
+      "destination": "/api/rpc.js"
+    },
+    {
       "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
