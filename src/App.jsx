@@ -124,31 +124,31 @@ function MarketBar() {
   const data = useCapyMarketData();
   const fmtUsd = (n) => n == null ? '...' : n < 0.0001 ? '$' + n.toExponential(3) : '$' + n.toLocaleString(undefined, { minimumFractionDigits: n < 0.01 ? 6 : 4, maximumFractionDigits: n < 0.01 ? 6 : 4 });
   return (
-    <div style={{background:'rgba(0,10,20,0.95)',borderBottom:'1px solid var(--cyan)',padding:'.75rem 2rem',display:'flex',alignItems:'center',justifyContent:'center',gap:'2rem',flexWrap:'wrap',fontFamily:'var(--mono)',fontSize:'.65rem',letterSpacing:'.15em'}}>
+    <div style={{background:'#040a14',borderBottom:'1px solid #00e5ff',padding:'.75rem 2rem',display:'flex',alignItems:'center',justifyContent:'center',gap:'2rem',flexWrap:'wrap',fontFamily:'monospace',fontSize:'.65rem',letterSpacing:'.15em'}}>
       <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
-        <span style={{color:'var(--muted)'}}>$CAPY PRICE</span>
-        <span style={{color:'var(--cyan)'}}>{fmtUsd(data?.capyUsd)}</span>
-        <span style={{color:'var(--muted)',fontSize:'.5rem'}}>{data ? data.capyXnt.toFixed(8) + ' XNT' : '...'}</span>
+        <span style={{color:'#6b7280'}}>$CAPY PRICE</span>
+        <span style={{color:'#00e5ff'}}>{fmtUsd(data?.capyUsd)}</span>
+        <span style={{color:'#6b7280',fontSize:'.5rem'}}>{data ? data.capyXnt.toFixed(8) + ' XNT' : '...'}</span>
       </div>
-      <div style={{width:'1px',height:'12px',background:'var(--border)'}} />
+      <div style={{width:'1px',height:'12px',background:'#1f2937'}} />
       <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
-        <span style={{color:'var(--muted)'}}>MARKET CAP</span>
-        <span style={{color:'var(--green)'}}>{data ? '$' + Math.round(data.marketCapUsd).toLocaleString() : '...'}</span>
+        <span style={{color:'#6b7280'}}>MARKET CAP</span>
+        <span style={{color:'#00ff88'}}>{data ? '$' + Math.round(data.marketCapUsd).toLocaleString() : '...'}</span>
       </div>
-      <div style={{width:'1px',height:'12px',background:'var(--border)'}} />
+      <div style={{width:'1px',height:'12px',background:'#1f2937'}} />
       <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
-        <span style={{color:'var(--muted)'}}>XNT</span>
-        <span style={{color:'var(--gold)'}}>{data ? '$' + data.xntUsd.toFixed(4) : '...'}</span>
+        <span style={{color:'#6b7280'}}>XNT</span>
+        <span style={{color:'#ffc940'}}>{data ? '$' + data.xntUsd.toFixed(4) : '...'}</span>
       </div>
-      <div style={{width:'1px',height:'12px',background:'var(--border)'}} />
+      <div style={{width:'1px',height:'12px',background:'#1f2937'}} />
       <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
-        <span style={{color:'var(--muted)'}}>SUPPLY</span>
-        <span style={{color:'var(--muted)'}}>1B $CAPY</span>
+        <span style={{color:'#6b7280'}}>SUPPLY</span>
+        <span style={{color:'#ffffff'}}>1B $CAPY</span>
       </div>
-      <div style={{width:'1px',height:'12px',background:'var(--border)'}} />
+      <div style={{width:'1px',height:'12px',background:'#1f2937'}} />
       <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
-        <span style={{color:'var(--purple)'}}>⚡ FAIRLY LAUNCHED</span>
-        <span style={{color:'var(--muted)'}}>DEGEN LAUNCHPAD X1</span>
+        <span style={{color:'#a855f7'}}>⚡ FAIRLY LAUNCHED</span>
+        <span style={{color:'#6b7280'}}>DEGEN LAUNCHPAD X1</span>
       </div>
     </div>
   );
