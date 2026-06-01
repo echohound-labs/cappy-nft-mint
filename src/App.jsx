@@ -123,7 +123,7 @@ function MarketBar() {
   const data = useCapyMarketData();
   const fmtUsd = (n) => n == null ? '...' : n < 0.0001 ? '$' + n.toExponential(3) : '$' + n.toLocaleString(undefined, { minimumFractionDigits: n < 0.01 ? 6 : 4, maximumFractionDigits: n < 0.01 ? 6 : 4 });
   return (
-    <div style={{background:'rgba(0,229,255,0.03)',borderBottom:'1px solid rgba(0,229,255,0.12)',padding:'.6rem 2rem',display:'flex',alignItems:'center',justifyContent:'center',gap:'2rem',flexWrap:'wrap',fontFamily:'var(--mono)',fontSize:'.58rem',letterSpacing:'.15em'}}>
+    <div style={{background:'rgba(0,10,20,0.95)',borderBottom:'1px solid var(--cyan)',padding:'.75rem 2rem',display:'flex',alignItems:'center',justifyContent:'center',gap:'2rem',flexWrap:'wrap',fontFamily:'var(--mono)',fontSize:'.65rem',letterSpacing:'.15em'}}>
       <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
         <span style={{color:'var(--muted)'}}>$CAPY PRICE</span>
         <span style={{color:'var(--cyan)'}}>{fmtUsd(data?.capyUsd)}</span>
