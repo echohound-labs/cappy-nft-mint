@@ -892,6 +892,24 @@ function CapyApp() {
   const mintedNFTs = useMintedNFTs(connection, mintState.bitmap);
   const [refreshTick, setRefreshTick] = useState(0);
   const [showDisclaimer, setShowDisclaimer] = useState(true);
+  const [capyPrice, setCapyPrice] = useState("...");
+  const [capyMcap, setCapyMcap] = useState("...");
+  const [capyXnt, setCapyXnt] = useState("...");
+  useEffect(() => {
+    async function loadPrice() {
+      try {
+        const call = (account) => fetch("/api/rpc", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({jsonrpc:"2.0",id:1,method:"getTokenAccountBalance",params:[account]})}).then(r=>r.json()).then(d=>Number(d?.result?.value?.uiAmount||0));
+        const [capy,xntAmt,xntPool,usdc] = await Promise.all([call("CCd6V4WZZ3qXEZSV4daDxvWRLR2V35WGqjxLupW8Ex88"),call("14rjAEfArCzNFktWQU6MSkgUjAjMkqqGACoNY9xPVyxc"),call("8wvV4HKBDFMLEUkVWp1WPNa5ano99XCm3f9t3troyLb"),call("7iw2adw8Af7x3pY7gj5RwczFXuGjCoX92Gfy3avwXQtg")]);
+        const xntUsd=usdc/xntPool; const capyXntPrice=xntAmt/capy; const capyUsd=capyXntPrice*xntUsd;
+        setCapyXnt("$"+xntUsd.toFixed(4));
+        setCapyPrice("$"+capyUsd.toLocaleString(undefined,{minimumFractionDigits:6,maximumFractionDigits:6}));
+        setCapyMcap("$"+Math.round(capyUsd*999993336).toLocaleString());
+      } catch(e){}
+    }
+    loadPrice();
+    const t=setInterval(loadPrice,30000);
+    return ()=>clearInterval(t);
+  },[]);
   const [agreed, setAgreed] = useState(false);
   const handleAgree = () => { setAgreed(true); setShowDisclaimer(false); };
 
@@ -922,7 +940,6 @@ function CapyApp() {
           }} />
         </div>
       </nav>
-      <MarketBar />
 
       {/* HERO */}
       <div className="hero">
@@ -942,20 +959,28 @@ function CapyApp() {
         <div className="ticker">
           <div className="tick-inner">
             {[
-              ['$CAPY','FAIRLY LAUNCHED','tg'],
+            {[
+              ['$CAPY', capyPrice],
+              ['MCAP', capyMcap],
+              ['XNT', capyXnt],
               ['PLATFORM','DEGEN LAUNCHPAD X1','to'],
               ['500 NFTS','30 MYTHIC','tgo'],
               ['120 LEGENDARY','350 COMMON','tg'],
               ['STORAGE','LIGHTHOUSE IPFS','tc'],
               ['RANDOMNESS','GEIGER ENTROPY ORACLE','tp'],
               ['MINT PRICE','10 XNT FLAT','tg'],
-              ['$CAPY','FAIRLY LAUNCHED','tg'],
+              ['$CAPY', capyPrice],
+              ['MCAP', capyMcap],
+              ['XNT', capyXnt],
               ['PLATFORM','DEGEN LAUNCHPAD X1','to'],
               ['500 NFTS','30 MYTHIC','tgo'],
               ['120 LEGENDARY','350 COMMON','tg'],
               ['STORAGE','LIGHTHOUSE IPFS','tc'],
               ['RANDOMNESS','GEIGER ENTROPY ORACLE','tp'],
               ['MINT PRICE','10 XNT FLAT','tg'],
+            ].map(([label, value, cls='tg'], i) => (
+              <div key={i} className="tick-item">{label} <b className={cls}>{value}</b></div>
+            ))}
             ].map(([label, value, cls], i) => (
               <div key={i} className="tick-item">{label} <b className={cls}>{value}</b></div>
             ))}
