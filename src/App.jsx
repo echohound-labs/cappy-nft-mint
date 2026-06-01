@@ -122,7 +122,7 @@ function useCapyMarketData() {
 
 function MarketBar() {
   const data = useCapyMarketData();
-  const fmtUsd = (n) => n == null ? '...' : n < 0.0001 ? '$' + n.toExponential(3) : '$' + n.toLocaleString(undefined, { minimumFractionDigits: n < 0.01 ? 6 : 4, maximumFractionDigits: n < 0.01 ? 6 : 4 });
+  const fmtUsd = (n) => n == null ? 'LOADING' : n < 0.0001 ? '$' + n.toExponential(3) : '$' + n.toLocaleString(undefined, { minimumFractionDigits: n < 0.01 ? 6 : 4, maximumFractionDigits: n < 0.01 ? 6 : 4 });
   return (
     <div style={{background:'#040a14',borderBottom:'1px solid #00e5ff',padding:'.75rem 2rem',display:'flex',alignItems:'center',justifyContent:'center',gap:'2rem',flexWrap:'wrap',fontFamily:'monospace',fontSize:'.65rem',letterSpacing:'.15em'}}>
       <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
