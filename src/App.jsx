@@ -71,6 +71,88 @@ function getMintsUntilNextWave(minted) {
   return null;
 }
 
+
+// ── Market Cap Tracker ─────────────────────────────────────────────────
+const RPC_URL = 'https://rpc.mainnet.x1.xyz';
+const CAPY_VAULT = 'CCd6V4WZZ3qXEZSV4daDxvWRLR2V35WGqjxLupW8Ex88';
+const XNT_CAPY_VAULT = '14rjAEfArCzNFktWQU6MSkgUjAjMkqqGACoNY9xPVyxc';
+const XNT_USDC_VAULT_XNT = '8wvV4HKBDFMLEUkVWp1WPNa5ano99XCm3f9t3troyLb';
+const XNT_USDC_VAULT_USDC = '7iw2adw8Af7x3pY7gj5RwczFXuGjCoX92Gfy3avwXQtg';
+const CAPY_TOTAL_SUPPLY = 999993336.999;
+
+async function fetchTokenBalance(account) {
+  try {
+    const res = await fetch(RPC_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'getTokenAccountBalance', params: [account] }),
+    });
+    const j = await res.json();
+    return Number(j?.result?.value?.uiAmount || 0);
+  } catch { return null; }
+}
+
+function useCapyMarketData() {
+  const [data, setData] = useState(null);
+  const refresh = useCallback(async () => {
+    try {
+      const [capyAmt, xntAmt, xntPoolAmt, usdcAmt] = await Promise.all([
+        fetchTokenBalance(CAPY_VAULT),
+        fetchTokenBalance(XNT_CAPY_VAULT),
+        fetchTokenBalance(XNT_USDC_VAULT_XNT),
+        fetchTokenBalance(XNT_USDC_VAULT_USDC),
+      ]);
+      if (!capyAmt || !xntAmt || !xntPoolAmt || !usdcAmt) return;
+      const xntUsd = usdcAmt / xntPoolAmt;
+      const capyXnt = xntAmt / capyAmt;
+      const capyUsd = capyXnt * xntUsd;
+      const marketCapUsd = capyUsd * CAPY_TOTAL_SUPPLY;
+      const marketCapXnt = capyXnt * CAPY_TOTAL_SUPPLY;
+      setData({ capyUsd, capyXnt, marketCapUsd, marketCapXnt, xntUsd, capyAmt, xntAmt });
+    } catch {}
+  }, []);
+  useEffect(() => {
+    refresh();
+    const id = setInterval(refresh, 30000);
+    return () => clearInterval(id);
+  }, [refresh]);
+  return data;
+}
+
+function MarketBar() {
+  const data = useCapyMarketData();
+  const fmtUsd = (n) => n == null ? '...' : n < 0.0001 ? '$' + n.toExponential(3) : '$' + n.toLocaleString(undefined, { minimumFractionDigits: n < 0.01 ? 6 : 4, maximumFractionDigits: n < 0.01 ? 6 : 4 });
+  return (
+    <div style={{background:'rgba(0,229,255,0.03)',borderBottom:'1px solid rgba(0,229,255,0.12)',padding:'.6rem 2rem',display:'flex',alignItems:'center',justifyContent:'center',gap:'2rem',flexWrap:'wrap',fontFamily:'var(--mono)',fontSize:'.58rem',letterSpacing:'.15em'}}>
+      <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
+        <span style={{color:'var(--muted)'}}>$CAPY PRICE</span>
+        <span style={{color:'var(--cyan)'}}>{fmtUsd(data?.capyUsd)}</span>
+        <span style={{color:'var(--muted)',fontSize:'.5rem'}}>{data ? data.capyXnt.toFixed(8) + ' XNT' : '...'}</span>
+      </div>
+      <div style={{width:'1px',height:'12px',background:'var(--border)'}} />
+      <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
+        <span style={{color:'var(--muted)'}}>MARKET CAP</span>
+        <span style={{color:'var(--green)'}}>{data ? '$' + Math.round(data.marketCapUsd).toLocaleString() : '...'}</span>
+      </div>
+      <div style={{width:'1px',height:'12px',background:'var(--border)'}} />
+      <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
+        <span style={{color:'var(--muted)'}}>XNT</span>
+        <span style={{color:'var(--gold)'}}>{data ? '$' + data.xntUsd.toFixed(4) : '...'}</span>
+      </div>
+      <div style={{width:'1px',height:'12px',background:'var(--border)'}} />
+      <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
+        <span style={{color:'var(--muted)'}}>SUPPLY</span>
+        <span style={{color:'var(--muted)'}}>1B $CAPY</span>
+      </div>
+      <div style={{width:'1px',height:'12px',background:'var(--border)'}} />
+      <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
+        <span style={{color:'var(--purple)'}}>⚡ FAIRLY LAUNCHED</span>
+        <span style={{color:'var(--muted)'}}>DEGEN LAUNCHPAD X1</span>
+      </div>
+    </div>
+  );
+}
+
 function getTier(tokenNumber) {
   if (tokenNumber <= 30) return { name: 'Mythic', color: 'var(--purple)', short: 'M' };
   if (tokenNumber <= 150) return { name: 'Legendary', color: 'var(--cyan)', short: 'L' };
@@ -446,14 +528,9 @@ function MintSection({ mintState, onSuccess }) {
   }, [step]);
 
   const { minted } = mintState;
-  const wave1 = Math.min(minted, WAVE1_MAX);
-  const wave2 = Math.min(Math.max(minted - WAVE1_MAX, 0), WAVE2_MAX);
-  const wave3 = Math.min(Math.max(minted - WAVE1_MAX - WAVE2_MAX, 0), WAVE3_MAX);
-  const currentPrice = getCurrentPrice(minted);
-  const nextWave = getMintsUntilNextWave(minted);
 
   const buttonLabel = {
-    idle: wallet.connected ? `MINT CAPY WARRIOR — ${currentPrice} XNT` : 'CONNECT WALLET TO MINT',
+    idle: wallet.connected ? 'MINT CAPY WARRIOR — 10 XNT' : 'CONNECT WALLET TO MINT',
     requesting: '☢️ REQUESTING RANDOMNESS...',
     waiting: '⏳ GEIGER GENERATING ENTROPY...',
     fulfilling: '🦫 MINTING YOUR CAPY...',
@@ -469,7 +546,7 @@ function MintSection({ mintState, onSuccess }) {
         <div className="mint-header">
           <div className="mint-title-row">
             <div className="mint-title">MINT PROGRESS</div>
-            <div className="mint-price-badge">FROM {currentPrice} XNT / MINT</div>
+            <div className="mint-price-badge">10 XNT / MINT</div>
           </div>
           <div className="mint-counts">
             <div><div className="mc-n">{minted}</div><div className="mc-l">MINTED</div></div>
@@ -485,35 +562,6 @@ function MintSection({ mintState, onSuccess }) {
           <span>{minted} MINTED</span>
           <span>{Math.round(minted/MAX_SUPPLY*100)}% COMPLETE</span>
           <span>500 TOTAL</span>
-        </div>
-
-        {nextWave && (
-          <div style={{fontFamily:'var(--mono)',fontSize:'.6rem',color:'var(--gold)',textAlign:'center',marginTop:'.75rem',letterSpacing:'.1em',border:'1px solid rgba(255,201,64,.2)',padding:'.5rem',background:'rgba(255,201,64,.04)'}}>
-            ⚡ {nextWave.until} MINTS UNTIL PRICE INCREASES TO {nextWave.nextPrice} XNT
-          </div>
-        )}
-
-        {/* Wave Pricing */}
-        <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1px',border:'1px solid var(--border)',marginTop:'1.5rem',overflow:'hidden'}}>
-          {[
-            {price:10,label:'WAVE 1',desc:'FIRST 150 MINTS',count:wave1,max:WAVE1_MAX,color:'var(--green)',bg:'rgba(0,255,136,0.06)',id:'wave1'},
-            {price:12,label:'WAVE 2',desc:'NEXT 150 MINTS',count:wave2,max:WAVE2_MAX,color:'var(--gold)',bg:'rgba(255,201,64,0.06)',id:'wave2'},
-            {price:15,label:'WAVE 3',desc:'FINAL 200 MINTS',count:wave3,max:WAVE3_MAX,color:'var(--orange)',bg:'rgba(255,106,0,0.06)',id:'wave3'},
-          ].map((w,i) => (
-            <div key={w.id} style={{padding:'1.25rem 1rem',background:w.bg,textAlign:'center',borderRight:i<2?'1px solid var(--border)':'none',borderTop:`2px solid ${w.color}`}}>
-              <div style={{fontFamily:'var(--display)',fontSize:'2rem',color:w.color,lineHeight:1}}>{w.price} XNT</div>
-              <div style={{fontFamily:'var(--mono)',fontSize:'.52rem',letterSpacing:'.18em',color:w.color,margin:'.3rem 0'}}>{w.label}</div>
-              <div style={{fontFamily:'var(--mono)',fontSize:'.6rem',color:'var(--muted)'}}>{w.desc}</div>
-              <div className="tp-bar-wrap" style={{marginTop:'.75rem'}}>
-                <div className="tp-bar" style={{width:`${(w.count/w.max*100)}%`,background:w.color}} />
-              </div>
-              <div style={{fontFamily:'var(--mono)',fontSize:'.52rem',color:'var(--muted)',marginTop:'.25rem'}}>{w.count} / {w.max}</div>
-            </div>
-          ))}
-        </div>
-
-        <div style={{fontFamily:'var(--mono)',fontSize:'.62rem',color:'var(--muted)',textAlign:'center',marginTop:'.75rem',letterSpacing:'.1em'}}>
-          MINT EARLY = LOWEST PRICE // PRICE INCREASES AS WAVES FILL
         </div>
         {/* Tier Breakdown */}
         {mintState.bitmap && (() => {
@@ -717,47 +765,6 @@ function GallerySection({ mintedNFTs }) {
   );
 }
 
-function XNTTracker({ minted }) {
-  const wave1 = Math.min(minted, WAVE1_MAX);
-  const wave2 = Math.min(Math.max(minted - WAVE1_MAX, 0), WAVE2_MAX);
-  const wave3 = Math.min(Math.max(minted - WAVE1_MAX - WAVE2_MAX, 0), WAVE3_MAX);
-  const xntRaised = (wave1 * WAVE1_PRICE) + (wave2 * WAVE2_PRICE) + (wave3 * WAVE3_PRICE);
-  const xntLP = Math.round(xntRaised * 0.9 * 10) / 10;
-  const xntGeiger = Math.round(xntRaised * 0.1 * 10) / 10;
-
-  return (
-    <div className="xnt-section">
-      <div className="xnt-inner">
-        <div className="stag gr">XNT RAISED — LIVE TRACKER</div>
-        <h2 className="sh">WHERE THE<br /><span className="gr">XNT GOES</span></h2>
-        <div className="xnt-stats">
-          <div className="xnt-stat"><div className="xnt-n go">{xntRaised} XNT</div><div className="xnt-l">TOTAL XNT RAISED</div></div>
-          <div className="xnt-stat"><div className="xnt-n g">{xntLP} XNT</div><div className="xnt-l">XNT ADDED TO LP</div></div>
-          <div className="xnt-stat"><div className="xnt-n c">{xntGeiger} XNT</div><div className="xnt-l">XNT TO GEIGER NODE</div></div>
-          <div className="xnt-stat"><div className="xnt-n p">0 $CAPY</div><div className="xnt-l">$CAPY BURNED</div></div>
-        </div>
-        <div className="logs-grid">
-          <div className="log-box lp">
-            <div className="log-header">
-              <div><div className="log-total g">{xntLP} XNT</div><div className="log-total-label">TOTAL ADDED TO LP</div></div>
-            </div>
-            <div className="log-entries">
-              <div className="log-empty">LP ADDITIONS UPDATE POST-MINT</div>
-            </div>
-          </div>
-          <div className="log-box burn">
-            <div className="log-header">
-              <div><div className="log-total r">0 $CAPY</div><div className="log-total-label">TOTAL BURNED</div></div>
-            </div>
-            <div className="log-entries">
-              <div className="log-empty">NO BURNS YET — UPDATES POST-MINT</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
 
 // ── Main App ───────────────────────────────────────────────────────────
 
@@ -813,8 +820,6 @@ function CapyApp() {
         <div className="nav-logo">$CAPY</div>
         <ul className="nav-links">
           <li><a href="#collection">COLLECTION</a></li>
-          <li><a href="#prize">🏆 PRIZE</a></li>
-          <li><a href="#meme">$CAPY</a></li>
           <li><a href="#protocol">PROTOCOL</a></li>
         </ul>
         <div style={{display:'flex',alignItems:'center',gap:'1rem'}}>
@@ -826,7 +831,42 @@ function CapyApp() {
           }} />
         </div>
       </nav>
+      <MarketBar />
 
+
+      {/* FAIRLY LAUNCHED SECTION */}
+      <div style={{borderBottom:'1px solid var(--border)',padding:'3rem 2rem',textAlign:'center',background:'rgba(4,5,10,.8)',position:'relative',overflow:'hidden'}}>
+        <div style={{position:'absolute',inset:0,background:'radial-gradient(ellipse at center, rgba(0,229,255,0.03) 0%, transparent 70%)',pointerEvents:'none'}} />
+        <div style={{fontFamily:'var(--mono)',fontSize:'.55rem',letterSpacing:'.3em',color:'var(--purple)',marginBottom:'1rem'}}>
+          ⚡ COMMUNITY MEME TOKEN — X1 NETWORK
+        </div>
+        <h2 style={{fontFamily:'var(--display)',fontSize:'clamp(1.8rem,4vw,3rem)',color:'var(--cyan)',lineHeight:1.1,marginBottom:'1.5rem',letterSpacing:'.05em'}}>
+          FAIRLY LAUNCHED<br /><span style={{color:'var(--green)'}}>NO PRESALE. NO VC. NO INSIDERS.</span>
+        </h2>
+        <p style={{fontFamily:'var(--mono)',fontSize:'.7rem',color:'var(--muted)',maxWidth:'620px',margin:'0 auto 1.5rem',lineHeight:2,letterSpacing:'.08em'}}>
+          Launched on <span style={{color:'var(--cyan)'}}>Degen Launchpad X1</span> — every wallet got in on equal terms.
+          Named after the real <span style={{color:'var(--gold)'}}>Project Capybara protocol</span> that defended the X1 blockchain.
+          The community ran with it.
+        </p>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))',gap:'1px',border:'1px solid var(--border)',maxWidth:'800px',margin:'0 auto 2rem',overflow:'hidden'}}>
+          {[
+            ['🛡️','NOT A SECURITY','A community meme token. Not an investment product of any kind.'],
+            ['⚖️','NO PROFIT PROMISES','No guarantees of return. No roadmap fiction. No financial promises.'],
+            ['🌐','EQUAL ACCESS','No presale. No VC allocation. No insider wallets. Pure fair launch.'],
+            ['🔥','X1 NATIVE','Built on the chain Capybara protects. Community meme energy only.'],
+          ].map(([ico, title, desc], i) => (
+            <div key={i} style={{padding:'1.5rem 1rem',textAlign:'center',background:'rgba(4,5,10,.6)',borderRight:i<3?'1px solid var(--border)':'none'}}>
+              <div style={{fontSize:'1.5rem',marginBottom:'.5rem'}}>{ico}</div>
+              <div style={{fontFamily:'var(--mono)',fontSize:'.52rem',letterSpacing:'.2em',color:'var(--cyan)',marginBottom:'.5rem'}}>{title}</div>
+              <div style={{fontFamily:'var(--mono)',fontSize:'.55rem',color:'var(--muted)',lineHeight:1.7}}>{desc}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{fontFamily:'var(--mono)',fontSize:'.55rem',color:'rgba(100,100,120,.6)',letterSpacing:'.1em',maxWidth:'600px',margin:'0 auto'}}>
+          $CAPY is a community meme token — not an investment, not a security, not a financial product.
+          No promises of profit. No guarantees of any kind. Participate for fun and community only.
+        </div>
+      </div>
       {/* HERO */}
       <div className="hero">
         <div className="orb1" /><div className="orb2" /><div className="orb3" />
@@ -839,7 +879,6 @@ function CapyApp() {
         <p className="hero-sub">THE CAPYBARA THAT GUARDS THE BLOCKCHAIN<br />NOW GUARDS THE MEME</p>
         <div className="btn-row">
           <a href="https://app.xdex.xyz/swap" target="_blank" rel="noopener noreferrer" className="btn-main">BUY $CAPY</a>
-          <a href="#prize" className="btn-gold">🏆 WIN 50 XNT</a>
           <a href="#collection" className="btn-ghost">VIEW COLLECTION</a>
         </div>
         <div className="ticker">
@@ -847,22 +886,10 @@ function CapyApp() {
             {[
               ['$CAPY','FAIRLY LAUNCHED','tg'],
               ['PLATFORM','DEGEN LAUNCHPAD X1','to'],
-              ['WAVE 1 — 150 MINTS','@ 10 XNT','tg'],
-              ['WAVE 2 — 150 MINTS','@ 12 XNT','tgo'],
-              ['WAVE 3 — 200 MINTS','@ 15 XNT','to'],
-              ['90% OF EVERY MINT','GOES TO LP','tg'],
-              ['10% OF EVERY MINT','GEIGER NODE','tp'],
-              ['MINT A FEATURED MYTHIC','WIN 50 XNT','tgo'],
               ['500 NFTS','30 MYTHIC','tgo'],
               ['STORAGE','LIGHTHOUSE IPFS','tc'],
               ['$CAPY','FAIRLY LAUNCHED','tg'],
               ['PLATFORM','DEGEN LAUNCHPAD X1','to'],
-              ['WAVE 1 — 150 MINTS','@ 10 XNT','tg'],
-              ['WAVE 2 — 150 MINTS','@ 12 XNT','tgo'],
-              ['WAVE 3 — 200 MINTS','@ 15 XNT','to'],
-              ['90% OF EVERY MINT','GOES TO LP','tg'],
-              ['10% OF EVERY MINT','GEIGER NODE','tp'],
-              ['MINT A FEATURED MYTHIC','WIN 50 XNT','tgo'],
               ['500 NFTS','30 MYTHIC','tgo'],
               ['STORAGE','LIGHTHOUSE IPFS','tc'],
             ].map(([label, value, cls], i) => (
@@ -908,174 +935,14 @@ function CapyApp() {
       {/* MINT SECTION */}
       <MintSection mintState={mintState} onSuccess={handleMintSuccess} />
 
-      {/* XNT TRACKER */}
-      <XNTTracker minted={mintState.minted} />
 
-      {/* PRIZE SECTION */}
-      <div className="prize-section" id="prize">
-        <div className="prize-inner">
-          <div className="prize-tag">🏆 MYSTERY PRIZE</div>
-          <h2 className="prize-title"><span className="go">MINT A FEATURED</span><br />MYTHIC WIN 50 XNT</h2>
-          <p className="prize-sub">These 10 Mythic CAPYs are hidden somewhere inside the 500 mint collection. Mint one of the featured Mythics below and win 50 XNT from the treasury — paid directly by the developer.</p>
-          <div className="prize-how">10 FEATURED MYTHICS // 50 XNT EACH // DM TO CLAIM // t.me/CAPYX1</div>
-          <div className="prize-grid">
-            {[
-              ['mythical_city.png','CITY // NEON GOD BLADE'],
-              ['mythical_space.png','SPACE // CELESTIAL SPEAR'],
-              ['mythical_ocean.png','OCEAN // TRIDENT'],
-              ['mythical_lava.png','LAVA // MAGMA SWORD'],
-              ['mythical_snow.png','SNOW // ICE LANCE'],
-              ['mythical_desert.png','DESERT // SANDSTONE BLADE'],
-              ['mythical_forrest.png','FOREST // SPIRIT BLADE'],
-              ['mythical_mountain.png','MOUNTAIN // WAR AXE'],
-              ['mythincal_swamp.png','SWAMP // VINE SPEAR'],
-              ['mythical_beach.png','BEACH // CORAL BLADE'],
-            ].map(([img, label], i) => (
-              <div key={i} className="prize-card">
-                <img src={`/${img}`} alt={label} />
-                <div className="prize-badge">50 XNT</div>
-                <div className="prize-glow" />
-                <div className="prize-env">{label}</div>
-              </div>
-            ))}
-          </div>
-          <div className="prize-claim">
-            <div className="prize-claim-title">HOW TO CLAIM YOUR PRIZE</div>
-            <p className="prize-claim-text">
-              If you mint one of the 10 featured Mythics above, DM the developer on Telegram with proof of your mint. Prize of 50 XNT will be sent directly from the treasury wallet.<br /><br />
-              <a href="https://t.me/CAPYX1" target="_blank" rel="noopener noreferrer">→ t.me/CAPYX1</a>
-            </p>
-          </div>
-          <div style={{marginTop:'2rem'}}>
-            <a href="https://t.me/CAPYX1" target="_blank" rel="noopener noreferrer" className="btn-gold">JOIN TELEGRAM TO CLAIM ↗</a>
-          </div>
-        </div>
-      </div>
-
-      {/* GALLERY */}
-      <GallerySection mintedNFTs={mintedNFTs} />
 
       <div className="sep-line" />
-
-      {/* MEME SECTION */}
-      <div className="meme-section" id="meme">
-        <div className="meme-inner">
-          <div className="meme-eyebrow">COMMUNITY MEME TOKEN</div>
-          <h2 className="meme-big"><span className="g1">FAIRLY LAUNCHED</span><br /><span className="g2">COMMUNITY DRIVEN</span></h2>
-          <p style={{fontSize:'.9rem',color:'var(--muted)',maxWidth:'520px',margin:'0 auto 2rem',lineHeight:1.8}}>$CAPY launched fairly on Degen Launchpad X1 — no presale, no VC, no insider allocation. Pure community meme energy on the best chain. Named after the real protocol that defended the X1 blockchain.</p>
-          <div className="launch-box">
-            <div className="launch-grid">
-              <div><div className="launch-label">LAUNCH PLATFORM</div><div className="launch-val">DEGEN</div><div className="launch-desc">Degen Launchpad X1 — fully fair, open to everyone</div></div>
-              <div><div className="launch-label">PRESALE / VC</div><div className="launch-val" style={{color:'var(--red)'}}>NONE</div><div className="launch-desc">Zero insider allocation. Community gets in equally.</div></div>
-              <div><div className="launch-label">MINT PRICE</div><div className="launch-val">10–15 XNT</div><div className="launch-desc">Wave pricing: 10 / 12 / 15 XNT. Mint early for the best price.</div></div>
-              <div><div className="launch-label">MISSION</div><div className="launch-val" style={{fontSize:'.95rem',color:'var(--gold)',paddingTop:'.4rem'}}>BIGGEST MEME ON X1</div><div className="launch-desc">Simple. Focused. Unstoppable.</div></div>
-            </div>
-          </div>
-          <div className="meme-cards">
-            {[
-              ['🛡️','c','LEGENDARY NAME','Named after the real X1 protocol. No meme has better lore.'],
-              ['⚡','g','X1 NATIVE','Built on the chain Capybara protects. We belong here.'],
-              ['🏆','p','WIN 50 XNT','Mint a featured Mythic. Claim your prize. DM to collect.'],
-              ['🔥','o','COMMUNITY FIRST','No fake utility. No roadmap fiction. Pure meme energy.'],
-            ].map(([ico, cls, title, desc], i) => (
-              <div key={i} className="mc">
-                <span className="mc-ico">{ico}</span>
-                <div className={`mc-t ${cls}`}>{title}</div>
-                <p className="mc-d">{desc}</p>
-              </div>
-            ))}
-          </div>
-          <div style={{marginTop:'2rem',display:'flex',gap:'1rem',justifyContent:'center',flexWrap:'wrap'}}>
-            <a href="#" className="btn-main">BUY $CAPY ON DEGEN LAUNCHPAD</a>
-            <a href="https://t.me/CAPYX1" target="_blank" rel="noopener noreferrer" className="btn-ghost">JOIN TELEGRAM ↗</a>
-          </div>
-        </div>
-      </div>
-
-      {/* ECONOMICS */}
-      <div className="econ-section">
-        <div className="econ-inner">
-          <div className="stag gr">MINT ECONOMICS — FULLY TRANSPARENT</div>
-          <h2 className="sh">TIERED MINT<br /><span className="gr">PRICING</span></h2>
-          <p className="sb" style={{marginBottom:0}}>Mint early for the lowest price. Every wave increases. 90% of every mint goes to LP — regardless of wave.</p>
-          <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1px',border:'1px solid var(--border)',marginTop:'2rem',overflow:'hidden'}}>
-            {[
-              {wave:'WAVE 1',price:'10 XNT',desc:'FIRST 150 MINTS',detail:'9 XNT → LP\n1 XNT → Geiger Node',total:'Total wave: 1,500 XNT',color:'var(--green)',bg:'rgba(0,255,136,0.05)'},
-              {wave:'WAVE 2',price:'12 XNT',desc:'NEXT 150 MINTS',detail:'10.8 XNT → LP\n1.2 XNT → Geiger Node',total:'Total wave: 1,800 XNT',color:'var(--gold)',bg:'rgba(255,201,64,0.05)'},
-              {wave:'WAVE 3',price:'15 XNT',desc:'FINAL 200 MINTS',detail:'13.5 XNT → LP\n1.5 XNT → Geiger Node',total:'Total wave: 3,000 XNT',color:'var(--orange)',bg:'rgba(255,106,0,0.05)'},
-            ].map((w,i) => (
-              <div key={i} style={{padding:'2rem 1.5rem',background:w.bg,textAlign:'center',borderRight:i<2?'1px solid var(--border)':'none',borderTop:`2px solid ${w.color}`}}>
-                <div style={{fontFamily:'var(--mono)',fontSize:'.58rem',letterSpacing:'.25em',color:w.color,marginBottom:'.5rem'}}>{w.wave}</div>
-                <div style={{fontFamily:'var(--display)',fontSize:'3.5rem',color:w.color,lineHeight:1,marginBottom:'.25rem'}}>{w.price}</div>
-                <div style={{fontFamily:'var(--mono)',fontSize:'.62rem',color:'var(--muted)',marginBottom:'1rem'}}>{w.desc}</div>
-                <div style={{fontSize:'.78rem',color:'var(--muted)',lineHeight:1.7,whiteSpace:'pre-line'}}>
-                  {w.detail}<br /><span style={{color:w.color}}>{w.total}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div style={{border:'1px solid var(--border)',background:'rgba(4,5,10,.6)',padding:'1.5rem 2rem',marginTop:'1px',display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'1px',textAlign:'center'}}>
-            {[
-              {val:'6,300',label:'TOTAL XNT IF SOLD OUT',color:'var(--cyan)'},
-              {val:'5,670',label:'XNT TO LP (90%)',color:'var(--green)'},
-              {val:'630',label:'XNT TO GEIGER (10%)',color:'var(--cyan)'},
-              {val:'500 XNT',label:'MAX PRIZE POOL',color:'var(--gold)'},
-            ].map((s,i) => (
-              <div key={i} style={{padding:'.75rem',borderLeft:i>0?'1px solid var(--border)':'none'}}>
-                <div style={{fontFamily:'var(--display)',fontSize:'1.8rem',color:s.color}}>{s.val}</div>
-                <div style={{fontFamily:'var(--mono)',fontSize:'.52rem',letterSpacing:'.15em',color:'var(--muted)'}}>{s.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div className="sep-line" />
-
-      {/* PROTOCOL */}
-      <div className="proto-section" id="protocol">
-        <div className="proto-inner">
-          <div className="stag cy">THE REAL PROTOCOL</div>
-          <h2 className="sh">PROJECT<br /><span className="cy">CAPYBARA</span></h2>
-          <div className="proto-grid">
-            <div>
-              <div className="notice">
-                <p><b>Project Capybara is a real X1 blockchain protocol</b> — specified by Jack Levin (Cyphereus Prime) on May 1st and deployed to mainnet.<br /><br /><span className="sep">$CAPY is a separate community meme.</span> Named after it because the name is legendary. No official connection. The community ran with it.</p>
-              </div>
-              <p style={{fontSize:'.84rem',color:'var(--muted)',lineHeight:1.85,marginBottom:'1.5rem'}}>Capybara is X1's delegation fair stake threshold system. Every epoch it calculates the 85th percentile of all active validator self-stakes — closing the door on validators trying to game Foundation delegation with tiny self-stake.</p>
-              <div className="quote">
-                <p className="q-text">"The p85 method ensures the threshold is always representative of real validator commitment — not a static number that becomes stale as the network evolves."</p>
-                <div className="q-auth">// JACK LEVIN — CYPHEREUS PRIME — MAY 1ST</div>
-              </div>
-            </div>
-            <div>
-              <p style={{fontFamily:'var(--mono)',fontSize:'.52rem',letterSpacing:'.2em',color:'var(--muted)',marginBottom:'1rem'}}>DELEGATION CRITERIA</p>
-              <div className="crit-list">
-                {[
-                  ['P85','SELF-STAKE','Must meet 85th percentile of all active validator self-stakes. Recalculates every epoch.'],
-                  ['≤10%','COMMISSION','Maximum commission rate. Keeps fees fair for delegators.'],
-                  ['≥97%','VOTE CREDITS','Minimum vote credit score. Proves active consensus participation.'],
-                  ['±10%','SKIP RATE','Must stay within 10% of network average.'],
-                  ['MAJ.','TACHYON VERSION','Must run majority Tachyon version. Network stays strongest.'],
-                ].map(([val, name, desc], i) => (
-                  <div key={i} className="crit-item">
-                    <div className="crit-val" style={val==='MAJ.'?{fontSize:'.85rem'}:{}}>{val}</div>
-                    <div><div className="crit-name">{name}</div><div className="crit-desc">{desc}</div></div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* FOOTER */}
       <footer>
         <div className="f-logo">$CAPY</div>
         <ul className="f-links">
           <li><a href="#collection">COLLECTION</a></li>
-          <li><a href="#prize">🏆 PRIZE</a></li>
-          <li><a href="#meme">$CAPY</a></li>
           <li><a href="#protocol">PROTOCOL</a></li>
           <li><a href="https://t.me/CAPYX1" target="_blank" rel="noopener noreferrer">TELEGRAM ↗</a></li>
           <li><a href="https://x1.xyz" target="_blank" rel="noopener noreferrer">X1 NETWORK ↗</a></li>
