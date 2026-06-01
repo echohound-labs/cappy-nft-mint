@@ -157,13 +157,10 @@ function MarketBar() {
   }, []);
   const items = [['$CAPY',price],['MCAP',mcap],['XNT',xnt],['SUPPLY','1B'],['MINT PRICE','10 XNT FLAT'],['500 NFTS','30 MYTHIC'],['120 LEGENDARY','350 COMMON'],['STORAGE','LIGHTHOUSE IPFS'],['RANDOMNESS','GEIGER ENTROPY ORACLE'],['FAIRLY LAUNCHED','DEGEN LAUNCHPAD X1'],['$CAPY',price],['MCAP',mcap],['XNT',xnt],['SUPPLY','1B'],['MINT PRICE','10 XNT FLAT'],['500 NFTS','30 MYTHIC'],['120 LEGENDARY','350 COMMON'],['STORAGE','LIGHTHOUSE IPFS'],['RANDOMNESS','GEIGER ENTROPY ORACLE'],['FAIRLY LAUNCHED','DEGEN LAUNCHPAD X1']];
   return (
-    <div style={{marginTop:'65px',position:'relative',zIndex:2,width:'100%',overflow:'hidden',borderTop:'1px solid var(--border)',borderBottom:'1px solid var(--border)',background:'rgba(0,229,255,0.02)',padding:'.5rem 0'}}>
+    <div style={{marginTop:"58px",position:"relative",zIndex:2,width:"100%",overflow:"hidden",borderTop:"1px solid var(--border)",borderBottom:"1px solid var(--border)",background:"rgba(0,229,255,0.02)",padding:".5rem 0"}}>
       <div style={{display:'flex',gap:'3rem',whiteSpace:'nowrap',width:'max-content',animation:'tick 30s linear infinite'}}>
         {items.map(([label,val],i) => (
-          <div key={i} style={{display:'flex',alignItems:'center',gap:'.5rem',fontFamily:'var(--mono)',fontSize:'.62rem',letterSpacing:'.1em',color:'var(--muted)'}}>
-            <span>{label}</span>
-            <b style={{color:'var(--cyan)',fontWeight:400}}>{val}</b>
-          </div>
+          <div key={i} className="tick-item">{label} <b className={["tg","to","tgo","tc","tp","tg","to","tgo","tc","tp"][i % 10]}>{val}</b></div>
         ))}
       </div>
     </div>
