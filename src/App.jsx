@@ -124,28 +124,28 @@ function MarketBar() {
   const data = useCapyMarketData();
   const fmtUsd = (n) => n == null ? 'LOADING' : n < 0.0001 ? '$' + n.toExponential(3) : '$' + n.toLocaleString(undefined, { minimumFractionDigits: n < 0.01 ? 6 : 4, maximumFractionDigits: n < 0.01 ? 6 : 4 });
   return (
-    <div style={{background:'#00e5ff',borderBottom:'2px solid #00e5ff',padding:'1rem 2rem',display:'flex',alignItems:'center',justifyContent:'center',gap:'2rem',flexWrap:'wrap',fontFamily:'monospace',fontSize:'.8rem',letterSpacing:'.15em'}}>
+    <div style={{background:'#00e5ff',borderBottom:'2px solid #00e5ff',padding:'.6rem 1rem',display:'grid',gridTemplateColumns:'repeat(5,1fr)',alignItems:'center',fontFamily:'monospace',fontSize:'.65rem',letterSpacing:'.1em',textAlign:'center'}}>
       <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
         <span style={{color:'#000000'}}>$CAPY PRICE</span>
         <span style={{color:'#000000'}}>{fmtUsd(data?.capyUsd)}</span>
         <span style={{color:'#000000',fontSize:'.7rem'}}>{data ? data.capyXnt.toFixed(8) + ' XNT' : '...'}</span>
       </div>
-      <div style={{width:'1px',height:'12px',background:'#1f2937'}} />
+      
       <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
         <span style={{color:'#000000'}}>MARKET CAP</span>
         <span style={{color:'#000000'}}>{data ? '$' + Math.round(data.marketCapUsd).toLocaleString() : '...'}</span>
       </div>
-      <div style={{width:'1px',height:'12px',background:'#1f2937'}} />
+      
       <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
         <span style={{color:'#000000'}}>XNT</span>
         <span style={{color:'#000000'}}>{data ? '$' + data.xntUsd.toFixed(4) : '...'}</span>
       </div>
-      <div style={{width:'1px',height:'12px',background:'#1f2937'}} />
+      
       <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
         <span style={{color:'#000000'}}>SUPPLY</span>
         <span style={{color:'#000000'}}>1B $CAPY</span>
       </div>
-      <div style={{width:'1px',height:'12px',background:'#1f2937'}} />
+      
       <div style={{display:'flex',alignItems:'center',gap:'.5rem'}}>
         <span style={{color:'#000000'}}>⚡ FAIRLY LAUNCHED</span>
         <span style={{color:'#000000'}}>DEGEN LAUNCHPAD X1</span>
