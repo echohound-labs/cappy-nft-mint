@@ -894,6 +894,24 @@ function CapyApp() {
   const [showDisclaimer, setShowDisclaimer] = useState(true);
   const [agreed, setAgreed] = useState(false);
   const handleAgree = () => { setAgreed(true); setShowDisclaimer(false); };
+  const [capyPrice, setCapyPrice] = useState('...');
+  const [capyMcap, setCapyMcap] = useState('...');
+  const [capyXnt, setCapyXnt] = useState('...');
+  useEffect(() => {
+    async function loadPrice() {
+      try {
+        const call = (a) => fetch('/api/rpc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'getTokenAccountBalance',params:[a]})}).then(r=>r.json()).then(d=>Number(d?.result?.value?.uiAmount||0));
+        const [capy,xntA,xntP,usdc] = await Promise.all([call('CCd6V4WZZ3qXEZSV4daDxvWRLR2V35WGqjxLupW8Ex88'),call('14rjAEfArCzNFktWQU6MSkgUjAjMkqqGACoNY9xPVyxc'),call('8wvV4HKBDFMLEUkVWp1WPNa5ano99XCm3f9t3troyLb'),call('7iw2adw8Af7x3pY7gj5RwczFXuGjCoX92Gfy3avwXQtg')]);
+        const xu=usdc/xntP,cu=xntA/capy*xu;
+        setCapyXnt('$'+xu.toFixed(4));
+        setCapyPrice('$'+cu.toLocaleString(undefined,{minimumFractionDigits:6,maximumFractionDigits:6}));
+        setCapyMcap('$'+Math.round(cu*999993336).toLocaleString());
+      }catch(e){}
+    }
+    loadPrice();
+    const t=setInterval(loadPrice,30000);
+    return()=>clearInterval(t);
+  },[]);
 
   const handleMintSuccess = useCallback(() => {
     setTimeout(() => {
@@ -922,7 +940,6 @@ function CapyApp() {
           }} />
         </div>
       </nav>
-      <MarketBar />
 
       {/* HERO */}
       <div className="hero">
@@ -942,20 +959,24 @@ function CapyApp() {
         <div className="ticker">
           <div className="tick-inner">
             {[
-              ['$CAPY','FAIRLY LAUNCHED','tg'],
-              ['PLATFORM','DEGEN LAUNCHPAD X1','to'],
-              ['500 NFTS','30 MYTHIC','tgo'],
-              ['120 LEGENDARY','350 COMMON','tg'],
-              ['STORAGE','LIGHTHOUSE IPFS','tc'],
-              ['RANDOMNESS','GEIGER ENTROPY ORACLE','tp'],
-              ['MINT PRICE','10 XNT FLAT','tg'],
-              ['$CAPY','FAIRLY LAUNCHED','tg'],
-              ['PLATFORM','DEGEN LAUNCHPAD X1','to'],
-              ['500 NFTS','30 MYTHIC','tgo'],
-              ['120 LEGENDARY','350 COMMON','tg'],
-              ['STORAGE','LIGHTHOUSE IPFS','tc'],
-              ['RANDOMNESS','GEIGER ENTROPY ORACLE','tp'],
-              ['MINT PRICE','10 XNT FLAT','tg'],
+              ['CAPY PRICE', capyPrice, 'tg'],
+              ['MARKET CAP', capyMcap, 'to'],
+              ['XNT PRICE', capyXnt, 'tgo'],
+              ['PLATFORM', 'DEGEN LAUNCHPAD X1', 'tc'],
+              ['500 NFTS', '30 MYTHIC', 'tgo'],
+              ['120 LEGENDARY', '350 COMMON', 'tg'],
+              ['STORAGE', 'LIGHTHOUSE IPFS', 'tc'],
+              ['RANDOMNESS', 'GEIGER ENTROPY ORACLE', 'tp'],
+              ['MINT PRICE', '10 XNT FLAT', 'tg'],
+              ['CAPY PRICE', capyPrice, 'tg'],
+              ['MARKET CAP', capyMcap, 'to'],
+              ['XNT PRICE', capyXnt, 'tgo'],
+              ['PLATFORM', 'DEGEN LAUNCHPAD X1', 'tc'],
+              ['500 NFTS', '30 MYTHIC', 'tgo'],
+              ['120 LEGENDARY', '350 COMMON', 'tg'],
+              ['STORAGE', 'LIGHTHOUSE IPFS', 'tc'],
+              ['RANDOMNESS', 'GEIGER ENTROPY ORACLE', 'tp'],
+              ['MINT PRICE', '10 XNT FLAT', 'tg'],
             ].map(([label, value, cls], i) => (
               <div key={i} className="tick-item">{label} <b className={cls}>{value}</b></div>
             ))}
