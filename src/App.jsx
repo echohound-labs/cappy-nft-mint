@@ -908,6 +908,7 @@ function CapyApp() {
           }} />
         </div>
       </nav>
+      <MarketBar />
 
       {/* HERO */}
       <div className="hero">
