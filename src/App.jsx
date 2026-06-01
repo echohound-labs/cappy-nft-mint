@@ -947,7 +947,7 @@ function CapyApp() {
         <div className="alert-bar">⚠ BLOCKCHAIN UNDER ATTACK — IMPLEMENT PROJECT CAPYBARA</div>
         <div className="hero-tag">X1 NETWORK // COMMUNITY MEME</div>
         <h1 className="hero-title">
-          <span className="t1">$CAPY</span>
+          <span className="t1">CAPY WARRIORS</span>
           <span className="t2">X1</span>
         </h1>
         <p className="hero-sub">THE CAPYBARA THAT GUARDS THE BLOCKCHAIN<br />NOW GUARDS THE MEME</p>
@@ -988,6 +988,43 @@ function CapyApp() {
         </div>
       </div>
 
+      {/* FAIRLY LAUNCHED SECTION */}
+      <div style={{borderBottom:'1px solid var(--border)',padding:'4rem 2rem',textAlign:'center',background:'rgba(4,5,10,.8)',position:'relative',overflow:'hidden'}}>
+        <div style={{position:'absolute',inset:0,background:'radial-gradient(ellipse at center, rgba(0,229,255,0.03) 0%, transparent 70%)',pointerEvents:'none'}} />
+        <div style={{fontFamily:'var(--mono)',fontSize:'.55rem',letterSpacing:'.3em',color:'var(--purple)',marginBottom:'1rem'}}>
+          ⚡ COMMUNITY MEME TOKEN — X1 NETWORK
+        </div>
+        <h2 style={{fontFamily:'var(--display)',fontSize:'clamp(1.8rem,4vw,3rem)',color:'var(--cyan)',lineHeight:1.1,marginBottom:'1rem',letterSpacing:'.05em'}}>
+          FAIRLY LAUNCHED<br /><span style={{color:'var(--green)'}}>NO PRESALE. NO VC. NO INSIDERS.</span>
+        </h2>
+        <p style={{fontFamily:'var(--mono)',fontSize:'.7rem',color:'var(--muted)',maxWidth:'620px',margin:'0 auto 1rem',lineHeight:2,letterSpacing:'.08em'}}>
+          Fairly launched on <span style={{color:'var(--cyan)'}}>Degen Launchpad X1</span> — every wallet got in on equal terms.
+          Named after the real <span style={{color:'var(--gold)'}}>Project Capybara protocol</span> that defended the X1 blockchain.
+          The community ran with it.
+        </p>
+        <p style={{fontFamily:'var(--mono)',fontSize:'.7rem',color:'var(--muted)',maxWidth:'620px',margin:'0 auto 2rem',lineHeight:2,letterSpacing:'.08em'}}>
+          No promises of profit. No roadmap fiction. No guarantees of any kind.
+          Just a meme with legendary lore on the best chain.
+        </p>
+        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))',gap:'1px',border:'1px solid var(--border)',maxWidth:'800px',margin:'0 auto 2rem',overflow:'hidden'}}>
+          {[
+            ['🛡️','NOT A SECURITY','A community meme token. Not an investment product of any kind.'],
+            ['⚖️','NO PROFIT PROMISES','No guarantees of return. No roadmap fiction. No financial promises.'],
+            ['🌐','EQUAL ACCESS','No presale. No VC allocation. No insider wallets. Pure fair launch.'],
+            ['🔥','X1 NATIVE','Built on the chain Capybara protects. Community meme energy only.'],
+          ].map(([ico, title, desc], i) => (
+            <div key={i} style={{padding:'1.5rem 1rem',textAlign:'center',background:'rgba(4,5,10,.6)',borderRight:i<3?'1px solid var(--border)':'none'}}>
+              <div style={{fontSize:'1.5rem',marginBottom:'.5rem'}}>{ico}</div>
+              <div style={{fontFamily:'var(--mono)',fontSize:'.52rem',letterSpacing:'.2em',color:'var(--cyan)',marginBottom:'.5rem'}}>{title}</div>
+              <div style={{fontFamily:'var(--mono)',fontSize:'.55rem',color:'var(--muted)',lineHeight:1.7}}>{desc}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{fontFamily:'var(--mono)',fontSize:'.55rem',color:'rgba(100,100,120,.6)',letterSpacing:'.1em',maxWidth:'600px',margin:'0 auto'}}>
+          $CAPY is a community meme token — not an investment, not a security, not a financial product.
+          No promises of profit. No guarantees of any kind. Participate for fun and community only.
+        </div>
+      </div>
       {/* MYTHIC STRIP */}
       <div className="myth-strip">
         <div className="myth-strip-track">
