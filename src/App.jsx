@@ -82,7 +82,7 @@ const CAPY_TOTAL_SUPPLY = 999993336.999;
 
 async function fetchTokenBalance(account) {
   try {
-    const res = await fetch(RPC_URL, {
+    const res = await fetch('/api/rpc', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'getTokenAccountBalance', params: [account] }),
