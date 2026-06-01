@@ -951,9 +951,14 @@ function CapyApp() {
           <span className="t2">X1</span>
         </h1>
         <p className="hero-sub">THE CAPYBARA THAT GUARDS THE BLOCKCHAIN<br />NOW GUARDS THE MEME</p>
+        <div style={{fontFamily:'var(--mono)',fontSize:'.55rem',letterSpacing:'.1em',color:'var(--muted)',marginBottom:'1.5rem',display:'flex',alignItems:'center',justifyContent:'center',gap:'.75rem',flexWrap:'wrap'}}>
+          <span style={{color:'rgba(255,255,255,0.3)'}}>CA:</span>
+          <span style={{color:'var(--cyan)'}}>AnvCcvnY4DLRW42EZBEAb1QeU6Pt9aab3r3D75GtgJUU</span>
+          <button onClick={() => navigator.clipboard.writeText('AnvCcvnY4DLRW42EZBEAb1QeU6Pt9aab3r3D75GtgJUU')} style={{fontFamily:'var(--mono)',fontSize:'.5rem',letterSpacing:'.1em',background:'rgba(0,229,255,.1)',border:'1px solid rgba(0,229,255,.3)',color:'var(--cyan)',padding:'.2rem .6rem',cursor:'pointer'}}>COPY</button>
+        </div>
         <div className="btn-row">
           <a href="https://app.xdex.xyz/swap" target="_blank" rel="noopener noreferrer" className="btn-main">BUY $CAPY</a>
-          <a href="#prize" className="btn-gold">🏆 WIN 50 XNT</a>
+          <a href="https://x1.ninja/pair/GdKcXA1Q78Bquke5jyZUR1C8YMN6VYT9AUheN1RwKLfe" target="_blank" rel="noopener noreferrer" className="btn-ghost">📊 CHART</a>
           <a href="#collection" className="btn-ghost">VIEW COLLECTION</a>
         </div>
         <div className="ticker">
