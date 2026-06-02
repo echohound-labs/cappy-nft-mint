@@ -998,21 +998,12 @@ function CapyApp() {
           ))}
         </div>
       </div>
-
       {/* MINT SECTION */}
       <MintSection mintState={mintState} onSuccess={handleMintSuccess} />
-
-      {/* XNT TRACKER */}
-      <XNTTracker minted={mintState.minted} />
-
-      </div>
 
       {/* GALLERY */}
       <GallerySection mintedNFTs={mintedNFTs} />
 
-      <div className="sep-line" />
-
-      {/* MEME SECTION */}
       <div className="sep-line" />
 
       {/* PROTOCOL */}
