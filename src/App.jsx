@@ -739,7 +739,7 @@ function GallerySection({ mintedNFTs }) {
             if (nft) {
               const cid = nftMeta[nft.id];
               return (
-                <div key={nft.id} className="minted-slot filled">
+                <div key={nft.id} className="minted-slot filled" style={{cursor:"pointer"}} onClick={() => window.open(`${C.explorer}/address/${nft.mint}`, "_blank")}>
                   {cid && (
                     <img
                       src={`https://gateway.lighthouse.storage/ipfs/${cid}`}
