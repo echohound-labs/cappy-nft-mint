@@ -797,37 +797,6 @@ function XNTTracker({ minted }) {
   const xntGeiger = Math.round(xntRaised * 0.1 * 10) / 10;
 
   return (
-    <div className="xnt-section">
-      <div className="xnt-inner">
-        <div className="stag gr">XNT RAISED — LIVE TRACKER</div>
-        <h2 className="sh">WHERE THE<br /><span className="gr">XNT GOES</span></h2>
-        <div className="xnt-stats">
-          <div className="xnt-stat"><div className="xnt-n go">{xntRaised} XNT</div><div className="xnt-l">TOTAL XNT RAISED</div></div>
-          <div className="xnt-stat"><div className="xnt-n g">{xntLP} XNT</div><div className="xnt-l">XNT ADDED TO LP</div></div>
-          <div className="xnt-stat"><div className="xnt-n c">{xntGeiger} XNT</div><div className="xnt-l">XNT TO GEIGER NODE</div></div>
-          <div className="xnt-stat"><div className="xnt-n p">0 $CAPY</div><div className="xnt-l">$CAPY BURNED</div></div>
-        </div>
-        <div className="logs-grid">
-          <div className="log-box lp">
-            <div className="log-header">
-              <div><div className="log-total g">{xntLP} XNT</div><div className="log-total-label">TOTAL ADDED TO LP</div></div>
-            </div>
-            <div className="log-entries">
-              <div className="log-empty">LP ADDITIONS UPDATE POST-MINT</div>
-            </div>
-          </div>
-          <div className="log-box burn">
-            <div className="log-header">
-              <div><div className="log-total r">0 $CAPY</div><div className="log-total-label">TOTAL BURNED</div></div>
-            </div>
-            <div className="log-entries">
-              <div className="log-empty">NO BURNS YET — UPDATES POST-MINT</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
 }
 
 // ── Main App ───────────────────────────────────────────────────────────
@@ -902,7 +871,6 @@ function CapyApp() {
         <div className="nav-logo">$CAPY</div>
         <ul className="nav-links">
           <li><a href="#collection">COLLECTION</a></li>
-          <li><a href="#prize">🏆 PRIZE</a></li>
           <li><a href="#meme">$CAPY</a></li>
           <li><a href="#protocol">PROTOCOL</a></li>
         </ul>
@@ -1048,45 +1016,6 @@ function CapyApp() {
       {/* XNT TRACKER */}
       <XNTTracker minted={mintState.minted} />
 
-      {/* PRIZE SECTION */}
-      <div className="prize-section" id="prize">
-        <div className="prize-inner">
-          <div className="prize-tag">🏆 MYSTERY PRIZE</div>
-          <h2 className="prize-title"><span className="go">MINT A FEATURED</span><br />MYTHIC WIN 50 XNT</h2>
-          <p className="prize-sub">These 10 Mythic CAPYs are hidden somewhere inside the 500 mint collection. Mint one of the featured Mythics below and win 50 XNT from the treasury — paid directly by the developer.</p>
-          <div className="prize-how">10 FEATURED MYTHICS // 50 XNT EACH // DM TO CLAIM // t.me/CAPYX1</div>
-          <div className="prize-grid">
-            {[
-              ['mythical_city.png','CITY // NEON GOD BLADE'],
-              ['mythical_space.png','SPACE // CELESTIAL SPEAR'],
-              ['mythical_ocean.png','OCEAN // TRIDENT'],
-              ['mythical_lava.png','LAVA // MAGMA SWORD'],
-              ['mythical_snow.png','SNOW // ICE LANCE'],
-              ['mythical_desert.png','DESERT // SANDSTONE BLADE'],
-              ['mythical_forrest.png','FOREST // SPIRIT BLADE'],
-              ['mythical_mountain.png','MOUNTAIN // WAR AXE'],
-              ['mythincal_swamp.png','SWAMP // VINE SPEAR'],
-              ['mythical_beach.png','BEACH // CORAL BLADE'],
-            ].map(([img, label], i) => (
-              <div key={i} className="prize-card">
-                <img src={`/${img}`} alt={label} />
-                <div className="prize-badge">50 XNT</div>
-                <div className="prize-glow" />
-                <div className="prize-env">{label}</div>
-              </div>
-            ))}
-          </div>
-          <div className="prize-claim">
-            <div className="prize-claim-title">HOW TO CLAIM YOUR PRIZE</div>
-            <p className="prize-claim-text">
-              If you mint one of the 10 featured Mythics above, DM the developer on Telegram with proof of your mint. Prize of 50 XNT will be sent directly from the treasury wallet.<br /><br />
-              <a href="https://t.me/CAPYX1" target="_blank" rel="noopener noreferrer">→ t.me/CAPYX1</a>
-            </p>
-          </div>
-          <div style={{marginTop:'2rem'}}>
-            <a href="https://t.me/CAPYX1" target="_blank" rel="noopener noreferrer" className="btn-gold">JOIN TELEGRAM TO CLAIM ↗</a>
-          </div>
-        </div>
       </div>
 
       {/* GALLERY */}
@@ -1095,43 +1024,6 @@ function CapyApp() {
       <div className="sep-line" />
 
       {/* MEME SECTION */}
-      <div className="econ-section">
-        <div className="econ-inner">
-          <div className="stag gr">MINT ECONOMICS — FULLY TRANSPARENT</div>
-          <h2 className="sh">TIERED MINT<br /><span className="gr">PRICING</span></h2>
-          <p className="sb" style={{marginBottom:0}}>Mint early for the lowest price. Every wave increases. 90% of every mint goes to LP — regardless of wave.</p>
-          <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1px',border:'1px solid var(--border)',marginTop:'2rem',overflow:'hidden'}}>
-            {[
-              {wave:'WAVE 1',price:'10 XNT',desc:'FIRST 150 MINTS',detail:'9 XNT → LP\n1 XNT → Geiger Node',total:'Total wave: 1,500 XNT',color:'var(--green)',bg:'rgba(0,255,136,0.05)'},
-              {wave:'WAVE 2',price:'12 XNT',desc:'NEXT 150 MINTS',detail:'10.8 XNT → LP\n1.2 XNT → Geiger Node',total:'Total wave: 1,800 XNT',color:'var(--gold)',bg:'rgba(255,201,64,0.05)'},
-              {wave:'WAVE 3',price:'15 XNT',desc:'FINAL 200 MINTS',detail:'13.5 XNT → LP\n1.5 XNT → Geiger Node',total:'Total wave: 3,000 XNT',color:'var(--orange)',bg:'rgba(255,106,0,0.05)'},
-            ].map((w,i) => (
-              <div key={i} style={{padding:'2rem 1.5rem',background:w.bg,textAlign:'center',borderRight:i<2?'1px solid var(--border)':'none',borderTop:`2px solid ${w.color}`}}>
-                <div style={{fontFamily:'var(--mono)',fontSize:'.58rem',letterSpacing:'.25em',color:w.color,marginBottom:'.5rem'}}>{w.wave}</div>
-                <div style={{fontFamily:'var(--display)',fontSize:'3.5rem',color:w.color,lineHeight:1,marginBottom:'.25rem'}}>{w.price}</div>
-                <div style={{fontFamily:'var(--mono)',fontSize:'.62rem',color:'var(--muted)',marginBottom:'1rem'}}>{w.desc}</div>
-                <div style={{fontSize:'.78rem',color:'var(--muted)',lineHeight:1.7,whiteSpace:'pre-line'}}>
-                  {w.detail}<br /><span style={{color:w.color}}>{w.total}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div style={{border:'1px solid var(--border)',background:'rgba(4,5,10,.6)',padding:'1.5rem 2rem',marginTop:'1px',display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:'1px',textAlign:'center'}}>
-            {[
-              {val:'6,300',label:'TOTAL XNT IF SOLD OUT',color:'var(--cyan)'},
-              {val:'5,670',label:'XNT TO LP (90%)',color:'var(--green)'},
-              {val:'630',label:'XNT TO GEIGER (10%)',color:'var(--cyan)'},
-              {val:'500 XNT',label:'MAX PRIZE POOL',color:'var(--gold)'},
-            ].map((s,i) => (
-              <div key={i} style={{padding:'.75rem',borderLeft:i>0?'1px solid var(--border)':'none'}}>
-                <div style={{fontFamily:'var(--display)',fontSize:'1.8rem',color:s.color}}>{s.val}</div>
-                <div style={{fontFamily:'var(--mono)',fontSize:'.52rem',letterSpacing:'.15em',color:'var(--muted)'}}>{s.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
       <div className="sep-line" />
 
       {/* PROTOCOL */}
@@ -1211,7 +1103,6 @@ function CapyApp() {
         <div className="f-logo">$CAPY</div>
         <ul className="f-links">
           <li><a href="#collection">COLLECTION</a></li>
-          <li><a href="#prize">🏆 PRIZE</a></li>
           <li><a href="#meme">$CAPY</a></li>
           <li><a href="#protocol">PROTOCOL</a></li>
           <li><a href="https://t.me/CAPYX1" target="_blank" rel="noopener noreferrer">TELEGRAM ↗</a></li>
