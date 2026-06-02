@@ -991,43 +991,41 @@ function CapyApp() {
         </div>
       </div>
 
-      {/* FAIRLY LAUNCHED SECTION */}
-      <div style={{borderBottom:'1px solid var(--border)',padding:'4rem 2rem',textAlign:'center',background:'rgba(4,5,10,.8)',position:'relative',overflow:'hidden'}}>
-        <div style={{position:'absolute',inset:0,background:'radial-gradient(ellipse at center, rgba(0,229,255,0.03) 0%, transparent 70%)',pointerEvents:'none'}} />
-        <div style={{fontFamily:'var(--mono)',fontSize:'.55rem',letterSpacing:'.3em',color:'var(--purple)',marginBottom:'1rem'}}>
-          ⚡ COMMUNITY MEME TOKEN — X1 NETWORK
-        </div>
-        <h2 style={{fontFamily:'var(--display)',fontSize:'clamp(1.8rem,4vw,3rem)',color:'var(--cyan)',lineHeight:1.1,marginBottom:'1rem',letterSpacing:'.05em'}}>
-          FAIRLY LAUNCHED<br /><span style={{color:'var(--green)'}}>NO PRESALE. NO VC. NO INSIDERS.</span>
-        </h2>
-        <p style={{fontFamily:'var(--mono)',fontSize:'.7rem',color:'var(--muted)',maxWidth:'620px',margin:'0 auto 1rem',lineHeight:2,letterSpacing:'.08em'}}>
-          Fairly launched on <span style={{color:'var(--cyan)'}}>Degen Launchpad X1</span> — every wallet got in on equal terms.
-          Named after the real <span style={{color:'var(--gold)'}}>Project Capybara protocol</span> that defended the X1 blockchain.
-          The community ran with it.
-        </p>
-        <p style={{fontFamily:'var(--mono)',fontSize:'.7rem',color:'var(--muted)',maxWidth:'620px',margin:'0 auto 2rem',lineHeight:2,letterSpacing:'.08em'}}>
-          No promises of profit. No roadmap fiction. No guarantees of any kind.
-          Just a meme with legendary lore on the best chain.
-        </p>
-        <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(200px,1fr))',gap:'1px',border:'1px solid var(--border)',maxWidth:'800px',margin:'0 auto 2rem',overflow:'hidden'}}>
-          {[
-            ['🛡️','NOT A SECURITY','A community meme token. Not an investment product of any kind.'],
-            ['⚖️','NO PROFIT PROMISES','No guarantees of return. No roadmap fiction. No financial promises.'],
-            ['🌐','EQUAL ACCESS','No presale. No VC allocation. No insider wallets. Pure fair launch.'],
-            ['🔥','X1 NATIVE','Built on the chain Capybara protects. Community meme energy only.'],
-          ].map(([ico, title, desc], i) => (
-            <div key={i} style={{padding:'1.5rem 1rem',textAlign:'center',background:'rgba(4,5,10,.6)',borderRight:i<3?'1px solid var(--border)':'none'}}>
-              <div style={{fontSize:'1.5rem',marginBottom:'.5rem'}}>{ico}</div>
-              <div style={{fontFamily:'var(--mono)',fontSize:'.52rem',letterSpacing:'.2em',color:'var(--cyan)',marginBottom:'.5rem'}}>{title}</div>
-              <div style={{fontFamily:'var(--mono)',fontSize:'.55rem',color:'var(--muted)',lineHeight:1.7}}>{desc}</div>
+      <div className="meme-section" id="meme">
+        <div className="meme-inner">
+          <div className="meme-eyebrow">COMMUNITY MEME TOKEN</div>
+          <h2 className="meme-big"><span className="g1">FAIRLY LAUNCHED</span><br /><span className="g2">COMMUNITY DRIVEN</span></h2>
+          <p style={{fontSize:'.9rem',color:'var(--muted)',maxWidth:'520px',margin:'0 auto 2rem',lineHeight:1.8}}>$CAPY launched fairly on Degen Launchpad X1 — no presale, no VC, no insider allocation. Pure community meme energy on the best chain. Named after the real protocol that defended the X1 blockchain.</p>
+          <div className="launch-box">
+            <div className="launch-grid">
+              <div><div className="launch-label">LAUNCH PLATFORM</div><div className="launch-val">DEGEN</div><div className="launch-desc">Degen Launchpad X1 — fully fair, open to everyone</div></div>
+              <div><div className="launch-label">PRESALE / VC</div><div className="launch-val" style={{color:'var(--red)'}}>NONE</div><div className="launch-desc">Zero insider allocation. Community gets in equally.</div></div>
+              <div><div className="launch-label">MINT PRICE</div><div className="launch-val">10–15 XNT</div><div className="launch-desc">Wave pricing: 10 / 12 / 15 XNT. Mint early for the best price.</div></div>
+              <div><div className="launch-label">MISSION</div><div className="launch-val" style={{fontSize:'.95rem',color:'var(--gold)',paddingTop:'.4rem'}}>BIGGEST MEME ON X1</div><div className="launch-desc">Simple. Focused. Unstoppable.</div></div>
             </div>
-          ))}
-        </div>
-        <div style={{fontFamily:'var(--mono)',fontSize:'.55rem',color:'rgba(100,100,120,.6)',letterSpacing:'.1em',maxWidth:'600px',margin:'0 auto'}}>
-          $CAPY is a community meme token — not an investment, not a security, not a financial product.
-          No promises of profit. No guarantees of any kind. Participate for fun and community only.
+          </div>
+          <div className="meme-cards">
+            {[
+              ['🛡️','c','LEGENDARY NAME','Named after the real X1 protocol. No meme has better lore.'],
+              ['⚡','g','X1 NATIVE','Built on the chain Capybara protects. We belong here.'],
+              ['🏆','p','WIN 50 XNT','Mint a featured Mythic. Claim your prize. DM to collect.'],
+              ['🔥','o','COMMUNITY FIRST','No fake utility. No roadmap fiction. Pure meme energy.'],
+            ].map(([ico, cls, title, desc], i) => (
+              <div key={i} className="mc">
+                <span className="mc-ico">{ico}</span>
+                <div className={`mc-t ${cls}`}>{title}</div>
+                <p className="mc-d">{desc}</p>
+              </div>
+            ))}
+          </div>
+          <div style={{marginTop:'2rem',display:'flex',gap:'1rem',justifyContent:'center',flexWrap:'wrap'}}>
+            <a href="#" className="btn-main">BUY $CAPY ON DEGEN LAUNCHPAD</a>
+            <a href="https://t.me/CAPYX1" target="_blank" rel="noopener noreferrer" className="btn-ghost">JOIN TELEGRAM ↗</a>
+          </div>
         </div>
       </div>
+
+      {/* ECONOMICS */}
       {/* MYTHIC STRIP */}
       <div className="myth-strip">
         <div className="myth-strip-track">
@@ -1114,41 +1112,6 @@ function CapyApp() {
       <div className="sep-line" />
 
       {/* MEME SECTION */}
-      <div className="meme-section" id="meme">
-        <div className="meme-inner">
-          <div className="meme-eyebrow">COMMUNITY MEME TOKEN</div>
-          <h2 className="meme-big"><span className="g1">FAIRLY LAUNCHED</span><br /><span className="g2">COMMUNITY DRIVEN</span></h2>
-          <p style={{fontSize:'.9rem',color:'var(--muted)',maxWidth:'520px',margin:'0 auto 2rem',lineHeight:1.8}}>$CAPY launched fairly on Degen Launchpad X1 — no presale, no VC, no insider allocation. Pure community meme energy on the best chain. Named after the real protocol that defended the X1 blockchain.</p>
-          <div className="launch-box">
-            <div className="launch-grid">
-              <div><div className="launch-label">LAUNCH PLATFORM</div><div className="launch-val">DEGEN</div><div className="launch-desc">Degen Launchpad X1 — fully fair, open to everyone</div></div>
-              <div><div className="launch-label">PRESALE / VC</div><div className="launch-val" style={{color:'var(--red)'}}>NONE</div><div className="launch-desc">Zero insider allocation. Community gets in equally.</div></div>
-              <div><div className="launch-label">MINT PRICE</div><div className="launch-val">10–15 XNT</div><div className="launch-desc">Wave pricing: 10 / 12 / 15 XNT. Mint early for the best price.</div></div>
-              <div><div className="launch-label">MISSION</div><div className="launch-val" style={{fontSize:'.95rem',color:'var(--gold)',paddingTop:'.4rem'}}>BIGGEST MEME ON X1</div><div className="launch-desc">Simple. Focused. Unstoppable.</div></div>
-            </div>
-          </div>
-          <div className="meme-cards">
-            {[
-              ['🛡️','c','LEGENDARY NAME','Named after the real X1 protocol. No meme has better lore.'],
-              ['⚡','g','X1 NATIVE','Built on the chain Capybara protects. We belong here.'],
-              ['🏆','p','WIN 50 XNT','Mint a featured Mythic. Claim your prize. DM to collect.'],
-              ['🔥','o','COMMUNITY FIRST','No fake utility. No roadmap fiction. Pure meme energy.'],
-            ].map(([ico, cls, title, desc], i) => (
-              <div key={i} className="mc">
-                <span className="mc-ico">{ico}</span>
-                <div className={`mc-t ${cls}`}>{title}</div>
-                <p className="mc-d">{desc}</p>
-              </div>
-            ))}
-          </div>
-          <div style={{marginTop:'2rem',display:'flex',gap:'1rem',justifyContent:'center',flexWrap:'wrap'}}>
-            <a href="#" className="btn-main">BUY $CAPY ON DEGEN LAUNCHPAD</a>
-            <a href="https://t.me/CAPYX1" target="_blank" rel="noopener noreferrer" className="btn-ghost">JOIN TELEGRAM ↗</a>
-          </div>
-        </div>
-      </div>
-
-      {/* ECONOMICS */}
       <div className="econ-section">
         <div className="econ-inner">
           <div className="stag gr">MINT ECONOMICS — FULLY TRANSPARENT</div>
