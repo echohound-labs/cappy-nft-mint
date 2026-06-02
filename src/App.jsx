@@ -549,7 +549,7 @@ function MintSection({ mintState, onSuccess }) {
   const nextWave = getMintsUntilNextWave(minted);
 
   const buttonLabel = {
-    idle: wallet.connected ? `MINT CAPY WARRIOR — ${currentPrice} XNT` : 'CONNECT WALLET TO MINT',
+    idle: wallet.connected ? 'MINT CAPY WARRIOR — 10 XNT' : 'CONNECT WALLET TO MINT',
     requesting: '☢️ REQUESTING RANDOMNESS...',
     waiting: '⏳ GEIGER GENERATING ENTROPY...',
     fulfilling: '🦫 MINTING YOUR CAPY...',
@@ -565,7 +565,7 @@ function MintSection({ mintState, onSuccess }) {
         <div className="mint-header">
           <div className="mint-title-row">
             <div className="mint-title">MINT PROGRESS</div>
-            <div className="mint-price-badge">FROM {currentPrice} XNT / MINT</div>
+            <div className="mint-price-badge">10 XNT / MINT</div>
           </div>
           <div className="mint-counts">
             <div><div className="mc-n">{minted}</div><div className="mc-l">MINTED</div></div>
@@ -583,34 +583,9 @@ function MintSection({ mintState, onSuccess }) {
           <span>500 TOTAL</span>
         </div>
 
-        {nextWave && (
-          <div style={{fontFamily:'var(--mono)',fontSize:'.6rem',color:'var(--gold)',textAlign:'center',marginTop:'.75rem',letterSpacing:'.1em',border:'1px solid rgba(255,201,64,.2)',padding:'.5rem',background:'rgba(255,201,64,.04)'}}>
-            ⚡ {nextWave.until} MINTS UNTIL PRICE INCREASES TO {nextWave.nextPrice} XNT
-          </div>
-        )}
 
-        {/* Wave Pricing */}
-        <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'1px',border:'1px solid var(--border)',marginTop:'1.5rem',overflow:'hidden'}}>
-          {[
-            {price:10,label:'WAVE 1',desc:'FIRST 150 MINTS',count:wave1,max:WAVE1_MAX,color:'var(--green)',bg:'rgba(0,255,136,0.06)',id:'wave1'},
-            {price:12,label:'WAVE 2',desc:'NEXT 150 MINTS',count:wave2,max:WAVE2_MAX,color:'var(--gold)',bg:'rgba(255,201,64,0.06)',id:'wave2'},
-            {price:15,label:'WAVE 3',desc:'FINAL 200 MINTS',count:wave3,max:WAVE3_MAX,color:'var(--orange)',bg:'rgba(255,106,0,0.06)',id:'wave3'},
-          ].map((w,i) => (
-            <div key={w.id} style={{padding:'1.25rem 1rem',background:w.bg,textAlign:'center',borderRight:i<2?'1px solid var(--border)':'none',borderTop:`2px solid ${w.color}`}}>
-              <div style={{fontFamily:'var(--display)',fontSize:'2rem',color:w.color,lineHeight:1}}>{w.price} XNT</div>
-              <div style={{fontFamily:'var(--mono)',fontSize:'.52rem',letterSpacing:'.18em',color:w.color,margin:'.3rem 0'}}>{w.label}</div>
-              <div style={{fontFamily:'var(--mono)',fontSize:'.6rem',color:'var(--muted)'}}>{w.desc}</div>
-              <div className="tp-bar-wrap" style={{marginTop:'.75rem'}}>
-                <div className="tp-bar" style={{width:`${(w.count/w.max*100)}%`,background:w.color}} />
-              </div>
-              <div style={{fontFamily:'var(--mono)',fontSize:'.52rem',color:'var(--muted)',marginTop:'.25rem'}}>{w.count} / {w.max}</div>
-            </div>
-          ))}
-        </div>
 
-        <div style={{fontFamily:'var(--mono)',fontSize:'.62rem',color:'var(--muted)',textAlign:'center',marginTop:'.75rem',letterSpacing:'.1em'}}>
-          MINT EARLY = LOWEST PRICE // PRICE INCREASES AS WAVES FILL
-        </div>
+
         {/* Tier Breakdown */}
         {mintState.bitmap && (() => {
           const tiers = [{label:'MYTHIC',color:'var(--purple)',total:30,start:1,end:30},{label:'LEGENDARY',color:'var(--gold)',total:120,start:31,end:150},{label:'COMMON',color:'var(--cyan)',total:350,start:151,end:500}];
