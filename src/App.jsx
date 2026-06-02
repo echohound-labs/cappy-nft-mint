@@ -24,7 +24,7 @@ import '@solana/wallet-adapter-react-ui/styles.css';
 import './App.css';
 
 // ── Config ─────────────────────────────────────────────────────────────
-const NETWORK = 'testnet'; // switch to 'mainnet' for production
+const NETWORK = 'mainnet'; // switch to 'mainnet' for production
 
 const CONFIG = {
   testnet: {
@@ -38,8 +38,8 @@ const CONFIG = {
   },
   mainnet: {
     rpc: 'https://rpc.mainnet.x1.xyz',
-    program: '9TjTjyiz3gpRrTaeGvxi2LTrjjsYmDers7VQVDxo9Zdh',
-    mintState: 'Gpbu72gYwMPbYyaFQjdxAt2c7KV3hzCMqPWPfDYo7DSx',
+    program: '6r9HZKQRhDfNnZM4m6TgkcK82Bt6EA1q2Ck9VNWoTnGm',
+    mintState: '5y1GoGNfruDk9QUszD5UdEn9fjAg6xxDBJfywNu4dGmH',
     lpTreasury: 'GZuBHE3fQCQ6eSTLMwWKrK15CjtWfA58BmxdtWwG5mJJ',
     oracleOperator: 'HGFisVbULNKqogtPuGTfcHG9y6i5nboZabYwifkiiodo',
     geiger: 'BxUNg2yo5371BQMZPkfcxdCptFRDHkhvEXNM1QNPBRYU',

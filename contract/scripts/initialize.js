@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 
 async function main() {
-  const connection = new Connection("https://rpc.testnet.x1.xyz", "confirmed");
+  const connection = new Connection("https://rpc.mainnet.x1.xyz", "confirmed");
 
   const walletKeypair = Keypair.fromSecretKey(
     Buffer.from(JSON.parse(fs.readFileSync(
@@ -16,7 +16,7 @@ async function main() {
   const provider = new anchor.AnchorProvider(connection, wallet, {});
   anchor.setProvider(provider);
 
-  const programId = new PublicKey("9TjTjyiz3gpRrTaeGvxi2LTrjjsYmDers7VQVDxo9Zdh");
+  const programId = new PublicKey("6r9HZKQRhDfNnZM4m6TgkcK82Bt6EA1q2Ck9VNWoTnGm");
   const idl = JSON.parse(fs.readFileSync(
     path.join(__dirname, "../target/idl/capy_warriors.json")
   ));

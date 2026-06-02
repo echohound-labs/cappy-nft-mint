@@ -7,17 +7,15 @@ use anchor_spl::metadata::{
 };
 use anchor_spl::token::{self, Mint, MintTo, Token, TokenAccount};
 
-declare_id!("9TjTjyiz3gpRrTaeGvxi2LTrjjsYmDers7VQVDxo9Zdh");
+declare_id!("6r9HZKQRhDfNnZM4m6TgkcK82Bt6EA1q2Ck9VNWoTnGm");
 
 // ── Constants ──────────────────────────────────────────────────────────
 pub const MAX_SUPPLY: u32 = 500;
 
-// Wave pricing (in XNT lamports, 9 decimals)
-pub const WAVE1_PRICE: u64 = 10_000_000_000; // 10 XNT — first 150 mints
-pub const WAVE2_PRICE: u64 = 12_000_000_000; // 12 XNT — next 150 mints
-pub const WAVE3_PRICE: u64 = 15_000_000_000; // 15 XNT — final 200 mints
+// Flat pricing (in XNT lamports, 9 decimals)
+pub const MINT_PRICE: u64 = 10_000_000_000; // 10 XNT flat
 pub const WAVE1_MAX: u32 = 150;
-pub const WAVE2_MAX: u32 = 300; // 150 + 150
+pub const WAVE2_MAX: u32 = 300;
 
 // Split: 90% to LP treasury, 10% to Geiger node
 pub const GEIGER_FEE_BPS: u64 = 1_000; // 10% in basis points
@@ -28,7 +26,7 @@ pub const MINT_AUTHORITY: Pubkey = pubkey!("2EMbtMasbwBW4MA3pwqNtQguDJLh5k3GuQ3h
 pub const LP_TREASURY: Pubkey = pubkey!("GZuBHE3fQCQ6eSTLMwWKrK15CjtWfA58BmxdtWwG5mJJ"); 
 
 pub const BASE_URI: &str = "https://capy-nft-mint.vercel.app/api/metadata/";
-pub const GEIGER_PROGRAM: Pubkey = pubkey!("2dQf9uaCzXewrDNLttmtzQmc3SmqfAHz3qahKQjtGQyY");
+pub const GEIGER_PROGRAM: Pubkey = pubkey!("BxUNg2yo5371BQMZPkfcxdCptFRDHkhvEXNM1QNPBRYU");
 
 // Tier boundaries (token numbers are 1-indexed in metadata, 0-indexed in contract)
 pub const MYTHIC_MAX: u32 = 30;    // tokens 1-30
@@ -37,15 +35,9 @@ pub const LEGENDARY_MAX: u32 = 150; // tokens 31-150
 
 // ── Helpers ────────────────────────────────────────────────────────────
 
-/// Calculate mint price based on total minted so far
-pub fn get_mint_price(total_minted: u32) -> u64 {
-    if total_minted < WAVE1_MAX {
-        WAVE1_PRICE
-    } else if total_minted < WAVE2_MAX {
-        WAVE2_PRICE
-    } else {
-        WAVE3_PRICE
-    }
+/// Get flat mint price
+pub fn get_mint_price(_total_minted: u32) -> u64 {
+    MINT_PRICE
 }
 
 /// Calculate tier string from mint number (0-indexed)
@@ -294,13 +286,7 @@ pub mod capy_warriors {
         emit!(MintEvent {
             mint_number: token_id,
             tier: tier.to_string(),
-            wave: if total_minted < WAVE1_MAX {
-                1
-            } else if total_minted < WAVE2_MAX {
-                2
-            } else {
-                3
-            },
+            wave: 1,
             mint_price,
             minter: ctx.accounts.minter.key(),
         });
