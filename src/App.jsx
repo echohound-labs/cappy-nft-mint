@@ -788,17 +788,6 @@ function GallerySection({ mintedNFTs }) {
   );
 }
 
-function XNTTracker({ minted }) {
-  const wave1 = Math.min(minted, WAVE1_MAX);
-  const wave2 = Math.min(Math.max(minted - WAVE1_MAX, 0), WAVE2_MAX);
-  const wave3 = Math.min(Math.max(minted - WAVE1_MAX - WAVE2_MAX, 0), WAVE3_MAX);
-  const xntRaised = (wave1 * WAVE1_PRICE) + (wave2 * WAVE2_PRICE) + (wave3 * WAVE3_PRICE);
-  const xntLP = Math.round(xntRaised * 0.9 * 10) / 10;
-  const xntGeiger = Math.round(xntRaised * 0.1 * 10) / 10;
-
-  return (
-}
-
 // ── Main App ───────────────────────────────────────────────────────────
 
 function DisclaimerModal({ open, onClose }) {
