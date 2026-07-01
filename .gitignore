@@ -5,3 +5,4 @@ dist/
 .DS_StoreDEPLOYMENT.md
 .vercel
 .env*
+contract/capy-collection-mint.json
