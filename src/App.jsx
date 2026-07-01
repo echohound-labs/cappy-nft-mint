@@ -54,6 +54,7 @@ const LP_TREASURY = new PublicKey(C.lpTreasury);
 const ORACLE_OPERATOR = new PublicKey(C.oracleOperator);
 const GEIGER_PROGRAM = new PublicKey(C.geiger);
 const METADATA_PROGRAM = new PublicKey('metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s');
+const COLLECTION_MINT = new PublicKey('HC8zqrya22MHNR2JsNkmvr2yqPthDDov1ehDSEUATKbC');
 
 const WAVE1_MAX = 150, WAVE2_MAX = 150, WAVE3_MAX = 200;
 const WAVE1_PRICE = 10, WAVE2_PRICE = 12, WAVE3_PRICE = 15;
@@ -400,6 +401,10 @@ function useCapyMint(connection, wallet, onSuccess) {
           { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },
           { pubkey: METADATA_PROGRAM, isSigner: false, isWritable: false },
           { pubkey: new PublicKey('SysvarRent111111111111111111111111111111111'), isSigner: false, isWritable: false },
+          // ── collection accounts for auto-join (kept LAST, matches FulfillMint struct) ──
+          { pubkey: COLLECTION_MINT, isSigner: false, isWritable: false },
+          { pubkey: PublicKey.findProgramAddressSync([Buffer.from('metadata'), METADATA_PROGRAM.toBuffer(), COLLECTION_MINT.toBuffer()], METADATA_PROGRAM)[0], isSigner: false, isWritable: true },
+          { pubkey: PublicKey.findProgramAddressSync([Buffer.from('metadata'), METADATA_PROGRAM.toBuffer(), COLLECTION_MINT.toBuffer(), Buffer.from('edition')], METADATA_PROGRAM)[0], isSigner: false, isWritable: false },
         ],
         programId: CAPY_PROGRAM,
         data: fulfillDiscrim,

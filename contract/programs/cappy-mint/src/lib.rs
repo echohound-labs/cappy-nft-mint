@@ -1,9 +1,10 @@
 use anchor_lang::prelude::*;
 use anchor_spl::associated_token::AssociatedToken;
 use anchor_spl::metadata::{
-    create_metadata_accounts_v3,
-    mpl_token_metadata::types::{Creator, DataV2},
-    CreateMetadataAccountsV3, Metadata,
+    create_master_edition_v3, create_metadata_accounts_v3,
+    mpl_token_metadata::types::{CollectionDetails, Creator, DataV2},
+    set_and_verify_sized_collection_item, CreateMasterEditionV3, CreateMetadataAccountsV3, Metadata,
+    SetAndVerifySizedCollectionItem,
 };
 use anchor_spl::token::{self, Mint, MintTo, Token, TokenAccount};
 
@@ -13,7 +14,7 @@ declare_id!("6r9HZKQRhDfNnZM4m6TgkcK82Bt6EA1q2Ck9VNWoTnGm");
 pub const MAX_SUPPLY: u32 = 500;
 
 // Flat pricing (in XNT lamports, 9 decimals)
-pub const MINT_PRICE: u64 = 10_000_000_000; // 10 XNT flat
+pub const MINT_PRICE: u64 = 2_000_000_000; // 2 XNT flat (was 10)
 pub const WAVE1_MAX: u32 = 150;
 pub const WAVE2_MAX: u32 = 300;
 
@@ -27,6 +28,8 @@ pub const LP_TREASURY: Pubkey = pubkey!("GZuBHE3fQCQ6eSTLMwWKrK15CjtWfA58BmxdtWw
 
 pub const BASE_URI: &str = "https://capy-nft-mint.vercel.app/api/metadata/";
 pub const GEIGER_PROGRAM: Pubkey = pubkey!("BxUNg2yo5371BQMZPkfcxdCptFRDHkhvEXNM1QNPBRYU");
+// Parent CAPY Warriors Collection NFT — every mint auto-joins THIS collection (pinned).
+pub const COLLECTION_MINT: Pubkey = pubkey!("HC8zqrya22MHNR2JsNkmvr2yqPthDDov1ehDSEUATKbC");
 
 // Tier boundaries (token numbers are 1-indexed in metadata, 0-indexed in contract)
 pub const MYTHIC_MAX: u32 = 30;    // tokens 1-30
@@ -237,39 +240,35 @@ pub mod capy_warriors {
             None,  // collection_details
         )?;
 
-        // ── 5. Wave pricing + 90/10 split ──────────────────────────────
-        let mint_price = get_mint_price(total_minted);
-
-        // Geiger node gets 10%
-        let geiger_fee = mint_price
-            .checked_mul(GEIGER_FEE_BPS)
-            .unwrap()
-            .checked_div(10_000)
-            .unwrap();
-
-        // LP treasury gets remaining 90%
-        let lp_amount = mint_price.checked_sub(geiger_fee).unwrap();
-
-        // Transfer to LP treasury (90%)
-        let lp_ix = anchor_lang::solana_program::system_instruction::transfer(
-            &ctx.accounts.minter.key(),
-            &ctx.accounts.lp_treasury.key(),
-            lp_amount,
-        );
-        anchor_lang::solana_program::program::invoke(
-            &lp_ix,
-            &[
-                ctx.accounts.minter.to_account_info(),
-                ctx.accounts.lp_treasury.to_account_info(),
-                ctx.accounts.system_program.to_account_info(),
-            ],
+        // ── 5. Full mint price to Geiger node (no LP split) ────────────
+        // Auto-join the collection: set + verify, program signs as mint_state
+        set_and_verify_sized_collection_item(
+            CpiContext::new_with_signer(
+                ctx.accounts.token_metadata_program.to_account_info(),
+                SetAndVerifySizedCollectionItem {
+                    metadata: ctx.accounts.metadata.to_account_info(),
+                    collection_authority: ctx.accounts.mint_state.to_account_info(),
+                    payer: ctx.accounts.minter.to_account_info(),
+                    update_authority: ctx.accounts.mint_state.to_account_info(),
+                    collection_mint: ctx.accounts.collection_mint.to_account_info(),
+                    collection_metadata: ctx.accounts.collection_metadata.to_account_info(),
+                    collection_master_edition: ctx
+                        .accounts
+                        .collection_master_edition
+                        .to_account_info(),
+                },
+                signer_seeds,
+            ),
+            None,
         )?;
 
-        // Transfer to Geiger oracle operator (10%)
+        let mint_price = get_mint_price(total_minted);
+
+        // Entire mint price goes to the Geiger oracle operator
         let geiger_ix = anchor_lang::solana_program::system_instruction::transfer(
             &ctx.accounts.minter.key(),
             &ctx.accounts.oracle_operator.key(),
-            geiger_fee,
+            mint_price,
         );
         anchor_lang::solana_program::program::invoke(
             &geiger_ix,
@@ -293,9 +292,169 @@ pub mod capy_warriors {
 
         Ok(())
     }
+
+    pub fn create_collection(ctx: Context<CreateCollection>, uri: String) -> Result<()> {
+        let bump = ctx.accounts.mint_state.bump;
+        let seeds = &[b"mint_state_v2".as_ref(), &[bump]];
+        let signer = &[&seeds[..]];
+
+        // 1 supply to the authority's collection ATA
+        token::mint_to(
+            CpiContext::new_with_signer(
+                ctx.accounts.token_program.to_account_info(),
+                MintTo {
+                    mint: ctx.accounts.collection_mint.to_account_info(),
+                    to: ctx.accounts.collection_token.to_account_info(),
+                    authority: ctx.accounts.mint_state.to_account_info(),
+                },
+                signer,
+            ),
+            1,
+        )?;
+
+        // metadata, marked as a SIZED collection (size starts at 0)
+        create_metadata_accounts_v3(
+            CpiContext::new_with_signer(
+                ctx.accounts.token_metadata_program.to_account_info(),
+                CreateMetadataAccountsV3 {
+                    metadata: ctx.accounts.collection_metadata.to_account_info(),
+                    mint: ctx.accounts.collection_mint.to_account_info(),
+                    mint_authority: ctx.accounts.mint_state.to_account_info(),
+                    payer: ctx.accounts.authority.to_account_info(),
+                    update_authority: ctx.accounts.mint_state.to_account_info(),
+                    system_program: ctx.accounts.system_program.to_account_info(),
+                    rent: ctx.accounts.rent.to_account_info(),
+                },
+                signer,
+            ),
+            DataV2 {
+                name: "CAPY Warriors".to_string(),
+                symbol: "CAPY".to_string(),
+                uri,
+                seller_fee_basis_points: 500,
+                creators: Some(vec![Creator {
+                    address: ctx.accounts.mint_state.key(),
+                    verified: true,
+                    share: 100,
+                }]),
+                collection: None,
+                uses: None,
+            },
+            true,
+            true,
+            Some(CollectionDetails::V1 { size: 0 }),
+        )?;
+
+        // master edition (max_supply 0 → a proper Collection NFT)
+        create_master_edition_v3(
+            CpiContext::new_with_signer(
+                ctx.accounts.token_metadata_program.to_account_info(),
+                CreateMasterEditionV3 {
+                    edition: ctx.accounts.collection_master_edition.to_account_info(),
+                    mint: ctx.accounts.collection_mint.to_account_info(),
+                    update_authority: ctx.accounts.mint_state.to_account_info(),
+                    mint_authority: ctx.accounts.mint_state.to_account_info(),
+                    payer: ctx.accounts.authority.to_account_info(),
+                    metadata: ctx.accounts.collection_metadata.to_account_info(),
+                    token_program: ctx.accounts.token_program.to_account_info(),
+                    system_program: ctx.accounts.system_program.to_account_info(),
+                    rent: ctx.accounts.rent.to_account_info(),
+                },
+                signer,
+            ),
+            Some(0),
+        )?;
+
+        Ok(())
+    }
+
+    // ── CERT: set + verify one already-minted member into the collection ──
+    // Members carry collection:None and update_authority = mint_state, so the
+    // program (signing as mint_state) does set_and_verify in one CPI. Authority-gated.
+    pub fn verify_collection(ctx: Context<VerifyCollectionItem>) -> Result<()> {
+        let bump = ctx.accounts.mint_state.bump;
+        let seeds = &[b"mint_state_v2".as_ref(), &[bump]];
+        let signer = &[&seeds[..]];
+
+        set_and_verify_sized_collection_item(
+            CpiContext::new_with_signer(
+                ctx.accounts.token_metadata_program.to_account_info(),
+                SetAndVerifySizedCollectionItem {
+                    metadata: ctx.accounts.metadata.to_account_info(),
+                    collection_authority: ctx.accounts.mint_state.to_account_info(),
+                    payer: ctx.accounts.authority.to_account_info(),
+                    update_authority: ctx.accounts.mint_state.to_account_info(),
+                    collection_mint: ctx.accounts.collection_mint.to_account_info(),
+                    collection_metadata: ctx.accounts.collection_metadata.to_account_info(),
+                    collection_master_edition: ctx
+                        .accounts
+                        .collection_master_edition
+                        .to_account_info(),
+                },
+                signer,
+            ),
+            None,
+        )?;
+
+        Ok(())
+    }
+
 }
 
 // ── Account Structs ────────────────────────────────────────────────────
+
+#[derive(Accounts)]
+pub struct CreateCollection<'info> {
+    #[account(seeds = [b"mint_state_v2"], bump = mint_state.bump, has_one = authority)]
+    pub mint_state: Account<'info, MintState>,
+    #[account(mut)]
+    pub authority: Signer<'info>,
+    #[account(
+        init,
+        payer = authority,
+        mint::decimals = 0,
+        mint::authority = mint_state,
+        mint::freeze_authority = mint_state,
+    )]
+    pub collection_mint: Account<'info, Mint>,
+    #[account(
+        init,
+        payer = authority,
+        associated_token::mint = collection_mint,
+        associated_token::authority = authority,
+    )]
+    pub collection_token: Account<'info, TokenAccount>,
+    /// CHECK: Metaplex metadata PDA, created via CPI
+    #[account(mut)]
+    pub collection_metadata: UncheckedAccount<'info>,
+    /// CHECK: Metaplex master edition PDA, created via CPI
+    #[account(mut)]
+    pub collection_master_edition: UncheckedAccount<'info>,
+    pub token_program: Program<'info, Token>,
+    pub associated_token_program: Program<'info, AssociatedToken>,
+    pub token_metadata_program: Program<'info, Metadata>,
+    pub system_program: Program<'info, System>,
+    pub rent: Sysvar<'info, Rent>,
+}
+
+#[derive(Accounts)]
+pub struct VerifyCollectionItem<'info> {
+    #[account(seeds = [b"mint_state_v2"], bump = mint_state.bump, has_one = authority)]
+    pub mint_state: Account<'info, MintState>,
+    #[account(mut)]
+    pub authority: Signer<'info>,
+    /// CHECK: member NFT metadata, mutated by the CPI
+    #[account(mut)]
+    pub metadata: UncheckedAccount<'info>,
+    /// CHECK: parent collection mint
+    pub collection_mint: UncheckedAccount<'info>,
+    /// CHECK: parent collection metadata, size-incremented by the CPI
+    #[account(mut)]
+    pub collection_metadata: UncheckedAccount<'info>,
+    /// CHECK: parent collection master edition
+    pub collection_master_edition: UncheckedAccount<'info>,
+    pub token_metadata_program: Program<'info, Metadata>,
+}
 
 #[account]
 pub struct MintState {
@@ -403,6 +562,15 @@ pub struct FulfillMint<'info> {
     pub system_program: Program<'info, System>,
     pub token_metadata_program: Program<'info, Metadata>,
     pub rent: Sysvar<'info, Rent>,
+    // ── appended for auto-join (kept LAST so an un-upgraded program harmlessly ignores them) ──
+    /// CHECK: parent collection mint — pinned to the CAPY collection
+    #[account(address = COLLECTION_MINT)]
+    pub collection_mint: UncheckedAccount<'info>,
+    /// CHECK: parent collection metadata, size-incremented by the CPI
+    #[account(mut)]
+    pub collection_metadata: UncheckedAccount<'info>,
+    /// CHECK: parent collection master edition
+    pub collection_master_edition: UncheckedAccount<'info>,
 }
 
 #[derive(Accounts)]
