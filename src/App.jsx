@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import {
   ConnectionProvider,
   WalletProvider,
@@ -609,6 +609,69 @@ function MyNFTCard({ nft }) {
   );
 }
 
+// Lazy-loads a minted NFT image only once its slot scrolls into view.
+// Shows a dark shimmering placeholder until loaded, and retries a failed
+// gateway fetch up to 3 times with a 2s delay between attempts.
+function LazyNFTImage({ cid, id }) {
+  const ref = useRef(null);
+  const [inView, setInView] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const [attempt, setAttempt] = useState(0);
+  const retries = useRef(0);
+  const retryTimer = useRef(null);
+
+  // Observe the slot; start loading when it (nearly) enters the viewport.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some(e => e.isIntersecting)) {
+        setInView(true);
+        observer.disconnect();
+      }
+    }, { rootMargin: '200px' });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  // Clean up any pending retry timer on unmount.
+  useEffect(() => () => { if (retryTimer.current) clearTimeout(retryTimer.current); }, []);
+
+  const handleError = () => {
+    if (retries.current < 3) {
+      retries.current += 1;
+      retryTimer.current = setTimeout(() => setAttempt(a => a + 1), 2000);
+    } else {
+      setFailed(true);
+    }
+  };
+
+  // Cache-bust on retry so the gateway is re-hit instead of serving a cached failure.
+  const src = `https://gateway.lighthouse.storage/ipfs/${cid}${attempt > 0 ? `?retry=${attempt}` : ''}`;
+
+  return (
+    <div ref={ref} className="nft-lazy" style={{position:'absolute',inset:0,width:'100%',height:'100%'}}>
+      {!loaded && (
+        <div className={`nft-placeholder${!failed ? ' nft-shimmer' : ''}`}>
+          <span className="nft-ph-num">#{id}</span>
+          {failed && <span className="nft-ph-fail">LOAD FAILED</span>}
+        </div>
+      )}
+      {inView && !failed && (
+        <img
+          key={attempt}
+          src={src}
+          alt={`CAPY #${id}`}
+          onLoad={() => setLoaded(true)}
+          onError={handleError}
+          style={{width:'100%',height:'100%',objectFit:'cover',position:'absolute',inset:0,opacity:loaded?1:0,transition:'opacity .3s ease'}}
+        />
+      )}
+    </div>
+  );
+}
+
 function GallerySection({ mintedNFTs }) {
   const wallet = useWallet();
   const { connection } = useConnection();
@@ -637,6 +700,13 @@ function GallerySection({ mintedNFTs }) {
 
   return (
     <div className="gallery-section" id="collection">
+      <style>{`
+        .nft-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.25rem;background:#04050a;color:rgba(0,229,255,.25);font-family:var(--mono,monospace);font-size:.7rem;letter-spacing:.15em}
+        .nft-ph-num{font-size:.9rem;font-weight:700}
+        .nft-ph-fail{font-size:.5rem;color:rgba(255,60,90,.6)}
+        .nft-shimmer{background:linear-gradient(100deg,#04050a 30%,rgba(0,229,255,.08) 50%,#04050a 70%);background-size:200% 100%;animation:nftshimmer 1.4s infinite linear}
+        @keyframes nftshimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+      `}</style>
       <div className="gallery-inner">
         <div className="stag pu">LIVE MINTED COLLECTION</div>
         <h2 className="sh">MINTED<br /><span className="pu">CAPYS</span></h2>
@@ -649,13 +719,7 @@ function GallerySection({ mintedNFTs }) {
               const cid = nftMeta[nft.id];
               return (
                 <div key={nft.id} className="minted-slot filled" style={{cursor:"pointer"}} onClick={() => window.open(`${C.explorer}/address/${C.program}?tokenId=${nft.id}`, "_blank")}>
-                  {cid && (
-                    <img
-                      src={`https://gateway.lighthouse.storage/ipfs/${cid}`}
-                      alt={`CAPY #${nft.id}`}
-                      style={{width:'100%',height:'100%',objectFit:'cover',position:'absolute',inset:0}}
-                    />
-                  )}
+                  {cid && <LazyNFTImage cid={cid} id={nft.id} />}
                   <div className="cid-label">CAPY #{nft.id} — {nft.tier.name}</div>
                 </div>
               );
