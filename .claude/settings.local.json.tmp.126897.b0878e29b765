@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 *)",
+      "Bash(grep -an '\\\\$CAPY\\\\|DEGEN\\\\|FAIRLY LAUNCHED\\\\|COMMUNITY DRIVEN\\\\|meme-section\\\\|meme-big\\\\|BUY \\\\$CAPY\\\\|MARKET CAP\\\\|CAPY PRICE' src/App.jsx)",
+      "Bash(npm run *)",
+      "Bash(git add *)",
+      "Bash(git commit -m 'remove capy token, rebrand to capy warriors *)",
+      "Bash(git push *)",
+      "Bash(echo \"exit:$?\")",
+      "Bash(echo \"EXIT $?\")",
+      "Bash(xxd)",
+      "Bash(git commit *)"
+    ]
+  }
+}

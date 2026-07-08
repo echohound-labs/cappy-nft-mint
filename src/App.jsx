@@ -458,7 +458,7 @@ function MintSection({ mintState, onSuccess }) {
   const nextWave = getMintsUntilNextWave(minted);
 
   const buttonLabel = {
-    idle: wallet.connected ? 'MINT CAPY WARRIOR — 10 XNT' : 'CONNECT WALLET TO MINT',
+    idle: wallet.connected ? 'MINT CAPY WARRIOR — 2 XNT' : 'CONNECT WALLET TO MINT',
     requesting: '☢️ REQUESTING RANDOMNESS...',
     waiting: '⏳ GEIGER GENERATING ENTROPY...',
     fulfilling: '🦫 MINTING YOUR CAPY...',
@@ -474,7 +474,7 @@ function MintSection({ mintState, onSuccess }) {
         <div className="mint-header">
           <div className="mint-title-row">
             <div className="mint-title">MINT PROGRESS</div>
-            <div className="mint-price-badge">10 XNT / MINT</div>
+            <div className="mint-price-badge">2 XNT / MINT</div>
           </div>
           <div className="mint-counts">
             <div><div className="mc-n">{minted}</div><div className="mc-l">MINTED</div></div>
@@ -798,7 +798,7 @@ function CapyApp() {
               ['350', 'COMMON', 'tc'],
               ['STORAGE', 'LIGHTHOUSE IPFS', 'tc'],
               ['RANDOMNESS', 'GEIGER ENTROPY ORACLE', 'tp'],
-              ['MINT PRICE', '10 XNT FLAT', 'tg'],
+              ['MINT PRICE', '2 XNT FLAT', 'tg'],
               ['XNT PRICE', xntPrice, 'tgo'],
               ['CAPY WARRIORS', '500 NFTS', 'tg'],
               ['30', 'MYTHIC', 'tp'],
@@ -806,7 +806,7 @@ function CapyApp() {
               ['350', 'COMMON', 'tc'],
               ['STORAGE', 'LIGHTHOUSE IPFS', 'tc'],
               ['RANDOMNESS', 'GEIGER ENTROPY ORACLE', 'tp'],
-              ['MINT PRICE', '10 XNT FLAT', 'tg'],
+              ['MINT PRICE', '2 XNT FLAT', 'tg'],
             ].map(([label, value, cls], i) => (
               <div key={i} className="tick-item">{label} <b className={cls}>{value}</b></div>
             ))}
