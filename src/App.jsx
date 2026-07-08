@@ -72,102 +72,6 @@ function getMintsUntilNextWave(minted) {
   return null;
 }
 
-
-// ── Market Cap Tracker ─────────────────────────────────────────────────
-const RPC_URL = 'https://rpc.mainnet.x1.xyz';
-const CAPY_VAULT = 'CCd6V4WZZ3qXEZSV4daDxvWRLR2V35WGqjxLupW8Ex88';
-const XNT_CAPY_VAULT = '14rjAEfArCzNFktWQU6MSkgUjAjMkqqGACoNY9xPVyxc';
-const XNT_USDC_VAULT_XNT = '8wvV4HKBDFMLEUkVWp1WPNa5ano99XCm3f9t3troyLb';
-const XNT_USDC_VAULT_USDC = '7iw2adw8Af7x3pY7gj5RwczFXuGjCoX92Gfy3avwXQtg';
-const CAPY_TOTAL_SUPPLY = 999993336.999;
-
-async function fetchTokenBalance(account) {
-  try {
-    const res = await fetch('/api/rpc', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'getTokenAccountBalance', params: [account] }),
-    });
-    const j = await res.json();
-    return Number(j?.result?.value?.uiAmount || 0);
-  } catch { return null; }
-}
-
-function useCapyMarketData() {
-  const [data, setData] = useState(null);
-  const refresh = useCallback(async () => {
-    try {
-      const [capyAmt, xntAmt, xntPoolAmt, usdcAmt] = await Promise.all([
-        fetchTokenBalance(CAPY_VAULT),
-        fetchTokenBalance(XNT_CAPY_VAULT),
-        fetchTokenBalance(XNT_USDC_VAULT_XNT),
-        fetchTokenBalance(XNT_USDC_VAULT_USDC),
-      ]);
-      if (capyAmt == null || xntAmt == null || xntPoolAmt == null || usdcAmt == null) return;
-      if (capyAmt === 0 || xntPoolAmt === 0) return;
-      const xntUsd = usdcAmt / xntPoolAmt;
-      const capyXnt = xntAmt / capyAmt;
-      const capyUsd = capyXnt * xntUsd;
-      const marketCapUsd = capyUsd * CAPY_TOTAL_SUPPLY;
-      const marketCapXnt = capyXnt * CAPY_TOTAL_SUPPLY;
-      setData({ capyUsd, capyXnt, marketCapUsd, marketCapXnt, xntUsd, capyAmt, xntAmt });
-    } catch {}
-  }, []);
-  useEffect(() => {
-    refresh();
-    const id = setInterval(refresh, 30000);
-    return () => clearInterval(id);
-  }, [refresh]);
-  return data;
-}
-
-function MarketBar() {
-  const [price, setPrice] = useState('...');
-  const [mcap, setMcap] = useState('...');
-  const [xnt, setXnt] = useState('...');
-
-  useEffect(() => {
-    async function load() {
-      try {
-        const call = (account) => fetch('/api/rpc', {
-          method: 'POST',
-          headers: {'Content-Type':'application/json'},
-          body: JSON.stringify({jsonrpc:'2.0',id:1,method:'getTokenAccountBalance',params:[account]})
-        }).then(r => r.json()).then(d => Number(d?.result?.value?.uiAmount || 0));
-
-        const [capy, xntAmt, xntPool, usdc] = await Promise.all([
-          call('CCd6V4WZZ3qXEZSV4daDxvWRLR2V35WGqjxLupW8Ex88'),
-          call('14rjAEfArCzNFktWQU6MSkgUjAjMkqqGACoNY9xPVyxc'),
-          call('8wvV4HKBDFMLEUkVWp1WPNa5ano99XCm3f9t3troyLb'),
-          call('7iw2adw8Af7x3pY7gj5RwczFXuGjCoX92Gfy3avwXQtg'),
-        ]);
-
-        const xntUsd = usdc / xntPool;
-        const capyXnt = xntAmt / capy;
-        const capyUsd = capyXnt * xntUsd;
-        const mc = capyUsd * 999993336;
-
-        setXnt('$' + xntUsd.toFixed(4));
-        setPrice('$' + capyUsd.toLocaleString(undefined, {minimumFractionDigits:6,maximumFractionDigits:6}));
-        setMcap('$' + Math.round(mc).toLocaleString());
-      } catch(e) { setPrice('ERR'); }
-    }
-    load();
-    const t = setInterval(load, 30000);
-    return () => clearInterval(t);
-  }, []);
-  const items = [['$CAPY',price],['MCAP',mcap],['XNT',xnt],['SUPPLY','1B'],['MINT PRICE','10 XNT FLAT'],['500 NFTS','30 MYTHIC'],['120 LEGENDARY','350 COMMON'],['STORAGE','LIGHTHOUSE IPFS'],['RANDOMNESS','GEIGER ENTROPY ORACLE'],['FAIRLY LAUNCHED','DEGEN LAUNCHPAD X1'],['$CAPY',price],['MCAP',mcap],['XNT',xnt],['SUPPLY','1B'],['MINT PRICE','10 XNT FLAT'],['500 NFTS','30 MYTHIC'],['120 LEGENDARY','350 COMMON'],['STORAGE','LIGHTHOUSE IPFS'],['RANDOMNESS','GEIGER ENTROPY ORACLE'],['FAIRLY LAUNCHED','DEGEN LAUNCHPAD X1']];
-  return (
-    <div style={{marginTop:"58px",position:"relative",zIndex:2,width:"100%",overflow:"hidden",borderTop:"1px solid var(--border)",borderBottom:"1px solid var(--border)",background:"rgba(0,229,255,0.02)",padding:".5rem 0"}}>
-      <div style={{display:'flex',gap:'3rem',whiteSpace:'nowrap',width:'max-content',animation:'tick 30s linear infinite'}}>
-        {items.map(([label,val],i) => (
-          <div key={i} className="tick-item">{label} <b className={["tg","to","tgo","tc","tp","tg","to","tgo","tc","tp"][i % 10]}>{val}</b></div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function getTier(tokenNumber) {
   if (tokenNumber <= 30) return { name: 'Mythic', color: 'var(--purple)', short: 'M' };
   if (tokenNumber <= 150) return { name: 'Legendary', color: 'var(--cyan)', short: 'L' };
@@ -832,18 +736,14 @@ function CapyApp() {
   const [showDisclaimer, setShowDisclaimer] = useState(true);
   const [agreed, setAgreed] = useState(false);
   const handleAgree = () => { setAgreed(true); setShowDisclaimer(false); };
-  const [capyPrice, setCapyPrice] = useState('...');
-  const [capyMcap, setCapyMcap] = useState('...');
-  const [capyXnt, setCapyXnt] = useState('...');
+  const [xntPrice, setXntPrice] = useState('...');
   useEffect(() => {
     async function loadPrice() {
       try {
         const call = (a) => fetch('/api/rpc',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'getTokenAccountBalance',params:[a]})}).then(r=>r.json()).then(d=>Number(d?.result?.value?.uiAmount||0));
-        const [capy,xntA,xntP,usdc] = await Promise.all([call('CCd6V4WZZ3qXEZSV4daDxvWRLR2V35WGqjxLupW8Ex88'),call('14rjAEfArCzNFktWQU6MSkgUjAjMkqqGACoNY9xPVyxc'),call('8wvV4HKBDFMLEUkVWp1WPNa5ano99XCm3f9t3troyLb'),call('7iw2adw8Af7x3pY7gj5RwczFXuGjCoX92Gfy3avwXQtg')]);
-        const xu=usdc/xntP,cu=xntA/capy*xu;
-        setCapyXnt('$'+xu.toFixed(4));
-        setCapyPrice('$'+cu.toLocaleString(undefined,{minimumFractionDigits:6,maximumFractionDigits:6}));
-        setCapyMcap('$'+Math.round(cu*999993336).toLocaleString());
+        const [xntP,usdc] = await Promise.all([call('8wvV4HKBDFMLEUkVWp1WPNa5ano99XCm3f9t3troyLb'),call('7iw2adw8Af7x3pY7gj5RwczFXuGjCoX92Gfy3avwXQtg')]);
+        const xu=usdc/xntP;
+        setXntPrice('$'+xu.toFixed(4));
       }catch(e){}
     }
     loadPrice();
@@ -862,10 +762,9 @@ function CapyApp() {
     <div>
       {/* NAV */}
       <nav>
-        <div className="nav-logo">$CAPY</div>
+        <div className="nav-logo">CAPY WARRIORS</div>
         <ul className="nav-links">
           <li><a href="#collection">COLLECTION</a></li>
-          <li><a href="#meme">$CAPY</a></li>
           <li><a href="#protocol">PROTOCOL</a></li>
         </ul>
         <div style={{display:'flex',alignItems:'center',gap:'1rem'}}>
@@ -886,23 +785,13 @@ function CapyApp() {
           <span className="t1">X1 CAPY WARRIORS</span>
         </h1>
         <p className="hero-sub" style={{color:'var(--gold)',opacity:1,fontSize:'.9rem',letterSpacing:'.15em'}}>THE CAPYBARA THAT GUARDS THE BLOCKCHAIN<br />HAS RAISED AN ARMY OF CAPY WARRIORS</p>
-        <div style={{fontFamily:'var(--mono)',fontSize:'.55rem',letterSpacing:'.1em',color:'var(--muted)',marginBottom:'1.5rem',display:'flex',alignItems:'center',justifyContent:'center',gap:'.75rem',flexWrap:'wrap'}}>
-          <span style={{color:'rgba(255,255,255,0.3)'}}>CA:</span>
-          <span style={{color:'var(--cyan)'}}>AnvCcvnY4DLRW42EZBEAb1QeU6Pt9aab3r3D75GtgJUU</span>
-          <button onClick={() => navigator.clipboard.writeText('AnvCcvnY4DLRW42EZBEAb1QeU6Pt9aab3r3D75GtgJUU')} style={{fontFamily:'var(--mono)',fontSize:'.5rem',letterSpacing:'.1em',background:'rgba(0,229,255,.1)',border:'1px solid rgba(0,229,255,.3)',color:'var(--cyan)',padding:'.2rem .6rem',cursor:'pointer'}}>COPY</button>
-        </div>
         <div className="btn-row">
-          <a href="https://app.xdex.xyz/swap" target="_blank" rel="noopener noreferrer" style={{fontFamily:'var(--mono)',fontSize:'.72rem',letterSpacing:'.15em',background:'linear-gradient(90deg,var(--cyan),var(--purple))',color:'var(--black)',padding:'.85rem 2.5rem',textDecoration:'none',clipPath:'polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)'}}>BUY $CAPY</a>
-          <a href="https://x1.ninja/pair/GdKcXA1Q78Bquke5jyZUR1C8YMN6VYT9AUheN1RwKLfe" target="_blank" rel="noopener noreferrer" style={{fontFamily:'var(--mono)',fontSize:'.72rem',letterSpacing:'.15em',background:'linear-gradient(90deg,var(--purple),var(--cyan))',color:'var(--black)',padding:'.85rem 2.5rem',textDecoration:'none',clipPath:'polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)'}}>📊 CHART</a>
           <a href="#collection" style={{fontFamily:'var(--mono)',fontSize:'.72rem',letterSpacing:'.15em',background:'linear-gradient(90deg,#c084fc,var(--gold))',color:'var(--black)',padding:'.85rem 2.5rem',textDecoration:'none',clipPath:'polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%)'}}>VIEW COLLECTION</a>
         </div>
         <div className="ticker">
           <div className="tick-inner">
             {[
-              ['CAPY PRICE', capyPrice, 'tg'],
-              ['MARKET CAP', capyMcap, 'to'],
-              ['XNT PRICE', capyXnt, 'tgo'],
-              ['PLATFORM', 'DEGEN LAUNCHPAD X1', 'tc'],
+              ['XNT PRICE', xntPrice, 'tgo'],
               ['CAPY WARRIORS', '500 NFTS', 'tg'],
               ['30', 'MYTHIC', 'tp'],
               ['120', 'LEGENDARY', 'tgo'],
@@ -910,10 +799,7 @@ function CapyApp() {
               ['STORAGE', 'LIGHTHOUSE IPFS', 'tc'],
               ['RANDOMNESS', 'GEIGER ENTROPY ORACLE', 'tp'],
               ['MINT PRICE', '10 XNT FLAT', 'tg'],
-              ['CAPY PRICE', capyPrice, 'tg'],
-              ['MARKET CAP', capyMcap, 'to'],
-              ['XNT PRICE', capyXnt, 'tgo'],
-              ['PLATFORM', 'DEGEN LAUNCHPAD X1', 'tc'],
+              ['XNT PRICE', xntPrice, 'tgo'],
               ['CAPY WARRIORS', '500 NFTS', 'tg'],
               ['30', 'MYTHIC', 'tp'],
               ['120', 'LEGENDARY', 'tgo'],
@@ -1019,7 +905,7 @@ function CapyApp() {
           <div className="proto-grid">
             <div>
               <div className="notice">
-                <p><b>Project Capybara is a real X1 blockchain protocol</b> — specified by Jack Levin (Cyphereus Prime) on May 1st and deployed to mainnet.<br /><br /><span className="sep">$CAPY is a separate community meme.</span> Named after it because the name is legendary. No official connection. The community ran with it.</p>
+                <p><b>Project Capybara is a real X1 blockchain protocol</b> — specified by Jack Levin (Cyphereus Prime) on May 1st and deployed to mainnet.</p>
               </div>
               <p style={{fontSize:'.84rem',color:'var(--muted)',lineHeight:1.85,marginBottom:'1.5rem'}}>Capybara is X1's delegation fair stake threshold system. Every epoch it calculates the 85th percentile of all active validator self-stakes — closing the door on validators trying to game Foundation delegation with tiny self-stake.</p>
               <div className="quote">
@@ -1049,46 +935,10 @@ function CapyApp() {
       </div>
 
       {/* FOOTER */}
-      <div className="meme-section" id="meme">
-        <div className="meme-inner">
-          <div className="meme-eyebrow">COMMUNITY MEME TOKEN — X1 BLOCKCHAIN</div>
-          <h2 className="meme-big"><span className="g1">FAIRLY LAUNCHED</span><br /><span className="g2">COMMUNITY DRIVEN</span></h2>
-          <p style={{fontSize:'.9rem',color:'var(--muted)',maxWidth:'560px',margin:'0 auto 1rem',lineHeight:1.8}}>Fairly launched on Degen Launchpad X1 — every wallet got in on equal terms. Named after the real Project Capybara protocol that defended the X1 blockchain. The community ran with it.</p>
-          <p style={{fontSize:'.9rem',color:'var(--muted)',maxWidth:'560px',margin:'0 auto 2rem',lineHeight:1.8}}>No promises of profit. No roadmap fiction. No guarantees of any kind. Just a meme with legendary lore on the best chain.</p>
-          <div className="launch-box">
-            <div className="launch-grid">
-              <div><div className="launch-label">LAUNCH PLATFORM</div><div className="launch-val">DEGEN</div><div className="launch-desc">Degen Launchpad X1 — fully fair, open to everyone</div></div>
-              <div><div className="launch-label">PRESALE / VC</div><div className="launch-val" style={{color:'var(--red)'}}>NONE</div><div className="launch-desc">Zero insider allocation. Community gets in equally.</div></div>
-              <div><div className="launch-label">MINT PRICE</div><div className="launch-val">10 XNT</div><div className="launch-desc">Flat price. No waves. Everyone pays the same.</div></div>
-              <div><div className="launch-label">MISSION</div><div className="launch-val" style={{fontSize:'.95rem',color:'var(--gold)',paddingTop:'.4rem'}}>BIGGEST MEME ON X1</div><div className="launch-desc">Simple. Focused. Unstoppable.</div></div>
-            </div>
-          </div>
-          <div className="meme-cards">
-            {[
-              ['🛡️','c','NOT A SECURITY','A community meme token. Not an investment product of any kind.'],
-              ['⚖️','g','NO PROFIT PROMISES','No guarantees of return. No roadmap fiction. No financial promises.'],
-              ['🌐','p','EQUAL ACCESS','No presale. No VC allocation. No insider wallets. Pure fair launch.'],
-              ['🔥','o','X1 NATIVE','Built on the chain Capybara protects. Community meme energy only.'],
-            ].map(([ico, cls, title, desc], i) => (
-              <div key={i} className="mc">
-                <span className="mc-ico">{ico}</span>
-                <div className={`mc-t ${cls}`}>{title}</div>
-                <p className="mc-d">{desc}</p>
-              </div>
-            ))}
-          </div>
-          <p style={{fontFamily:'var(--mono)',fontSize:'.55rem',color:'rgba(100,100,120,.6)',letterSpacing:'.1em',maxWidth:'600px',margin:'2rem auto 1rem',lineHeight:1.8}}>$CAPY is a community meme token — not an investment, not a security, not a financial product. No promises of profit. No guarantees of any kind. Participate for fun and community only.</p>
-          <div style={{marginTop:'1rem',display:'flex',gap:'1rem',justifyContent:'center',flexWrap:'wrap'}}>
-            <a href="https://app.xdex.xyz/swap" target="_blank" rel="noopener noreferrer" className="btn-main">BUY $CAPY ON XDEX</a>
-            <a href="https://t.me/CAPYX1" target="_blank" rel="noopener noreferrer" className="btn-ghost">JOIN TELEGRAM ↗</a>
-          </div>
-        </div>
-      </div>
       <footer>
-        <div className="f-logo">$CAPY</div>
+        <div className="f-logo">CAPY WARRIORS</div>
         <ul className="f-links">
           <li><a href="#collection">COLLECTION</a></li>
-          <li><a href="#meme">$CAPY</a></li>
           <li><a href="#protocol">PROTOCOL</a></li>
           <li><a href="https://t.me/CAPYX1" target="_blank" rel="noopener noreferrer">TELEGRAM ↗</a></li>
           <li><a href="https://x1.xyz" target="_blank" rel="noopener noreferrer">X1 NETWORK ↗</a></li>
