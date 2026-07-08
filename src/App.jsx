@@ -885,7 +885,7 @@ function CapyApp() {
         <h1 className="hero-title">
           <span className="t1">X1 CAPY WARRIORS</span>
         </h1>
-        <p className="hero-sub" style={{color:'var(--gold)',opacity:1,fontSize:'.9rem',letterSpacing:'.15em'}}>THE CAPYBARA THAT GUARDS THE BLOCKCHAIN<br />NOW GUARDS THE MEME</p>
+        <p className="hero-sub" style={{color:'var(--gold)',opacity:1,fontSize:'.9rem',letterSpacing:'.15em'}}>THE CAPYBARA THAT GUARDS THE BLOCKCHAIN<br />HAS RAISED AN ARMY OF CAPY WARRIORS</p>
         <div style={{fontFamily:'var(--mono)',fontSize:'.55rem',letterSpacing:'.1em',color:'var(--muted)',marginBottom:'1.5rem',display:'flex',alignItems:'center',justifyContent:'center',gap:'.75rem',flexWrap:'wrap'}}>
           <span style={{color:'rgba(255,255,255,0.3)'}}>CA:</span>
           <span style={{color:'var(--cyan)'}}>AnvCcvnY4DLRW42EZBEAb1QeU6Pt9aab3r3D75GtgJUU</span>
