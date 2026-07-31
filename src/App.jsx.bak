@@ -309,15 +309,13 @@ function useCapyMint(connection, wallet, onSuccess) {
           { pubkey: COLLECTION_MINT, isSigner: false, isWritable: false },
           { pubkey: PublicKey.findProgramAddressSync([Buffer.from('metadata'), METADATA_PROGRAM.toBuffer(), COLLECTION_MINT.toBuffer()], METADATA_PROGRAM)[0], isSigner: false, isWritable: true },
           { pubkey: PublicKey.findProgramAddressSync([Buffer.from('metadata'), METADATA_PROGRAM.toBuffer(), COLLECTION_MINT.toBuffer(), Buffer.from('edition')], METADATA_PROGRAM)[0], isSigner: false, isWritable: false },
-          // ── member master edition (LAST — matches FulfillMint struct) ──
-          { pubkey: PublicKey.findProgramAddressSync([Buffer.from('metadata'), METADATA_PROGRAM.toBuffer(), nftMint.toBuffer(), Buffer.from('edition')], METADATA_PROGRAM)[0], isSigner: false, isWritable: true },
         ],
         programId: CAPY_PROGRAM,
         data: fulfillDiscrim,
       });
 
       const tx2 = new Transaction()
-        .add(ComputeBudgetProgram.setComputeUnitLimit({ units: 600000 }))
+        .add(ComputeBudgetProgram.setComputeUnitLimit({ units: 400000 }))
         .add(fulfillIx);
       const { blockhash: bh2 } = await connection.getLatestBlockhash();
       tx2.recentBlockhash = bh2; tx2.feePayer = wallet.publicKey;
