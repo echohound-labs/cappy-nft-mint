@@ -252,6 +252,7 @@ function useCapyMint(connection, wallet, onSuccess) {
           { pubkey: entropyPoolPDA, isSigner: false, isWritable: false },
           { pubkey: randomnessRequestPDA, isSigner: false, isWritable: true },
           { pubkey: GEIGER_PROGRAM, isSigner: false, isWritable: false },
+          { pubkey: ORACLE_OPERATOR, isSigner: false, isWritable: true },
           { pubkey: SystemProgram.programId, isSigner: false, isWritable: false },
         ],
         programId: CAPY_PROGRAM,

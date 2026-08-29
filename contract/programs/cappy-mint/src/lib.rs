@@ -129,6 +129,26 @@ pub mod capy_warriors {
             ],
         )?;
 
+        // Charge the mint price NOW (at request), straight to the operator.
+        // Kills the preview-and-abandon rarity grind: the result is only
+        // computable after the bound slot, but the minter has already paid,
+        // so re-rolling a bad tier costs a full mint price each time. Money is
+        // NOT escrowed in a PDA, so closing pending_mint cannot refund it.
+        let mint_price = get_mint_price(ctx.accounts.mint_state.total_minted);
+        let pay_ix = anchor_lang::solana_program::system_instruction::transfer(
+            &ctx.accounts.minter.key(),
+            &ctx.accounts.oracle_operator.key(),
+            mint_price,
+        );
+        anchor_lang::solana_program::program::invoke(
+            &pay_ix,
+            &[
+                ctx.accounts.minter.to_account_info(),
+                ctx.accounts.oracle_operator.to_account_info(),
+                ctx.accounts.system_program.to_account_info(),
+            ],
+        )?;
+
         // Store pending mint state
         let pending = &mut ctx.accounts.pending_mint;
         pending.minter = ctx.accounts.minter.key();
@@ -282,22 +302,9 @@ pub mod capy_warriors {
             Some(0),
         )?;
 
-        let mint_price = get_mint_price(total_minted);
-
-        // Entire mint price goes to the Geiger oracle operator
-        let geiger_ix = anchor_lang::solana_program::system_instruction::transfer(
-            &ctx.accounts.minter.key(),
-            &ctx.accounts.oracle_operator.key(),
-            mint_price,
-        );
-        anchor_lang::solana_program::program::invoke(
-            &geiger_ix,
-            &[
-                ctx.accounts.minter.to_account_info(),
-                ctx.accounts.oracle_operator.to_account_info(),
-                ctx.accounts.system_program.to_account_info(),
-            ],
-        )?;
+        // NOTE: mint price is now charged in request_mint (pay-at-request),
+        // not here — this prevents the preview-and-abandon rarity grind.
+        let mint_price = get_mint_price(total_minted); // kept for the MintEvent below
 
         // ── 6. Increment counter + emit event ─────────────────────────
         ctx.accounts.mint_state.total_minted += 1;
@@ -586,6 +593,9 @@ pub struct RequestMint<'info> {
     pub randomness_request: UncheckedAccount<'info>,
     /// CHECK: Geiger program ID for CPI
     pub geiger_program: UncheckedAccount<'info>,
+    /// CHECK: Geiger oracle operator — receives the mint price at request time
+    #[account(mut, address = ORACLE_OPERATOR)]
+    pub oracle_operator: AccountInfo<'info>,
     pub system_program: Program<'info, System>,
 }
 
