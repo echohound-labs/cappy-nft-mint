@@ -1,7 +1,7 @@
 {
   "name": "Capy: Mountain — Crimson",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmPmR7cbC6YQhoG6Tw3BwKRyNtTssEWhmCXcRU9rAGL71x",
+  "image": "ipfs://QmPmR7cbC6YQhoG6Tw3BwKRyNtTssEWhmCXcRU9rAGL71x",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,5 +31,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmPmR7cbC6YQhoG6Tw3BwKRyNtTssEWhmCXcRU9rAGL71x",
+        "type": "image/png"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmPmR7cbC6YQhoG6Tw3BwKRyNtTssEWhmCXcRU9rAGL71x",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
   }
 }

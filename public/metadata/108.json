@@ -1,7 +1,7 @@
 {
   "name": "Capy: Ocean — Shadow",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmVtyZh4MNR5h5H8MhwnucSTQitwnQCfPzDyQiyinng5iX",
+  "image": "ipfs://QmVtyZh4MNR5h5H8MhwnucSTQitwnQCfPzDyQiyinng5iX",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,5 +31,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmVtyZh4MNR5h5H8MhwnucSTQitwnQCfPzDyQiyinng5iX",
+        "type": "image/png"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmVtyZh4MNR5h5H8MhwnucSTQitwnQCfPzDyQiyinng5iX",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
   }
 }

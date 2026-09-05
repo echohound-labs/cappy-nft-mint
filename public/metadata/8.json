@@ -1,7 +1,7 @@
 {
   "name": "Capy Warrior #8",
   "description": "The Sand Tornado came without warning — a wall of desert fury that swallowed everything in its path. But this Capy Warrior did not run. Standing at the center of the ritual circle, they raised their Solar Spear toward the heavens, channeling the storm's own power back against itself.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmeVvaymT3c6PbnGn6uJQQXC3FjC4VRqnwUEfiMJ5zmJeE",
+  "image": "ipfs://QmeVvaymT3c6PbnGn6uJQQXC3FjC4VRqnwUEfiMJ5zmJeE",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -39,5 +39,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmeVvaymT3c6PbnGn6uJQQXC3FjC4VRqnwUEfiMJ5zmJeE",
+        "type": "image/png"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmeVvaymT3c6PbnGn6uJQQXC3FjC4VRqnwUEfiMJ5zmJeE",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "Capy: Snow — Original",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmTfXCqMrMcWPFFoJCgHp71c1cgwCHidjCEBgLsijR2rSs",
+  "image": "ipfs://QmTfXCqMrMcWPFFoJCgHp71c1cgwCHidjCEBgLsijR2rSs",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,5 +23,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmTfXCqMrMcWPFFoJCgHp71c1cgwCHidjCEBgLsijR2rSs",
+        "type": "image/jpeg"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmTfXCqMrMcWPFFoJCgHp71c1cgwCHidjCEBgLsijR2rSs",
+        "type": "image/jpeg"
+      }
+    ],
+    "category": "image"
   }
 }

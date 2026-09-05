@@ -1,7 +1,7 @@
 {
   "name": "Capy: City — Eclipse",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmVQpyNSBqmuG4CDuBdEy5hvxfarZXbj94nrTohmeMP9bR",
+  "image": "ipfs://QmVQpyNSBqmuG4CDuBdEy5hvxfarZXbj94nrTohmeMP9bR",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,5 +31,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmVQpyNSBqmuG4CDuBdEy5hvxfarZXbj94nrTohmeMP9bR",
+        "type": "image/png"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmVQpyNSBqmuG4CDuBdEy5hvxfarZXbj94nrTohmeMP9bR",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
   }
 }

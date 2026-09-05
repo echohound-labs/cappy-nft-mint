@@ -1,7 +1,7 @@
 {
   "name": "Capy: Beach — Eclipse",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmdEL2or3ekwoGFdxNizP7fKmQM2QtvV5rf4uTRUC8yHsU",
+  "image": "ipfs://QmdEL2or3ekwoGFdxNizP7fKmQM2QtvV5rf4uTRUC8yHsU",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,5 +31,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmdEL2or3ekwoGFdxNizP7fKmQM2QtvV5rf4uTRUC8yHsU",
+        "type": "image/png"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmdEL2or3ekwoGFdxNizP7fKmQM2QtvV5rf4uTRUC8yHsU",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
   }
 }

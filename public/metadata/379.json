@@ -1,7 +1,7 @@
 {
   "name": "Capy: Ocean — Deep Abyss — Frost",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/Qmf4ekePVnoE2KbP8smK9tVEqeJeZQxA3VmETPdkHPNS8s",
+  "image": "ipfs://Qmf4ekePVnoE2KbP8smK9tVEqeJeZQxA3VmETPdkHPNS8s",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,5 +23,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://Qmf4ekePVnoE2KbP8smK9tVEqeJeZQxA3VmETPdkHPNS8s",
+        "type": "image/jpeg"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/Qmf4ekePVnoE2KbP8smK9tVEqeJeZQxA3VmETPdkHPNS8s",
+        "type": "image/jpeg"
+      }
+    ],
+    "category": "image"
   }
 }

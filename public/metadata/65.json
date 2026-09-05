@@ -1,7 +1,7 @@
 {
   "name": "Capy: Desert — Storm",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmNui4E23CNQbTML6BEnPZvHYr4V5oeVgsW3vojWQXaS8F",
+  "image": "ipfs://QmNui4E23CNQbTML6BEnPZvHYr4V5oeVgsW3vojWQXaS8F",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,5 +31,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmNui4E23CNQbTML6BEnPZvHYr4V5oeVgsW3vojWQXaS8F",
+        "type": "image/png"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmNui4E23CNQbTML6BEnPZvHYr4V5oeVgsW3vojWQXaS8F",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
   }
 }

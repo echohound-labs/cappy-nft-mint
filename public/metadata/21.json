@@ -1,7 +1,7 @@
 {
   "name": "Capy Warrior #21",
   "description": "Where ocean meets storm, the world splits in two. Above the waterline, lightning tears through a churning sky and waves crash against ancient towers. Below, the deep pulses with bioluminescent calm. One Capy Warrior stands at the threshold of both worlds, Tempest Staff in hand, master of the divide.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmRMrz3MN8B897CiM5gA5u6WYhEE6XQrhyR17Ah2Gmfjy1",
+  "image": "ipfs://QmRMrz3MN8B897CiM5gA5u6WYhEE6XQrhyR17Ah2Gmfjy1",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -39,5 +39,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmRMrz3MN8B897CiM5gA5u6WYhEE6XQrhyR17Ah2Gmfjy1",
+        "type": "image/png"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmRMrz3MN8B897CiM5gA5u6WYhEE6XQrhyR17Ah2Gmfjy1",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
   }
 }

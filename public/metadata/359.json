@@ -1,7 +1,7 @@
 {
   "name": "Capy: Mountain — Aurora Night — Shadow",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmVqDZ3KKD4BfTjYYtbzcriS4vc5TKWAJq5E5eKnFX64pU",
+  "image": "ipfs://QmVqDZ3KKD4BfTjYYtbzcriS4vc5TKWAJq5E5eKnFX64pU",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,5 +23,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmVqDZ3KKD4BfTjYYtbzcriS4vc5TKWAJq5E5eKnFX64pU",
+        "type": "image/jpeg"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmVqDZ3KKD4BfTjYYtbzcriS4vc5TKWAJq5E5eKnFX64pU",
+        "type": "image/jpeg"
+      }
+    ],
+    "category": "image"
   }
 }

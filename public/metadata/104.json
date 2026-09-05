@@ -1,7 +1,7 @@
 {
   "name": "Capy: Ocean — Crimson",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmPTnxZSB7EuNfHujRZc8nDTjKvYPL2TnzqLxMUm17Quqo",
+  "image": "ipfs://QmPTnxZSB7EuNfHujRZc8nDTjKvYPL2TnzqLxMUm17Quqo",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,5 +31,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmPTnxZSB7EuNfHujRZc8nDTjKvYPL2TnzqLxMUm17Quqo",
+        "type": "image/png"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmPTnxZSB7EuNfHujRZc8nDTjKvYPL2TnzqLxMUm17Quqo",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
   }
 }

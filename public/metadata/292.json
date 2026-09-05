@@ -1,7 +1,7 @@
 {
   "name": "Capy: Lava — Original — Crimson",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmVy2khaibxFyie3Y2SjqdNY9319AU488Ujbvu8zjUCXhd",
+  "image": "ipfs://QmVy2khaibxFyie3Y2SjqdNY9319AU488Ujbvu8zjUCXhd",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,5 +23,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmVy2khaibxFyie3Y2SjqdNY9319AU488Ujbvu8zjUCXhd",
+        "type": "image/jpeg"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmVy2khaibxFyie3Y2SjqdNY9319AU488Ujbvu8zjUCXhd",
+        "type": "image/jpeg"
+      }
+    ],
+    "category": "image"
   }
 }

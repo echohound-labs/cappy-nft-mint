@@ -1,7 +1,7 @@
 {
   "name": "Capy: Desert — Gold",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmehVQF4NiNd3xf1XbmXbKp5NWBFSQ53aNPD8goF8UBZxJ",
+  "image": "ipfs://QmehVQF4NiNd3xf1XbmXbKp5NWBFSQ53aNPD8goF8UBZxJ",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,5 +31,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmehVQF4NiNd3xf1XbmXbKp5NWBFSQ53aNPD8goF8UBZxJ",
+        "type": "image/png"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmehVQF4NiNd3xf1XbmXbKp5NWBFSQ53aNPD8goF8UBZxJ",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "Capy: Forest — Eclipse",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmXQzwFKgeNSuHHuqorYDHKS4QFPXbJPJAzvti6424z7vD",
+  "image": "ipfs://QmXQzwFKgeNSuHHuqorYDHKS4QFPXbJPJAzvti6424z7vD",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,5 +31,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmXQzwFKgeNSuHHuqorYDHKS4QFPXbJPJAzvti6424z7vD",
+        "type": "image/png"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmXQzwFKgeNSuHHuqorYDHKS4QFPXbJPJAzvti6424z7vD",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
   }
 }

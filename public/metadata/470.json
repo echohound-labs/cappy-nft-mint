@@ -1,7 +1,7 @@
 {
   "name": "Capy: Swamp — Original — Frost",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmYc5iojhnkk41hRJP9G9dNkxKCMC8v9KFMS8k3Rg9qANX",
+  "image": "ipfs://QmYc5iojhnkk41hRJP9G9dNkxKCMC8v9KFMS8k3Rg9qANX",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,5 +23,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmYc5iojhnkk41hRJP9G9dNkxKCMC8v9KFMS8k3Rg9qANX",
+        "type": "image/jpeg"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmYc5iojhnkk41hRJP9G9dNkxKCMC8v9KFMS8k3Rg9qANX",
+        "type": "image/jpeg"
+      }
+    ],
+    "category": "image"
   }
 }

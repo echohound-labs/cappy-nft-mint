@@ -1,7 +1,7 @@
 {
   "name": "Capy: Space — Nebula Storm — Inferno",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmUhLhQ2eZTPFcPG9qwsswiJjtgq5C9piRGxWEoJdLhHsS",
+  "image": "ipfs://QmUhLhQ2eZTPFcPG9qwsswiJjtgq5C9piRGxWEoJdLhHsS",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,5 +23,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmUhLhQ2eZTPFcPG9qwsswiJjtgq5C9piRGxWEoJdLhHsS",
+        "type": "image/jpeg"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmUhLhQ2eZTPFcPG9qwsswiJjtgq5C9piRGxWEoJdLhHsS",
+        "type": "image/jpeg"
+      }
+    ],
+    "category": "image"
   }
 }

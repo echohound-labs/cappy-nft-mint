@@ -1,7 +1,7 @@
 {
   "name": "Capy: Ocean — Storm Surge — Void",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmcgZ94LiZYwnSm8czyRDWSqXK97hDHaUKL9v8R3SjtroR",
+  "image": "ipfs://QmcgZ94LiZYwnSm8czyRDWSqXK97hDHaUKL9v8R3SjtroR",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,5 +23,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmcgZ94LiZYwnSm8czyRDWSqXK97hDHaUKL9v8R3SjtroR",
+        "type": "image/jpeg"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmcgZ94LiZYwnSm8czyRDWSqXK97hDHaUKL9v8R3SjtroR",
+        "type": "image/jpeg"
+      }
+    ],
+    "category": "image"
   }
 }

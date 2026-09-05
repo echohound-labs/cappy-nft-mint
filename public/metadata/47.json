@@ -1,7 +1,7 @@
 {
   "name": "Capy: City — Frost",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmdqUQiNMykeF2d3qqD59mypPGeiAb6xtsdbTn8j5eKKU8",
+  "image": "ipfs://QmdqUQiNMykeF2d3qqD59mypPGeiAb6xtsdbTn8j5eKKU8",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,5 +31,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmdqUQiNMykeF2d3qqD59mypPGeiAb6xtsdbTn8j5eKKU8",
+        "type": "image/png"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmdqUQiNMykeF2d3qqD59mypPGeiAb6xtsdbTn8j5eKKU8",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
   }
 }

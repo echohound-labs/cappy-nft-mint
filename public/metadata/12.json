@@ -1,7 +1,7 @@
 {
   "name": "Capy Warrior #12",
   "description": "The forest burned — not from carelessness, but from power too great to contain. As ancient trees became pillars of flame and the sky turned to ember, one Capy Warrior stood at the center of it all, Druid Staff raised high, the fire bending to their will rather than consuming them.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmXn4orEa2pQ8mqH2Cbq9TPVu4EQzuHU1o7XcUd5qCYXAw",
+  "image": "ipfs://QmXn4orEa2pQ8mqH2Cbq9TPVu4EQzuHU1o7XcUd5qCYXAw",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -39,5 +39,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmXn4orEa2pQ8mqH2Cbq9TPVu4EQzuHU1o7XcUd5qCYXAw",
+        "type": "image/png"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmXn4orEa2pQ8mqH2Cbq9TPVu4EQzuHU1o7XcUd5qCYXAw",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
   }
 }

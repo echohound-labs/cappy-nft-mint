@@ -1,7 +1,7 @@
 {
   "name": "Capy: Forest — Storm — Inferno",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmRSSGpWuqP1xSe5j8MaALoEyTN2QZEzt6Eux5bnRr8M6f",
+  "image": "ipfs://QmRSSGpWuqP1xSe5j8MaALoEyTN2QZEzt6Eux5bnRr8M6f",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,5 +23,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmRSSGpWuqP1xSe5j8MaALoEyTN2QZEzt6Eux5bnRr8M6f",
+        "type": "image/jpeg"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmRSSGpWuqP1xSe5j8MaALoEyTN2QZEzt6Eux5bnRr8M6f",
+        "type": "image/jpeg"
+      }
+    ],
+    "category": "image"
   }
 }

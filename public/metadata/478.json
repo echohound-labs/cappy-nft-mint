@@ -1,7 +1,7 @@
 {
   "name": "Capy: Swamp — Toxic Storm — Shadow",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmPCNvgaANzsEZBFnPG52HeKLudH3zBbKJsUrepRWoGzZR",
+  "image": "ipfs://QmPCNvgaANzsEZBFnPG52HeKLudH3zBbKJsUrepRWoGzZR",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,5 +23,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmPCNvgaANzsEZBFnPG52HeKLudH3zBbKJsUrepRWoGzZR",
+        "type": "image/jpeg"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmPCNvgaANzsEZBFnPG52HeKLudH3zBbKJsUrepRWoGzZR",
+        "type": "image/jpeg"
+      }
+    ],
+    "category": "image"
   }
 }

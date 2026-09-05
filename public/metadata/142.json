@@ -1,7 +1,7 @@
 {
   "name": "Capy: Swamp — Void",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmVtxGkJf4neq8b4LMYmPNaoZD5wtu5o33xc8EBFCkSHNZ",
+  "image": "ipfs://QmVtxGkJf4neq8b4LMYmPNaoZD5wtu5o33xc8EBFCkSHNZ",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,5 +31,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmVtxGkJf4neq8b4LMYmPNaoZD5wtu5o33xc8EBFCkSHNZ",
+        "type": "image/png"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmVtxGkJf4neq8b4LMYmPNaoZD5wtu5o33xc8EBFCkSHNZ",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "Capy Warrior #2",
   "description": "As the Rising Temple emerged from the depths of the storm sea, one warrior was already waiting. The ancient structure had not been seen in a thousand years — and yet here stood a Capy Warrior, spear raised, ritual circle glowing beneath their feet, as if they had summoned it themselves.",
-  "image": "https://gateway.lighthouse.storage/ipfs/Qma5SUQpN8xNpAX1rfUqjU1eaWzffjXAKGGYyr4MgXagN6",
+  "image": "ipfs://Qma5SUQpN8xNpAX1rfUqjU1eaWzffjXAKGGYyr4MgXagN6",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -39,5 +39,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://Qma5SUQpN8xNpAX1rfUqjU1eaWzffjXAKGGYyr4MgXagN6",
+        "type": "image/png"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/Qma5SUQpN8xNpAX1rfUqjU1eaWzffjXAKGGYyr4MgXagN6",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
   }
 }

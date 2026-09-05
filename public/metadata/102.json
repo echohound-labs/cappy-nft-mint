@@ -1,7 +1,7 @@
 {
   "name": "Capy: Mountain — Eclipse",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmXNc5MwxfGywM2mdx3zojojJZZCnkUSrGt67zuSaFsy5c",
+  "image": "ipfs://QmXNc5MwxfGywM2mdx3zojojJZZCnkUSrGt67zuSaFsy5c",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,5 +31,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmXNc5MwxfGywM2mdx3zojojJZZCnkUSrGt67zuSaFsy5c",
+        "type": "image/png"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmXNc5MwxfGywM2mdx3zojojJZZCnkUSrGt67zuSaFsy5c",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
   }
 }

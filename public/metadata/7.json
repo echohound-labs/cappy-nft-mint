@@ -1,7 +1,7 @@
 {
   "name": "Capy Warrior #7",
   "description": "The desert sun had turned apocalyptic — a burning red wound in a sky choked with ash and falling rock. Ancient pillars crumbled around them, palm trees bent in the scorching wind. Yet one Capy Warrior stood unmoved, blade gleaming with solar fire, facing the end of the world without flinching.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmXNVrBXiXkyKLKJTCUCWu88jKVUrZeEoS3UMVTxVrfsVE",
+  "image": "ipfs://QmXNVrBXiXkyKLKJTCUCWu88jKVUrZeEoS3UMVTxVrfsVE",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -39,5 +39,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmXNVrBXiXkyKLKJTCUCWu88jKVUrZeEoS3UMVTxVrfsVE",
+        "type": "image/png"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmXNVrBXiXkyKLKJTCUCWu88jKVUrZeEoS3UMVTxVrfsVE",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
   }
 }

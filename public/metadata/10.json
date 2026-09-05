@@ -1,7 +1,7 @@
 {
   "name": "Capy Warrior #10",
   "description": "Deep in the bioluminescent forest where glowing mushrooms light the way and ancient trees twist toward a crescent moon, one Capy Warrior walks alone. Their blade pulses with bio-electric energy harvested from the forest itself. In this place where nature speaks, only the worthy can hear it.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmaHfMJyhBUCVTfTYX91YRkEhvVq8DK7m15chZXjGz9iS5",
+  "image": "ipfs://QmaHfMJyhBUCVTfTYX91YRkEhvVq8DK7m15chZXjGz9iS5",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -39,5 +39,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmaHfMJyhBUCVTfTYX91YRkEhvVq8DK7m15chZXjGz9iS5",
+        "type": "image/png"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmaHfMJyhBUCVTfTYX91YRkEhvVq8DK7m15chZXjGz9iS5",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
   }
 }

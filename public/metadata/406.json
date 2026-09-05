@@ -1,7 +1,7 @@
 {
   "name": "Capy: Snow — Blizzard — Void",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmS5WYqSgTGHoDm3pqTC6fbxNVqju5pB5UEw42hs89n9Lj",
+  "image": "ipfs://QmS5WYqSgTGHoDm3pqTC6fbxNVqju5pB5UEw42hs89n9Lj",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,5 +23,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmS5WYqSgTGHoDm3pqTC6fbxNVqju5pB5UEw42hs89n9Lj",
+        "type": "image/jpeg"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmS5WYqSgTGHoDm3pqTC6fbxNVqju5pB5UEw42hs89n9Lj",
+        "type": "image/jpeg"
+      }
+    ],
+    "category": "image"
   }
 }

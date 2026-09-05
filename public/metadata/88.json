@@ -1,7 +1,7 @@
 {
   "name": "Capy: Lava — Blood",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmPj9EeDVyJoTgsss5vreVt6LcoD7yaDeUb5Pgkh7CA9Nd",
+  "image": "ipfs://QmPj9EeDVyJoTgsss5vreVt6LcoD7yaDeUb5Pgkh7CA9Nd",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,5 +31,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmPj9EeDVyJoTgsss5vreVt6LcoD7yaDeUb5Pgkh7CA9Nd",
+        "type": "image/png"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmPj9EeDVyJoTgsss5vreVt6LcoD7yaDeUb5Pgkh7CA9Nd",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "Capy Warrior #1",
   "description": "On the night the Storm Shore swallowed the horizon, one Capy Warrior stood unbroken. Waves crashed against ancient stone pillars as lightning split the sky, and from the chaos emerged a blade of pure coral energy — forged not by hand, but by the fury of the sea itself. This is the first of the Mythics. There is no other.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmRL9ZbbJwrQArftwGKWcDbU6PSTGWyo7GrWjBfxPRbTAY",
+  "image": "ipfs://QmRL9ZbbJwrQArftwGKWcDbU6PSTGWyo7GrWjBfxPRbTAY",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -39,5 +39,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmRL9ZbbJwrQArftwGKWcDbU6PSTGWyo7GrWjBfxPRbTAY",
+        "type": "image/png"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmRL9ZbbJwrQArftwGKWcDbU6PSTGWyo7GrWjBfxPRbTAY",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
   }
 }

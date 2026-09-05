@@ -1,7 +1,7 @@
 {
   "name": "Capy: Space — Frost",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/Qmdmwio2ydd2RgcrtGoBwx6SX5nWDLvwJmzb2G9Z15FbjL",
+  "image": "ipfs://Qmdmwio2ydd2RgcrtGoBwx6SX5nWDLvwJmzb2G9Z15FbjL",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,5 +31,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://Qmdmwio2ydd2RgcrtGoBwx6SX5nWDLvwJmzb2G9Z15FbjL",
+        "type": "image/png"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/Qmdmwio2ydd2RgcrtGoBwx6SX5nWDLvwJmzb2G9Z15FbjL",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "Capy: Space — Original",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmV8WEttufz4BnceWkXuCAjcetwtX1ccmQpe3RWThML6cv",
+  "image": "ipfs://QmV8WEttufz4BnceWkXuCAjcetwtX1ccmQpe3RWThML6cv",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,5 +31,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmV8WEttufz4BnceWkXuCAjcetwtX1ccmQpe3RWThML6cv",
+        "type": "image/png"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmV8WEttufz4BnceWkXuCAjcetwtX1ccmQpe3RWThML6cv",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
   }
 }

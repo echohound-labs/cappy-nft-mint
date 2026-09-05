@@ -1,7 +1,7 @@
 {
   "name": "Capy: City — Cyber Dawn — Frost",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmQb1Dr6CMA5kAJUTrAMpBDsEjhwsPS53PTZKpAbZC6aoZ",
+  "image": "ipfs://QmQb1Dr6CMA5kAJUTrAMpBDsEjhwsPS53PTZKpAbZC6aoZ",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,5 +23,18 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
+  },
+  "properties": {
+    "files": [
+      {
+        "uri": "ipfs://QmQb1Dr6CMA5kAJUTrAMpBDsEjhwsPS53PTZKpAbZC6aoZ",
+        "type": "image/jpeg"
+      },
+      {
+        "uri": "https://gateway.lighthouse.storage/ipfs/QmQb1Dr6CMA5kAJUTrAMpBDsEjhwsPS53PTZKpAbZC6aoZ",
+        "type": "image/jpeg"
+      }
+    ],
+    "category": "image"
   }
 }
