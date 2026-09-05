@@ -1,7 +1,7 @@
 {
   "name": "Capy: Forest — Dawn — Void",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmPcvKtYnh3WNcw9jAk7HRmQbvwcf6w9JFeKV6Sxjzav5m",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmPcvKtYnh3WNcw9jAk7HRmQbvwcf6w9JFeKV6Sxjzav5m",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmPcvKtYnh3WNcw9jAk7HRmQbvwcf6w9JFeKV6Sxjzav5m",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmPcvKtYnh3WNcw9jAk7HRmQbvwcf6w9JFeKV6Sxjzav5m",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

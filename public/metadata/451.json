@@ -1,7 +1,7 @@
 {
   "name": "Capy: Space — Red Alert — Inferno",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmWhZ4W9Fa3c7ePVPs9ntXQg2GnPFzHnMufydgHmY4psG6",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmWhZ4W9Fa3c7ePVPs9ntXQg2GnPFzHnMufydgHmY4psG6",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmWhZ4W9Fa3c7ePVPs9ntXQg2GnPFzHnMufydgHmY4psG6",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmWhZ4W9Fa3c7ePVPs9ntXQg2GnPFzHnMufydgHmY4psG6",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

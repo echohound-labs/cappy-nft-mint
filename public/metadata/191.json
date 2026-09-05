@@ -1,7 +1,7 @@
 {
   "name": "Capy: City — Original — Shadow",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmckrL1b3FUXpXgpU1pnWXNzG9uPvtM9xb2n3voj59DbsA",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmckrL1b3FUXpXgpU1pnWXNzG9uPvtM9xb2n3voj59DbsA",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmckrL1b3FUXpXgpU1pnWXNzG9uPvtM9xb2n3voj59DbsA",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmckrL1b3FUXpXgpU1pnWXNzG9uPvtM9xb2n3voj59DbsA",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "Capy: Forest — Toxic Green — Gold",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmUo4hWpx4AvJGYRncnBgyDnu1SPe7NKLPdbriRZQXvDr6",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmUo4hWpx4AvJGYRncnBgyDnu1SPe7NKLPdbriRZQXvDr6",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmUo4hWpx4AvJGYRncnBgyDnu1SPe7NKLPdbriRZQXvDr6",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmUo4hWpx4AvJGYRncnBgyDnu1SPe7NKLPdbriRZQXvDr6",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

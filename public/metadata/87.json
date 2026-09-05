@@ -1,7 +1,7 @@
 {
   "name": "Capy: Lava — Cosmic",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmUcaKZY2Hui5PhcyghNdtf6DCA7HcCxPXY6JVU6XwxHp1",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmUcaKZY2Hui5PhcyghNdtf6DCA7HcCxPXY6JVU6XwxHp1",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,18 +31,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmUcaKZY2Hui5PhcyghNdtf6DCA7HcCxPXY6JVU6XwxHp1",
-        "type": "image/png"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmUcaKZY2Hui5PhcyghNdtf6DCA7HcCxPXY6JVU6XwxHp1",
-        "type": "image/png"
-      }
-    ],
-    "category": "image"
   }
 }

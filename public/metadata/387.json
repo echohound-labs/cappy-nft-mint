@@ -1,7 +1,7 @@
 {
   "name": "Capy: Ocean — Blood Tide — Shadow",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmNLquar8a8sQec2uvbemV7Y5DYAtwAQzszS5LGS8gNubs",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmNLquar8a8sQec2uvbemV7Y5DYAtwAQzszS5LGS8gNubs",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmNLquar8a8sQec2uvbemV7Y5DYAtwAQzszS5LGS8gNubs",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmNLquar8a8sQec2uvbemV7Y5DYAtwAQzszS5LGS8gNubs",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "Capy: Desert — Night — Void",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmUzpWtHs5ZTdcoP8bHVz5MenzRzafDwWxSHs54MMf9dRv",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmUzpWtHs5ZTdcoP8bHVz5MenzRzafDwWxSHs54MMf9dRv",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmUzpWtHs5ZTdcoP8bHVz5MenzRzafDwWxSHs54MMf9dRv",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmUzpWtHs5ZTdcoP8bHVz5MenzRzafDwWxSHs54MMf9dRv",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

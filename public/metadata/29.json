@@ -1,7 +1,7 @@
 {
   "name": "Capy Warrior #29",
   "description": "The Poison Fog rolls in from the deep swamp like a living thing — thick, purple, and hungry. Glowing mushrooms dot the wetlands like fallen stars. Standing within the ritual circle as the fog swirls around their feet, one Capy Warrior holds their Poison Trident steady, a sentinel at the edge of the world's most dangerous garden.",
-  "image": "ipfs://QmY4QwzTidedW1ZiFiLKPUS82EN83f8gfVphqwyuXgh5AK",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmY4QwzTidedW1ZiFiLKPUS82EN83f8gfVphqwyuXgh5AK",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -39,18 +39,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmY4QwzTidedW1ZiFiLKPUS82EN83f8gfVphqwyuXgh5AK",
-        "type": "image/png"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmY4QwzTidedW1ZiFiLKPUS82EN83f8gfVphqwyuXgh5AK",
-        "type": "image/png"
-      }
-    ],
-    "category": "image"
   }
 }

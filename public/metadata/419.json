@@ -1,7 +1,7 @@
 {
   "name": "Capy: Snow — Aurora Borealis — Gold",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmeibZ1PwzHs2Ji2Y3vtV7xyf4jj3joTxjVMFDojTj1s2s",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmeibZ1PwzHs2Ji2Y3vtV7xyf4jj3joTxjVMFDojTj1s2s",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmeibZ1PwzHs2Ji2Y3vtV7xyf4jj3joTxjVMFDojTj1s2s",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmeibZ1PwzHs2Ji2Y3vtV7xyf4jj3joTxjVMFDojTj1s2s",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

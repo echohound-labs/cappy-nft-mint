@@ -1,7 +1,7 @@
 {
   "name": "Capy: Lava — Inferno",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmcqZPLoA2d3UrZvhybzHn7uW8r9iVek7tKC4ABB7sFcjy",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmcqZPLoA2d3UrZvhybzHn7uW8r9iVek7tKC4ABB7sFcjy",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,18 +31,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmcqZPLoA2d3UrZvhybzHn7uW8r9iVek7tKC4ABB7sFcjy",
-        "type": "image/png"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmcqZPLoA2d3UrZvhybzHn7uW8r9iVek7tKC4ABB7sFcjy",
-        "type": "image/png"
-      }
-    ],
-    "category": "image"
   }
 }

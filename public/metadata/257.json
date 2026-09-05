@@ -1,7 +1,7 @@
 {
   "name": "Capy: Forest — Original — Crimson",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmeYQSZpuKysZTztUt7CHnH9fyXYPJ542EacGvnbX4TJ5R",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmeYQSZpuKysZTztUt7CHnH9fyXYPJ542EacGvnbX4TJ5R",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmeYQSZpuKysZTztUt7CHnH9fyXYPJ542EacGvnbX4TJ5R",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmeYQSZpuKysZTztUt7CHnH9fyXYPJ542EacGvnbX4TJ5R",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

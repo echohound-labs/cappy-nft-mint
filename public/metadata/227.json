@@ -1,7 +1,7 @@
 {
   "name": "Capy: Desert — Original — Inferno",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmZPNYFFQ445xNkZPnewTpmRdeu9t19dZD9F5eBrKWGepC",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmZPNYFFQ445xNkZPnewTpmRdeu9t19dZD9F5eBrKWGepC",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmZPNYFFQ445xNkZPnewTpmRdeu9t19dZD9F5eBrKWGepC",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmZPNYFFQ445xNkZPnewTpmRdeu9t19dZD9F5eBrKWGepC",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

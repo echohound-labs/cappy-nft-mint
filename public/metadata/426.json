@@ -1,7 +1,7 @@
 {
   "name": "Capy: Snow — Frozen Dawn — Gold",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmfVyiTELQMxkxJbKmeD8DoSs85ZxF2SXSW5yXz19WpdK2",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmfVyiTELQMxkxJbKmeD8DoSs85ZxF2SXSW5yXz19WpdK2",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmfVyiTELQMxkxJbKmeD8DoSs85ZxF2SXSW5yXz19WpdK2",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmfVyiTELQMxkxJbKmeD8DoSs85ZxF2SXSW5yXz19WpdK2",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

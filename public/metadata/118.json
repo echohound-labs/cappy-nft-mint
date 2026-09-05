@@ -1,7 +1,7 @@
 {
   "name": "Capy: Snow — Void",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmPKXxNexHa9yWSveC8Q91WtYvo7HV5h4Ma9T17UNyKxCE",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmPKXxNexHa9yWSveC8Q91WtYvo7HV5h4Ma9T17UNyKxCE",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,18 +31,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmPKXxNexHa9yWSveC8Q91WtYvo7HV5h4Ma9T17UNyKxCE",
-        "type": "image/png"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmPKXxNexHa9yWSveC8Q91WtYvo7HV5h4Ma9T17UNyKxCE",
-        "type": "image/png"
-      }
-    ],
-    "category": "image"
   }
 }

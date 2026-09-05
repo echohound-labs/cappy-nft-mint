@@ -1,7 +1,7 @@
 {
   "name": "Capy: Ocean — Storm Surge — Inferno",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmeVQoCD7BYQq7dX638Zdsis8Ae8oKidy5df24n3565LLb",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmeVQoCD7BYQq7dX638Zdsis8Ae8oKidy5df24n3565LLb",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmeVQoCD7BYQq7dX638Zdsis8Ae8oKidy5df24n3565LLb",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmeVQoCD7BYQq7dX638Zdsis8Ae8oKidy5df24n3565LLb",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

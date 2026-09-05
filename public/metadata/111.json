@@ -1,7 +1,7 @@
 {
   "name": "Capy: Ocean — Cosmic",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmZjoyabGp5psMar7sdhGkJbkvbW8U2rvML4ssYatSCtw4",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmZjoyabGp5psMar7sdhGkJbkvbW8U2rvML4ssYatSCtw4",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,18 +31,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmZjoyabGp5psMar7sdhGkJbkvbW8U2rvML4ssYatSCtw4",
-        "type": "image/png"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmZjoyabGp5psMar7sdhGkJbkvbW8U2rvML4ssYatSCtw4",
-        "type": "image/png"
-      }
-    ],
-    "category": "image"
   }
 }

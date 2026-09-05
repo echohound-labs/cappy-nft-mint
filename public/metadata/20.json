@@ -1,7 +1,7 @@
 {
   "name": "Capy Warrior #20",
   "description": "The Underwater Throne was lost to history — until one Capy Warrior claimed it. Surrounded by glowing coral, ancient stone columns, and manta rays that circle overhead like a living crown, they stand with an Abyssal Trident and the quiet authority of one who has always belonged in the deep.",
-  "image": "ipfs://QmZhvd5W1uij4cMAPzh7J3NApp5H92EqgzWqhPvMmtiHDF",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmZhvd5W1uij4cMAPzh7J3NApp5H92EqgzWqhPvMmtiHDF",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -39,18 +39,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmZhvd5W1uij4cMAPzh7J3NApp5H92EqgzWqhPvMmtiHDF",
-        "type": "image/png"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmZhvd5W1uij4cMAPzh7J3NApp5H92EqgzWqhPvMmtiHDF",
-        "type": "image/png"
-      }
-    ],
-    "category": "image"
   }
 }

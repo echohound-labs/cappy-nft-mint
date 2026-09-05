@@ -1,7 +1,7 @@
 {
   "name": "Capy: Desert — Solar Flare — Crimson",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmNwbvCGiKzFqErQmsVf4qLZtV87jHw9yDNke3GTW8V3KJ",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmNwbvCGiKzFqErQmsVf4qLZtV87jHw9yDNke3GTW8V3KJ",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmNwbvCGiKzFqErQmsVf4qLZtV87jHw9yDNke3GTW8V3KJ",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmNwbvCGiKzFqErQmsVf4qLZtV87jHw9yDNke3GTW8V3KJ",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

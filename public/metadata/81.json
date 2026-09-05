@@ -1,7 +1,7 @@
 {
   "name": "Capy: Lava — Gold",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmakYHH9NLDnnA2wSWuPFbWkDMKJEt9kkvGjqnEXnGDxCU",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmakYHH9NLDnnA2wSWuPFbWkDMKJEt9kkvGjqnEXnGDxCU",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,18 +31,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmakYHH9NLDnnA2wSWuPFbWkDMKJEt9kkvGjqnEXnGDxCU",
-        "type": "image/png"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmakYHH9NLDnnA2wSWuPFbWkDMKJEt9kkvGjqnEXnGDxCU",
-        "type": "image/png"
-      }
-    ],
-    "category": "image"
   }
 }

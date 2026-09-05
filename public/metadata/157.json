@@ -1,7 +1,7 @@
 {
   "name": "Capy: Beach — Original — Inferno",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmZVvReydUMTgJV7mH4Z1woJ3tHg2LYVFVnX6au72eWY8d",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmZVvReydUMTgJV7mH4Z1woJ3tHg2LYVFVnX6au72eWY8d",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmZVvReydUMTgJV7mH4Z1woJ3tHg2LYVFVnX6au72eWY8d",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmZVvReydUMTgJV7mH4Z1woJ3tHg2LYVFVnX6au72eWY8d",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

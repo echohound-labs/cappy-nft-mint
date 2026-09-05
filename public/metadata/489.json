@@ -1,7 +1,7 @@
 {
   "name": "Capy: Swamp — Frozen Swamp — Gold",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmUVSHtf1REKsiLLb1MoCgzKj6W8EXjgCmK1J6PcrXRibY",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmUVSHtf1REKsiLLb1MoCgzKj6W8EXjgCmK1J6PcrXRibY",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmUVSHtf1REKsiLLb1MoCgzKj6W8EXjgCmK1J6PcrXRibY",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmUVSHtf1REKsiLLb1MoCgzKj6W8EXjgCmK1J6PcrXRibY",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

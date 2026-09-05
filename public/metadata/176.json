@@ -1,7 +1,7 @@
 {
   "name": "Capy: Beach — Blood Moon — Frost",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmU4sLZwExqi4hwZF8kZEuPuiTHMjuhZTpJx37n4AQDgmp",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmU4sLZwExqi4hwZF8kZEuPuiTHMjuhZTpJx37n4AQDgmp",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmU4sLZwExqi4hwZF8kZEuPuiTHMjuhZTpJx37n4AQDgmp",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmU4sLZwExqi4hwZF8kZEuPuiTHMjuhZTpJx37n4AQDgmp",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

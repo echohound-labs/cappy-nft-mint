@@ -1,7 +1,7 @@
 {
   "name": "Capy: Desert — Original — Crimson",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmQQ17yL74ob6ZtuNBF4VRPcnDMBHe2xD2A3wWMvdRs13x",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmQQ17yL74ob6ZtuNBF4VRPcnDMBHe2xD2A3wWMvdRs13x",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmQQ17yL74ob6ZtuNBF4VRPcnDMBHe2xD2A3wWMvdRs13x",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmQQ17yL74ob6ZtuNBF4VRPcnDMBHe2xD2A3wWMvdRs13x",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

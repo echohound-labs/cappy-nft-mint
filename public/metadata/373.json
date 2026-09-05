@@ -1,7 +1,7 @@
 {
   "name": "Capy: Ocean — Storm Surge — Shadow",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://Qmbzft4UJyqkFXzBdpPfDyxqsfmdDnVzFuHCUYPLGpsjqG",
+  "image": "https://gateway.lighthouse.storage/ipfs/Qmbzft4UJyqkFXzBdpPfDyxqsfmdDnVzFuHCUYPLGpsjqG",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://Qmbzft4UJyqkFXzBdpPfDyxqsfmdDnVzFuHCUYPLGpsjqG",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/Qmbzft4UJyqkFXzBdpPfDyxqsfmdDnVzFuHCUYPLGpsjqG",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

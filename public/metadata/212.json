@@ -1,7 +1,7 @@
 {
   "name": "Capy: City — Blood Red Moon — Shadow",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmSVDGFQpAtrjY8h4wvup2Wa9eViCAEq7fuV3WEaCJXRJy",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmSVDGFQpAtrjY8h4wvup2Wa9eViCAEq7fuV3WEaCJXRJy",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmSVDGFQpAtrjY8h4wvup2Wa9eViCAEq7fuV3WEaCJXRJy",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmSVDGFQpAtrjY8h4wvup2Wa9eViCAEq7fuV3WEaCJXRJy",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

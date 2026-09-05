@@ -1,7 +1,7 @@
 {
   "name": "Capy: Mountain — Shadow",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmfMFkQEzAfU7fXJDLwkfEfWArrudRtiAsZQLMaWfH3iNb",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmfMFkQEzAfU7fXJDLwkfEfWArrudRtiAsZQLMaWfH3iNb",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,18 +31,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmfMFkQEzAfU7fXJDLwkfEfWArrudRtiAsZQLMaWfH3iNb",
-        "type": "image/png"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmfMFkQEzAfU7fXJDLwkfEfWArrudRtiAsZQLMaWfH3iNb",
-        "type": "image/png"
-      }
-    ],
-    "category": "image"
   }
 }

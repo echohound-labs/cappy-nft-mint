@@ -1,7 +1,7 @@
 {
   "name": "Capy: Space — Crimson",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmbJ8rh3uDM95vbS6qP2VExZ2aNUzCf1LDRmYJ3fQpLR8z",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmbJ8rh3uDM95vbS6qP2VExZ2aNUzCf1LDRmYJ3fQpLR8z",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,18 +31,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmbJ8rh3uDM95vbS6qP2VExZ2aNUzCf1LDRmYJ3fQpLR8z",
-        "type": "image/png"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmbJ8rh3uDM95vbS6qP2VExZ2aNUzCf1LDRmYJ3fQpLR8z",
-        "type": "image/png"
-      }
-    ],
-    "category": "image"
   }
 }

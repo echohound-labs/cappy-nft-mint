@@ -1,7 +1,7 @@
 {
   "name": "Capy: Ocean — Original — Gold",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmNtoyhyBGSKWaoBmvGSR9RPagUEbH6ZA2KYPrf71aKdGu",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmNtoyhyBGSKWaoBmvGSR9RPagUEbH6ZA2KYPrf71aKdGu",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmNtoyhyBGSKWaoBmvGSR9RPagUEbH6ZA2KYPrf71aKdGu",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmNtoyhyBGSKWaoBmvGSR9RPagUEbH6ZA2KYPrf71aKdGu",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

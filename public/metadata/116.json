@@ -1,7 +1,7 @@
 {
   "name": "Capy: Snow — Crimson",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmXKCu4pxpFDmn5g4n59kTd4AssuY8DPGKX3bd2vDBMZKH",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmXKCu4pxpFDmn5g4n59kTd4AssuY8DPGKX3bd2vDBMZKH",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,18 +31,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmXKCu4pxpFDmn5g4n59kTd4AssuY8DPGKX3bd2vDBMZKH",
-        "type": "image/png"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmXKCu4pxpFDmn5g4n59kTd4AssuY8DPGKX3bd2vDBMZKH",
-        "type": "image/png"
-      }
-    ],
-    "category": "image"
   }
 }

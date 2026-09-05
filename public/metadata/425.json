@@ -1,7 +1,7 @@
 {
   "name": "Capy: Snow — Frozen Dawn — Crimson",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://Qmf6j3UagnEMc3q1hdE7soFndrjAY2gMVpt43LZVjAh8Ce",
+  "image": "https://gateway.lighthouse.storage/ipfs/Qmf6j3UagnEMc3q1hdE7soFndrjAY2gMVpt43LZVjAh8Ce",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://Qmf6j3UagnEMc3q1hdE7soFndrjAY2gMVpt43LZVjAh8Ce",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/Qmf6j3UagnEMc3q1hdE7soFndrjAY2gMVpt43LZVjAh8Ce",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

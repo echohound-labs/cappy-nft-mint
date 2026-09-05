@@ -1,7 +1,7 @@
 {
   "name": "Capy: Forest — Gold",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmcBbY3t9imQAygcWHYPmuhGpjDALxZDCE8QgH5WDad8xM",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmcBbY3t9imQAygcWHYPmuhGpjDALxZDCE8QgH5WDad8xM",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,18 +31,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmcBbY3t9imQAygcWHYPmuhGpjDALxZDCE8QgH5WDad8xM",
-        "type": "image/png"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmcBbY3t9imQAygcWHYPmuhGpjDALxZDCE8QgH5WDad8xM",
-        "type": "image/png"
-      }
-    ],
-    "category": "image"
   }
 }

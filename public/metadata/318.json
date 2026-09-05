@@ -1,7 +1,7 @@
 {
   "name": "Capy: Lava — Blood Moon — Inferno",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmZZXP3gR3AuZDTMWw3344MRqiu7pGGnxRXMaxALifq363",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmZZXP3gR3AuZDTMWw3344MRqiu7pGGnxRXMaxALifq363",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmZZXP3gR3AuZDTMWw3344MRqiu7pGGnxRXMaxALifq363",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmZZXP3gR3AuZDTMWw3344MRqiu7pGGnxRXMaxALifq363",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "Capy: Mountain — Void",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmTy1VBE47tgc5ZcsgB3nCRmWXp7VJ8ftzn5MycxWQBFm7",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmTy1VBE47tgc5ZcsgB3nCRmWXp7VJ8ftzn5MycxWQBFm7",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,18 +31,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmTy1VBE47tgc5ZcsgB3nCRmWXp7VJ8ftzn5MycxWQBFm7",
-        "type": "image/png"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmTy1VBE47tgc5ZcsgB3nCRmWXp7VJ8ftzn5MycxWQBFm7",
-        "type": "image/png"
-      }
-    ],
-    "category": "image"
   }
 }

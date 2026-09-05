@@ -1,7 +1,7 @@
 {
   "name": "Capy: Swamp — Dawn Mist — Void",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmdmgvSiVuiWzxWXmCuo6vJuefQpX2jzumQsJxCqx93EHr",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmdmgvSiVuiWzxWXmCuo6vJuefQpX2jzumQsJxCqx93EHr",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmdmgvSiVuiWzxWXmCuo6vJuefQpX2jzumQsJxCqx93EHr",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmdmgvSiVuiWzxWXmCuo6vJuefQpX2jzumQsJxCqx93EHr",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

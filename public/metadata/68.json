@@ -1,7 +1,7 @@
 {
   "name": "Capy: Forest — Crimson",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmS4ouDc2s8dDDw3bL8kjGb1oNLnhdKxVjopCkRE4VC8MM",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmS4ouDc2s8dDDw3bL8kjGb1oNLnhdKxVjopCkRE4VC8MM",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,18 +31,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmS4ouDc2s8dDDw3bL8kjGb1oNLnhdKxVjopCkRE4VC8MM",
-        "type": "image/png"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmS4ouDc2s8dDDw3bL8kjGb1oNLnhdKxVjopCkRE4VC8MM",
-        "type": "image/png"
-      }
-    ],
-    "category": "image"
   }
 }

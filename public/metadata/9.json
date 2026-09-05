@@ -1,7 +1,7 @@
 {
   "name": "Capy Warrior #9",
   "description": "Under the Blood Moon, the desert reveals its true nature — ancient, merciless, and alive. The ruins of a forgotten civilization stretch to the horizon, bathed in crimson light. One Capy Warrior stands within the ritual circle, curved Dune Blade glowing red, a guardian of secrets that were buried long before the world remembered them.",
-  "image": "ipfs://QmPqC4Gd6s9rerJNsxGdQcWfC4YyHmLJKTCTrcR5eyE1Ef",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmPqC4Gd6s9rerJNsxGdQcWfC4YyHmLJKTCTrcR5eyE1Ef",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -39,18 +39,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmPqC4Gd6s9rerJNsxGdQcWfC4YyHmLJKTCTrcR5eyE1Ef",
-        "type": "image/png"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmPqC4Gd6s9rerJNsxGdQcWfC4YyHmLJKTCTrcR5eyE1Ef",
-        "type": "image/png"
-      }
-    ],
-    "category": "image"
   }
 }

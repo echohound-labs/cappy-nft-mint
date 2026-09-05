@@ -1,7 +1,7 @@
 {
   "name": "Capy: Mountain — Frozen Blizzard — Gold",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmU2tXkfCeTHQU2X5Yn1FNPJZMjFBCVTrK7a1aNBec8zzW",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmU2tXkfCeTHQU2X5Yn1FNPJZMjFBCVTrK7a1aNBec8zzW",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmU2tXkfCeTHQU2X5Yn1FNPJZMjFBCVTrK7a1aNBec8zzW",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmU2tXkfCeTHQU2X5Yn1FNPJZMjFBCVTrK7a1aNBec8zzW",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

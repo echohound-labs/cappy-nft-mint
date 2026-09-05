@@ -1,7 +1,7 @@
 {
   "name": "Capy: Space — Gold",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmeDJEMtix9Fm9K7kMnqo8JZGcWpZbQY8T5wn2orwyDLMs",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmeDJEMtix9Fm9K7kMnqo8JZGcWpZbQY8T5wn2orwyDLMs",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,18 +31,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmeDJEMtix9Fm9K7kMnqo8JZGcWpZbQY8T5wn2orwyDLMs",
-        "type": "image/png"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmeDJEMtix9Fm9K7kMnqo8JZGcWpZbQY8T5wn2orwyDLMs",
-        "type": "image/png"
-      }
-    ],
-    "category": "image"
   }
 }

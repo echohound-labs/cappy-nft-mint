@@ -1,7 +1,7 @@
 {
   "name": "Capy: Space — Toxic",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmUcSjTyTJ2614p5ogUKwK3sE5MwA6aQ9czMAVCwy71wDJ",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmUcSjTyTJ2614p5ogUKwK3sE5MwA6aQ9czMAVCwy71wDJ",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,18 +31,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmUcSjTyTJ2614p5ogUKwK3sE5MwA6aQ9czMAVCwy71wDJ",
-        "type": "image/png"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmUcSjTyTJ2614p5ogUKwK3sE5MwA6aQ9czMAVCwy71wDJ",
-        "type": "image/png"
-      }
-    ],
-    "category": "image"
   }
 }

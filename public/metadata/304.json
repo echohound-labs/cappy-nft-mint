@@ -1,7 +1,7 @@
 {
   "name": "Capy: Lava — Ash Storm — Inferno",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmY6PtutqFw8qFzmm2ByKdBGjbByY8VY6uxdffsAxDMpuQ",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmY6PtutqFw8qFzmm2ByKdBGjbByY8VY6uxdffsAxDMpuQ",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmY6PtutqFw8qFzmm2ByKdBGjbByY8VY6uxdffsAxDMpuQ",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmY6PtutqFw8qFzmm2ByKdBGjbByY8VY6uxdffsAxDMpuQ",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "Capy: Lava — Original — Shadow",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://Qmb3naJXPgVhRjLKYejCkQcHpT2VYbnkY8CdTAw8WLueuF",
+  "image": "https://gateway.lighthouse.storage/ipfs/Qmb3naJXPgVhRjLKYejCkQcHpT2VYbnkY8CdTAw8WLueuF",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://Qmb3naJXPgVhRjLKYejCkQcHpT2VYbnkY8CdTAw8WLueuF",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/Qmb3naJXPgVhRjLKYejCkQcHpT2VYbnkY8CdTAw8WLueuF",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

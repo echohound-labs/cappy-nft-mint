@@ -1,7 +1,7 @@
 {
   "name": "Capy Warrior #30",
   "description": "The Ancient Tree had stood for ten thousand years — until the night it finally fell. As the colossal trunk crashed through the swamp and the earth shook, one Capy Warrior was there to witness it. They did not mourn the tree. They claimed its power, forging a Root Hammer from its oldest wood, and carried its legend forward.",
-  "image": "ipfs://QmYuGt9HzgQiCiuF8UqYWfBG8VSJRRfx2QacYK539EVCfT",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmYuGt9HzgQiCiuF8UqYWfBG8VSJRRfx2QacYK539EVCfT",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -39,18 +39,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmYuGt9HzgQiCiuF8UqYWfBG8VSJRRfx2QacYK539EVCfT",
-        "type": "image/png"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmYuGt9HzgQiCiuF8UqYWfBG8VSJRRfx2QacYK539EVCfT",
-        "type": "image/png"
-      }
-    ],
-    "category": "image"
   }
 }

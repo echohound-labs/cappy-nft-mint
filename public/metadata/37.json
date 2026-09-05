@@ -1,7 +1,7 @@
 {
   "name": "Capy: Beach — Toxic",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmSCXuq2sB74VgRqP56KLyDMwhtpD4jnQLaBAXGYLWGjwN",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmSCXuq2sB74VgRqP56KLyDMwhtpD4jnQLaBAXGYLWGjwN",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,18 +31,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmSCXuq2sB74VgRqP56KLyDMwhtpD4jnQLaBAXGYLWGjwN",
-        "type": "image/png"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmSCXuq2sB74VgRqP56KLyDMwhtpD4jnQLaBAXGYLWGjwN",
-        "type": "image/png"
-      }
-    ],
-    "category": "image"
   }
 }

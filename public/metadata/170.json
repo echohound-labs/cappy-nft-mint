@@ -1,7 +1,7 @@
 {
   "name": "Capy: Beach — Dawn — Shadow",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmbByBqkxot9MU2PyfHViWMGkb9Svo5f7iJgANBdXs56pd",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmbByBqkxot9MU2PyfHViWMGkb9Svo5f7iJgANBdXs56pd",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmbByBqkxot9MU2PyfHViWMGkb9Svo5f7iJgANBdXs56pd",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmbByBqkxot9MU2PyfHViWMGkb9Svo5f7iJgANBdXs56pd",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

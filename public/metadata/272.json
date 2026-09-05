@@ -1,7 +1,7 @@
 {
   "name": "Capy: Forest — Dawn — Gold",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmX79Yd865ck4d5bZAGgoXfdfntcPsVcd1dndK58JXNQ45",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmX79Yd865ck4d5bZAGgoXfdfntcPsVcd1dndK58JXNQ45",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmX79Yd865ck4d5bZAGgoXfdfntcPsVcd1dndK58JXNQ45",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmX79Yd865ck4d5bZAGgoXfdfntcPsVcd1dndK58JXNQ45",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

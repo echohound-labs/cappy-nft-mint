@@ -1,7 +1,7 @@
 {
   "name": "Capy: Forest — Blood Moon — Frost",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmSrhPN7mXh58AKDMoZmjWh333wMPdYgoZBDwoDsAYRxJJ",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmSrhPN7mXh58AKDMoZmjWh333wMPdYgoZBDwoDsAYRxJJ",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmSrhPN7mXh58AKDMoZmjWh333wMPdYgoZBDwoDsAYRxJJ",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmSrhPN7mXh58AKDMoZmjWh333wMPdYgoZBDwoDsAYRxJJ",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

@@ -1,7 +1,7 @@
 {
   "name": "Capy: Ocean — Gold",
   "description": "A Legendary Capy warrior. One of 120 Legendaries in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmS2PWyMG1gsmvbJkus19FNZU6Vh7hinJtGeSsAgyH96PB",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmS2PWyMG1gsmvbJkus19FNZU6Vh7hinJtGeSsAgyH96PB",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -31,18 +31,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmS2PWyMG1gsmvbJkus19FNZU6Vh7hinJtGeSsAgyH96PB",
-        "type": "image/png"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmS2PWyMG1gsmvbJkus19FNZU6Vh7hinJtGeSsAgyH96PB",
-        "type": "image/png"
-      }
-    ],
-    "category": "image"
   }
 }

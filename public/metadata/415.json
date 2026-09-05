@@ -1,7 +1,7 @@
 {
   "name": "Capy: Snow — Blood Moon — Shadow",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmcF7vhedisaYAnUMKDybBZBswUyNyak6NEPB2A7Fwj9iV",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmcF7vhedisaYAnUMKDybBZBswUyNyak6NEPB2A7Fwj9iV",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmcF7vhedisaYAnUMKDybBZBswUyNyak6NEPB2A7Fwj9iV",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmcF7vhedisaYAnUMKDybBZBswUyNyak6NEPB2A7Fwj9iV",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }

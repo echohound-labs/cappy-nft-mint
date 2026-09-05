@@ -1,7 +1,7 @@
 {
   "name": "Capy: Lava — Original — Inferno",
   "description": "A Common Capy warrior. One of 350 Commons in a collection of 500 on the X1 Network.",
-  "image": "ipfs://QmPQqzeXPX9hNKBx8jppZYQERZ4nHcwUW66KwqrURXEyR1",
+  "image": "https://gateway.lighthouse.storage/ipfs/QmPQqzeXPX9hNKBx8jppZYQERZ4nHcwUW66KwqrURXEyR1",
   "attributes": [
     {
       "trait_type": "Tier",
@@ -23,18 +23,5 @@
   "collection": {
     "name": "Capy Warriors",
     "family": "Capy Warriors"
-  },
-  "properties": {
-    "files": [
-      {
-        "uri": "ipfs://QmPQqzeXPX9hNKBx8jppZYQERZ4nHcwUW66KwqrURXEyR1",
-        "type": "image/jpeg"
-      },
-      {
-        "uri": "https://gateway.lighthouse.storage/ipfs/QmPQqzeXPX9hNKBx8jppZYQERZ4nHcwUW66KwqrURXEyR1",
-        "type": "image/jpeg"
-      }
-    ],
-    "category": "image"
   }
 }
