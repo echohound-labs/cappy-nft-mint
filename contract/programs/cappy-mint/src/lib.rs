@@ -2,9 +2,11 @@ use anchor_lang::prelude::*;
 use anchor_spl::associated_token::AssociatedToken;
 use anchor_spl::metadata::{
     create_master_edition_v3, create_metadata_accounts_v3,
+    mpl_token_metadata::accounts::Metadata as MetadataAccount,
     mpl_token_metadata::types::{CollectionDetails, Creator, DataV2},
-    set_and_verify_sized_collection_item, CreateMasterEditionV3, CreateMetadataAccountsV3, Metadata,
-    SetAndVerifySizedCollectionItem,
+    set_and_verify_sized_collection_item, update_metadata_accounts_v2, CreateMasterEditionV3,
+    CreateMetadataAccountsV3, Metadata, SetAndVerifySizedCollectionItem,
+    UpdateMetadataAccountsV2,
 };
 use anchor_spl::token::{self, Mint, MintTo, Token, TokenAccount};
 
@@ -456,6 +458,43 @@ pub mod capy_warriors {
         Ok(())
     }
 
+    /// Authority-gated URI repoint. Reads the CURRENT on-chain metadata and
+    /// copies every field forward unchanged except `uri`, so post-mint state
+    /// (verified collection, creators, master edition) is preserved exactly.
+    pub fn update_token_uri(ctx: Context<UpdateTokenUri>, new_uri: String) -> Result<()> {
+        let bump = ctx.accounts.mint_state.bump;
+        let seeds = &[b"mint_state_v2".as_ref(), &[bump]];
+        let signer = &[&seeds[..]];
+
+        let cur = MetadataAccount::try_from(&ctx.accounts.metadata.to_account_info())?;
+        let trim = |s: &str| s.trim_end_matches('\0').to_string();
+
+        update_metadata_accounts_v2(
+            CpiContext::new_with_signer(
+                ctx.accounts.token_metadata_program.to_account_info(),
+                UpdateMetadataAccountsV2 {
+                    metadata: ctx.accounts.metadata.to_account_info(),
+                    update_authority: ctx.accounts.mint_state.to_account_info(),
+                },
+                signer,
+            ),
+            None,
+            Some(DataV2 {
+                name: trim(&cur.name),
+                symbol: trim(&cur.symbol),
+                uri: new_uri,
+                seller_fee_basis_points: cur.seller_fee_basis_points,
+                creators: cur.creators.clone(),
+                collection: cur.collection.clone(),
+                uses: cur.uses.clone(),
+            }),
+            None,
+            None,
+        )?;
+
+        Ok(())
+    }
+
 }
 
 // ── Account Structs ────────────────────────────────────────────────────
@@ -532,6 +571,17 @@ pub struct CreateMemberMasterEdition<'info> {
     pub token_program: Program<'info, Token>,
     pub system_program: Program<'info, System>,
     pub rent: Sysvar<'info, Rent>,
+}
+
+#[derive(Accounts)]
+pub struct UpdateTokenUri<'info> {
+    #[account(seeds = [b"mint_state_v2"], bump = mint_state.bump, has_one = authority)]
+    pub mint_state: Account<'info, MintState>,
+    pub authority: Signer<'info>,
+    /// CHECK: metadata PDA, validated by the Metaplex CPI
+    #[account(mut)]
+    pub metadata: UncheckedAccount<'info>,
+    pub token_metadata_program: Program<'info, Metadata>,
 }
 
 #[account]
