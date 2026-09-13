@@ -16,3 +16,21 @@ See `cid_map.json` — 500 entries keyed by token ID.
 ## Recovery
 CIDs derive from content. Re-upload the same files to any pinning
 service and the identical CIDs come back — no on-chain change needed.
+
+## Reproducing CIDs — VERIFIED 2026-09-13
+
+All 500 art CIDs in `cid_map.json` reproduce exactly from the masters using:
+
+    ipfs add -q --cid-version 0 --chunker=size-1048576 <file>
+
+Note the 1MB chunker — kubo's 256KB default produces DIFFERENT CIDs.
+
+Source files: `all_images/` — `1.png`–`150.png` (Mythic + Legendary),
+`151.jpg`–`500.jpg` (Commons). Masters are byte-identical to what is
+hosted (verified by sha256 against the gateway copy).
+
+Census result: MATCH 500, MISMATCH 0, MISSING 0.
+
+Recovery: re-upload the same files to any pinning service with these
+flags — identical CIDs come back, every NFT resolves, no on-chain
+change and no keys required.
