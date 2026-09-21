@@ -1,7 +1,16 @@
 {
   "name": "Capy Warriors",
   "symbol": "CAPY",
-  "description": "500 Capy Warriors on X1, guardians of the chain. Each warrior's traits were chosen by true physical randomness from the Geiger Entropy Oracle at mint — Common, Legendary and Mythic tiers across ten environments.",
-  "image": "https://gateway.lighthouse.storage/ipfs/QmRL9ZbbJwrQArftwGKWcDbU6PSTGWyo7GrWjBfxPRbTAY",
-  "external_url": "https://x1forge.xyz/collection/capy"
+  "description": "500 Capy Warriors on X1, guardians of the chain. Each warrior's traits were chosen by true physical randomness from the Geiger Entropy Oracle at mint \u2014 Common, Legendary and Mythic tiers across ten environments.",
+  "image": "https://capy-nft-mint.vercel.app/collection.jpg",
+  "external_url": "https://x1forge.xyz/collection/capy",
+  "properties": {
+    "files": [
+      {
+        "uri": "https://capy-nft-mint.vercel.app/collection.jpg",
+        "type": "image/jpeg"
+      }
+    ],
+    "category": "image"
+  }
 }
