@@ -495,6 +495,64 @@ pub mod capy_warriors {
         Ok(())
     }
 
+    /// Authority-gated royalty/creator update. Copies every other field forward
+    /// unchanged, like `update_token_uri`. `verified` is never taken from args:
+    /// a creator already on the metadata keeps its current flag (Metaplex rejects
+    /// flipping it here), and a new creator starts unverified and must sign
+    /// separately via Metaplex SignMetadata.
+    pub fn update_royalty(
+        ctx: Context<UpdateRoyalty>,
+        seller_fee_basis_points: u16,
+        creators: Vec<CreatorArg>,
+    ) -> Result<()> {
+        require!(seller_fee_basis_points <= 10_000, CapyError::InvalidRoyalty);
+        require!(!creators.is_empty() && creators.len() <= 5, CapyError::InvalidCreators);
+        let total: u32 = creators.iter().map(|c| c.share as u32).sum();
+        require!(total == 100, CapyError::InvalidCreators);
+
+        let bump = ctx.accounts.mint_state.bump;
+        let seeds = &[b"mint_state_v2".as_ref(), &[bump]];
+        let signer = &[&seeds[..]];
+
+        let cur = MetadataAccount::try_from(&ctx.accounts.metadata.to_account_info())?;
+        let trim = |s: &str| s.trim_end_matches('\0').to_string();
+
+        let existing = cur.creators.clone().unwrap_or_default();
+        let new_creators: Vec<Creator> = creators
+            .iter()
+            .map(|c| Creator {
+                address: c.address,
+                verified: existing.iter().any(|e| e.address == c.address && e.verified),
+                share: c.share,
+            })
+            .collect();
+
+        update_metadata_accounts_v2(
+            CpiContext::new_with_signer(
+                ctx.accounts.token_metadata_program.to_account_info(),
+                UpdateMetadataAccountsV2 {
+                    metadata: ctx.accounts.metadata.to_account_info(),
+                    update_authority: ctx.accounts.mint_state.to_account_info(),
+                },
+                signer,
+            ),
+            None,
+            Some(DataV2 {
+                name: trim(&cur.name),
+                symbol: trim(&cur.symbol),
+                uri: trim(&cur.uri),
+                seller_fee_basis_points,
+                creators: Some(new_creators),
+                collection: cur.collection.clone(),
+                uses: cur.uses.clone(),
+            }),
+            None,
+            None,
+        )?;
+
+        Ok(())
+    }
+
 }
 
 // ── Account Structs ────────────────────────────────────────────────────
@@ -582,6 +640,23 @@ pub struct UpdateTokenUri<'info> {
     #[account(mut)]
     pub metadata: UncheckedAccount<'info>,
     pub token_metadata_program: Program<'info, Metadata>,
+}
+
+#[derive(Accounts)]
+pub struct UpdateRoyalty<'info> {
+    #[account(seeds = [b"mint_state_v2"], bump = mint_state.bump, has_one = authority)]
+    pub mint_state: Account<'info, MintState>,
+    pub authority: Signer<'info>,
+    /// CHECK: metadata PDA, validated by the Metaplex CPI
+    #[account(mut)]
+    pub metadata: UncheckedAccount<'info>,
+    pub token_metadata_program: Program<'info, Metadata>,
+}
+
+#[derive(AnchorSerialize, AnchorDeserialize, Clone)]
+pub struct CreatorArg {
+    pub address: Pubkey,
+    pub share: u8,
 }
 
 #[account]
@@ -754,4 +829,8 @@ pub enum CapyError {
     RandomnessNotReady,
     #[msg("Not authorized")]
     Unauthorized,
+    #[msg("Royalty must be <= 10000 bps")]
+    InvalidRoyalty,
+    #[msg("Creators must be 1-5 entries with shares summing to 100")]
+    InvalidCreators,
 }
