@@ -1,0 +1,19 @@
+# Offline LiteSVM tests for the Capy Warriors program (freeze build).
+# Standalone workspace on purpose: its dependencies never touch the program's
+# Cargo.lock, so adding these tests cannot change the deployed binary.
+# Loads the freeze build from $CAPY_FREEZE_SO, or ../../target/deploy/cappy_mint.so
+# (run `cargo build-sbf` / `anchor build` in contract/ first), plus the X1 mainnet
+# dumps of Token Metadata and SPL Token in fixtures/. Run: cargo test --offline
+# Cargo.lock copied from rise-phoenix-contract/tests/svm (same crate versions).
+[package]
+name = "capy-svm-tests"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[workspace]
+
+[dev-dependencies]
+litesvm = "0.7.1"
+solana-sdk = "2.3"
+sha2 = "0.10"
