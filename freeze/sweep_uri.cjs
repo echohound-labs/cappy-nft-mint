@@ -7,21 +7,20 @@
 //   node freeze/sweep_uri.cjs --rpc $RPC --map uri_map.json --send --confirm-mainnet             members still off target
 //   node freeze/sweep_uri.cjs --rpc $RPC --map uri_map.json --collection [--send --confirm-mainnet]
 //   node freeze/sweep_uri.cjs --rpc $RPC --map uri_map.json --verify                              read-only, all 500
-//   node freeze/sweep_uri.cjs --rpc $RPC --map uri_map.json --verify --collection --collection-json <file>
+//   node freeze/sweep_uri.cjs --rpc $RPC --map uri_map.json --verify --collection
 //
-// Map file (freeze/make_uri_map.cjs writes it):
+// Map file (freeze/pin_metadata.cjs writes it from verified pins; freeze/make_uri_map.cjs rebuilds it offline):
 //   {"1": "https://ipfs.x1forge.xyz/ipfs/Qm…", …, "500": "…", "collection": "…"}
 // Numbering: on-chain "Capy Warrior #N" = map key "N" = repo file public/metadata/N.json.
 //
-// On mainnet today all 500 member URIs already equal public/metadata-cids-v2.json; only the
-// collection NFT (still on Vercel /api/metadata/collection) and any re-pinned member need a send.
+// After the follow-up-1 content change (external_url, names, #4) every member URI changes: the sweep
+// moves all 500 members and the collection NFT to the map that pin_metadata.cjs writes.
 // There is no --revert (RISE had one, to its Vercel URIs): the undo before a lock is this same
 // script with the previous map (e.g. one rebuilt from metadata-cids-v2.json).
 //
 // Options: --program <id>, --authority-keypair <path> (default ~/.config/solana/capy-mint-authority.json;
 //          it must be mint_state.authority 2EMb…, checked), --limit <n>, --priority <µLamports/CU>,
-//          --json-dir <dir> (verify; default ~/cappy-nft-mint/public/metadata),
-//          --collection-json <file> (verify --collection; required: the exact bytes that were pinned)
+//          --json-dir <dir> (verify; default ~/cappy-nft-mint/public/metadata; holds N.json and collection.json)
 //
 // Safety:
 //   * --rpc is required. Dry-run is the default and never reads a keypair file.
@@ -33,12 +32,12 @@
 //   * --verify, per member (real GET requests):
 //       - on-chain uri == map;
 //       - the served bytes hash to the CIDv0 in the uri (the gateway served the pinned content);
-//       - the JSON equals the repo file public/metadata/N.json field for field, except `image`,
-//         which must carry the SAME CID on the map's gateway host (no other exemption exists);
-//       - no Vercel / Lighthouse / pinata.cloud string anywhere in it; JSON name "Capy Warrior #N"
-//         for N ≤ 30; the image downloads in full with an image/* content type.
-//     --verify --collection: served bytes == --collection-json byte for byte (RISE audit L5) and hash
-//     to the uri's CID; same host and image checks.
+//       - the served bytes EQUAL K.pinnedMemberBytes(repo file public/metadata/N.json) byte for byte:
+//         the repo file with only `image` moved to the map's gateway (same CID), JSON.stringify(x,null,2);
+//       - JSON name "Capy Warrior #N", external_url https://x1forge.xyz/collection/capy, no Vercel /
+//         Lighthouse / pinata.cloud string; the image downloads in full with an image/* content type.
+//     --verify --collection: served bytes EQUAL K.pinnedCollectionBytes(<json-dir>/collection.json) byte
+//     for byte (RISE audit L5) and hash to the uri's CID; same host and image checks.
 //   * A FULL passing --verify (all 500 members, or --collection) records the map's sha256 in
 //     <map>.verified.json; lock_metadata.cjs refuses without it (RISE audit L3).
 
@@ -93,39 +92,39 @@ async function getBytes(url) {
   return Buffer.from(await res.arrayBuffer());
 }
 
-// Pure check of a pinned member JSON against the repo file. Returns a list of problems.
-function checkMemberJson(n, servedBytes, uri, repoJson) {
+// Pure check of a served member JSON against the repo file (bytes). Returns a list of problems.
+function checkMemberJson(n, servedBytes, uri, repoBytes) {
   const p = [];
   const cid = K.cidOfUri(uri);
-  try { if (K.cidV0(servedBytes) !== cid) p.push(`served bytes hash to ${K.cidV0(servedBytes)}, uri says ${cid}`); }
-  catch (e) { p.push(`cannot hash served bytes: ${e.message}`); }
+  if (K.cidV0(servedBytes) !== cid) p.push(`served bytes hash to ${K.cidV0(servedBytes)}, uri says ${cid}`);
   let meta;
   try { meta = JSON.parse(servedBytes.toString("utf8")); } catch { return [...p, "served bytes are not JSON"]; }
   const fh = K.forbiddenHost(servedBytes.toString("utf8"));
   if (fh) p.push(`JSON mentions ${fh}`);
-  if (n <= 30 && meta.name !== `Capy Warrior #${n}`) p.push(`JSON name is ${JSON.stringify(meta.name)}, want "Capy Warrior #${n}"`);
-  if (!repoJson) { p.push(`no repo file for #${n}`); return p; }
-  // image: same CID as the repo file, on the map's gateway host. Nothing else may differ.
+  if (meta.name !== `Capy Warrior #${n}`) p.push(`JSON name is ${JSON.stringify(meta.name)}, want "Capy Warrior #${n}"`);
+  if (meta.external_url !== K.EXTERNAL_URL) p.push(`external_url is ${JSON.stringify(meta.external_url)}, want ${JSON.stringify(K.EXTERNAL_URL)}`);
+  if (!repoBytes) { p.push(`no repo file for #${n}`); return p; }
   const host = K.hostOf(uri);
-  const repoCid = typeof repoJson.image === "string" ? repoJson.image.split("/").pop() : null;
-  if (typeof meta.image !== "string" || K.hostOf(meta.image) !== host || !meta.image.startsWith(`https://${host}/ipfs/`))
-    p.push(`image ${JSON.stringify(meta.image)} is not on the map's gateway https://${host}/ipfs/`);
-  else if (meta.image.split("/").pop() !== repoCid) p.push(`image CID ${meta.image.split("/").pop()} != repo image CID ${repoCid}`);
-  const diffs = K.jsonDiff(repoJson, meta).filter((d) => !d.startsWith("image: "));
-  if (diffs.length) p.push(`differs from repo public/metadata/${n}.json: ${diffs.slice(0, 3).join("; ")}${diffs.length > 3 ? ` (+${diffs.length - 3})` : ""}`);
+  let want;
+  try { want = K.pinnedMemberBytes(repoBytes, `https://${host}`); } catch (e) { return [...p, `repo file: ${e.message}`]; }
+  if (!servedBytes.equals(want)) {
+    const diffs = K.jsonDiff(JSON.parse(want.toString("utf8")), meta);
+    p.push(`served bytes != pinned form of repo public/metadata/${n}.json` + (diffs.length ? `: ${diffs.slice(0, 3).join("; ")}${diffs.length > 3 ? ` (+${diffs.length - 3})` : ""}` : " (formatting differs)"));
+  }
   return p;
 }
-// Pure check of the served collection JSON against the local file that was pinned.
-function checkCollectionJson(servedBytes, uri, localBytes) {
+// Pure check of the served collection JSON against the repo collection.json (bytes).
+function checkCollectionJson(servedBytes, uri, repoBytes) {
   const p = [];
-  if (!localBytes) return ["--collection-json <file> is required to verify the collection (RISE audit L5)"];
-  if (!servedBytes.equals(localBytes)) p.push(`served bytes (sha256 ${K.sha256Hex(servedBytes)}) != local file (sha256 ${K.sha256Hex(localBytes)})`);
-  try { if (K.cidV0(servedBytes) !== K.cidOfUri(uri)) p.push(`served bytes hash to ${K.cidV0(servedBytes)}, uri says ${K.cidOfUri(uri)}`); }
-  catch (e) { p.push(`cannot hash served bytes: ${e.message}`); }
+  if (!repoBytes) return ["no repo collection.json"];
+  const want = K.pinnedCollectionBytes(repoBytes);
+  if (!servedBytes.equals(want)) p.push(`served bytes (sha256 ${K.sha256Hex(servedBytes)}) != pinned form of repo collection.json (sha256 ${K.sha256Hex(want)})`);
+  if (K.cidV0(servedBytes) !== K.cidOfUri(uri)) p.push(`served bytes hash to ${K.cidV0(servedBytes)}, uri says ${K.cidOfUri(uri)}`);
   let meta;
   try { meta = JSON.parse(servedBytes.toString("utf8")); } catch { return [...p, "served bytes are not JSON"]; }
   const fh = K.forbiddenHost(servedBytes.toString("utf8"));
   if (fh) p.push(`collection JSON mentions ${fh}`);
+  if (meta.external_url !== K.EXTERNAL_URL) p.push(`collection external_url ${JSON.stringify(meta.external_url)}`);
   const host = K.hostOf(uri);
   if (typeof meta.image !== "string" || !meta.image.startsWith(`https://${host}/ipfs/`)) p.push(`collection image ${JSON.stringify(meta.image)} is not on https://${host}/ipfs/`);
   for (const f of (meta.properties && meta.properties.files) || []) if (f && f.uri !== meta.image) p.push(`properties.files uri ${f.uri} != image`);
@@ -149,7 +148,7 @@ async function main() {
       flags: ["--send", "--confirm-mainnet", "--verify", "--collection"],
       opts: {
         "--rpc": K.V.url, "--map": K.V.any, "--token": K.V.tokenNumber, "--limit": K.V.positiveInt, "--program": K.V.pubkey,
-        "--priority": K.V.nonNegInt, "--authority-keypair": K.V.any, "--json-dir": K.V.any, "--collection-json": K.V.any,
+        "--priority": K.V.nonNegInt, "--authority-keypair": K.V.any, "--json-dir": K.V.any,
       },
     });
   } catch (e) { console.error("Refusing:", e.message); process.exit(1); }
@@ -162,8 +161,6 @@ async function main() {
   if (!a.opts["--map"]) { console.error("Refusing: --map <file> is required."); process.exit(1); }
   if (SEND && VERIFY) { console.error("Refusing: --verify is read-only; it cannot be combined with --send."); process.exit(1); }
   if (COLL && ONLY_TOKEN !== null) { console.error("Refusing: --collection and --token are exclusive."); process.exit(1); }
-  if (a.opts["--collection-json"] && !(VERIFY && COLL)) { console.error("Refusing: --collection-json only applies to --verify --collection."); process.exit(1); }
-  if (VERIFY && COLL && !a.opts["--collection-json"]) { console.error("Refusing: --verify --collection needs --collection-json <the exact file that was pinned> (RISE audit L5)."); process.exit(1); }
   const RPC = a.opts["--rpc"], MAP_PATH = a.opts["--map"];
   const PROGRAM = new PublicKey(a.opts["--program"] || K.DEFAULT_PROGRAM);
   const PRIORITY = a.opts["--priority"] !== undefined ? +a.opts["--priority"] : 1_000_000;
@@ -196,7 +193,8 @@ async function main() {
   if (VERIFY) {
     let ok = 0, wrongUri = 0, bad = 0;
     const problems = [];
-    const localColl = COLL ? fs.readFileSync(a.opts["--collection-json"]) : null;
+    const collFile = path.join(JSON_DIR, "collection.json");
+    const localColl = COLL && fs.existsSync(collFile) ? fs.readFileSync(collFile) : null;
     for (const m of items) {
       const k = keyOf(m), want = map[k], tag = label(m);
       if (m.uri !== want) { wrongUri++; problems.push(`${tag} on-chain uri=${m.uri} (want ${want})`); continue; }
@@ -206,7 +204,7 @@ async function main() {
         if (k === K.COLLECTION_KEY) p = checkCollectionJson(served, want, localColl);
         else {
           const f = path.join(JSON_DIR, `${k}.json`);
-          const repo = fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, "utf8")) : null;
+          const repo = fs.existsSync(f) ? fs.readFileSync(f) : null;
           p = checkMemberJson(+k, served, want, repo);
           if (!m.collection || m.collection.key !== K.COLLECTION_MINT || !m.collection.verified) p.push("collection not verified on-chain");
         }
@@ -220,7 +218,7 @@ async function main() {
     if (problems.length) { console.log("\nproblems:"); problems.slice(0, 60).forEach((p) => console.log("  " + p)); process.exit(1); }
     const scope = COLL ? "collection" : ONLY_TOKEN === null && items.length === K.EXPECTED_MEMBERS ? "members" : null;
     if (scope) {
-      const extra = COLL ? { collection_json_sha256: K.sha256Hex(localColl) } : { json_dir: JSON_DIR };
+      const extra = COLL ? { collection_json_sha256: K.sha256Hex(localColl), json_dir: JSON_DIR } : { json_dir: JSON_DIR };
       const r = K.writeVerifyRecord(MAP_PATH, scope, { checked: items.length, rpc: RPC, ...extra });
       console.log(`\nrecorded: ${K.recordPath(MAP_PATH)} ${scope} map_sha256 ${r.map_sha256}`);
       console.log(`lock_metadata.cjs needs --map-sha256 ${r.map_sha256}`);
@@ -295,7 +293,7 @@ async function main() {
     failures.slice(0, 20).forEach((f) => console.log(`  ${f.tag}  ${f.error.split("\n")[0].slice(0, 100)}`));
     process.exit(1);
   }
-  console.log(`\nAll sent. Next: node freeze/sweep_uri.cjs --rpc $RPC --map ${MAP_PATH} --verify${COLL ? " --collection --collection-json <file>" : ""}`);
+  console.log(`\nAll sent. Next: node freeze/sweep_uri.cjs --rpc $RPC --map ${MAP_PATH} --verify${COLL ? " --collection" : ""}`);
 }
 
 if (require.main === module) main().catch((e) => { console.error("ERR", e.message); process.exit(1); });

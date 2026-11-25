@@ -92,41 +92,86 @@ for (const [label, bad] of [["empty", { 1: "" }], ["vercel", { 1: "https://capy-
   assert.ok(K.checkMap(bad).length > 0, label);
 ok("map: https://<one gateway>/ipfs/<CIDv0> only, ≤200 B, no Vercel/Lighthouse/pinata.cloud, no dupes, keys 1..500 or \"collection\"");
 
-// ── the pinned JSONs reproduce offline from the repo files (CIDv0) ──
-// rewrite-metadata.cjs pinned JSON.stringify(repo file with image → ipfs.x1forge.xyz/ipfs/<same CID>, null, 2).
-const rebuilt = (k) => { const r = JSON.parse(fs.readFileSync(path.join(repo, `public/metadata/${k}.json`), "utf8")); const o = {}; for (const [a, v] of Object.entries(r)) o[a] = a === "image" ? "https://ipfs.x1forge.xyz/ipfs/" + v.split("/").pop() : v; return Buffer.from(JSON.stringify(o, null, 2)); };
-const mism = [];
-for (let k = 1; k <= 500; k++) if (K.cidV0(rebuilt(k)) !== cidsV2[k]) mism.push(k);
-assert.deepStrictEqual(mism, [4], "499/500 reproduce; #4's repo fix (fee4581, Energy Sword) was never pinned");
-assert.strictEqual(K.cidV0(rebuilt(4)), "QmTYE7JJBTnu9juAb4FcBCG56SxFotsJ4Ryw41NgQPHSSW", "CID a corrected #4 would have");
-assert.throws(() => K.cidV0(Buffer.alloc(0)), /empty/); assert.throws(() => K.cidV0(Buffer.alloc(262145)), /chunk/);
-ok("CIDv0: 499/500 pinned member JSONs reproduce byte for byte from public/metadata/N.json; #4 does not (unpinned fix)");
+// ── what gets pinned: every CID reproduces offline from the repo files ──
+const { execSync } = require("child_process");
+const pin = require(path.join(fz, "pin_metadata.cjs"));
+const cidsV3 = JSON.parse(fs.readFileSync(path.join(fz, "metadata-cids-v3.json")));
+const repoB = (k) => fs.readFileSync(path.join(repo, `public/metadata/${k}.json`));
+const mainB = (k) => execSync(`git -C ${JSON.stringify(repo)} show main:public/metadata/${k}.json`);
+// (a) main's files rebuild today's on-chain CIDs (metadata-cids-v2.json): 499/500, all but #4
+const mismMain = [];
+for (let k = 1; k <= 500; k++) if (K.cidV0(K.pinnedMemberBytes(mainB(k))) !== cidsV2[k]) mismMain.push(k);
+assert.deepStrictEqual(mismMain, [4], "main: #4's repo fix (fee4581) was never pinned");
+// (b) the new repo files rebuild metadata-cids-v3.json: 500/500, #4 included
+const mismNew = [];
+for (let k = 1; k <= 500; k++) if (K.cidV0(K.pinnedMemberBytes(repoB(k))) !== cidsV3[k]) mismNew.push(k);
+assert.deepStrictEqual(mismNew, [], "all 500 new member JSONs rebuild byte for byte");
+assert.strictEqual(new Set(Object.values(cidsV3)).size, 500);
+// (c) the pinned bytes differ from the repo file only in the image host (and JSON formatting)
+for (const k of [1, 4, 31, 398, 500]) {
+  const r = JSON.parse(repoB(k)), pb = JSON.parse(K.pinnedMemberBytes(repoB(k)));
+  assert.deepStrictEqual(K.jsonDiff(r, pb).map((d) => d.split(":")[0]), ["image"], `#${k}`);
+  assert.strictEqual(pb.image.split("/").pop(), r.image.split("/").pop(), `#${k} same image CID`);
+  assert.strictEqual(pb.name, `Capy Warrior #${k}`); assert.strictEqual(pb.external_url, K.EXTERNAL_URL);
+}
+assert.ok(JSON.parse(repoB(4)).attributes.some((a) => a.value === "Energy Sword"), "D3: #4 is the Energy Sword version");
+// (d) collection JSON + image
+const collRepoB = fs.readFileSync(path.join(repo, "public/metadata/collection.json"));
+const expMap = JSON.parse(fs.readFileSync(path.join(fz, "uri_map.expected.json")));
+assert.strictEqual(K.cidV0(K.pinnedCollectionBytes(collRepoB)), "QmXEiV3LR2J6ymj29mLVfomiwxNCVUn4EFCkdzQqMkhPfv");
+assert.strictEqual(expMap.collection, "https://ipfs.x1forge.xyz/ipfs/QmXEiV3LR2J6ymj29mLVfomiwxNCVUn4EFCkdzQqMkhPfv");
+const jpg = fs.readFileSync(path.join(repo, "public/collection.jpg"));
+assert.deepStrictEqual(pin.imageCandidates(jpg), ["QmULhXwBDnqpCmJZ3BSP2CRsgLawJbQfKuHi8ZhRjhdVfb", "QmfW5REhs2EQ8XjQ1KGN3i7bh7GZsHskDVBAcBoCDrhVSw"], "= ipfs add --cid-version 0 [--chunker=size-1048576]");
+assert.strictEqual(JSON.parse(collRepoB).image, "https://ipfs.x1forge.xyz/ipfs/QmULhXwBDnqpCmJZ3BSP2CRsgLawJbQfKuHi8ZhRjhdVfb");
+const png1 = path.join(repo, "public/1.png");
+if (fs.existsSync(png1)) { const b = fs.readFileSync(png1); assert.deepStrictEqual([K.cidV0(b), K.cidV0(b, K.CHUNK_1M)], ["QmbnCDmStz2hrexkJxn1mprCm7DYRwPmVac8ocdmYwdFZS", "QmRW2wRFY7ex8oMpXw2kDvRg3RCRnXukY9jWRvpAZoS7Vk"], "1.85 MB file, both chunkers = ipfs CLI"); }
+assert.throws(() => K.cidV0(Buffer.alloc(0)), /empty/); assert.throws(() => K.cidV0(Buffer.alloc(262144 * 175)), /174|tree level/);
+ok("CIDv0: main → today's on-chain CIDs 499/500 (#4 unpinned); new repo files → metadata-cids-v3 500/500; collection JSON QmXEiV3L…; image CID per chunker = ipfs CLI");
 
-// ── verify checks (pure): member JSON vs repo file, collection JSON vs local file ──
-const repo1 = JSON.parse(fs.readFileSync(path.join(repo, "public/metadata/1.json"), "utf8"));
-const repo4 = JSON.parse(fs.readFileSync(path.join(repo, "public/metadata/4.json"), "utf8"));
-const u = (k) => good[k];
-assert.deepStrictEqual(sweep.checkMemberJson(1, rebuilt(1), u(1), repo1), []);
-assert.deepStrictEqual(sweep.checkMemberJson(200, rebuilt(200), u(200), JSON.parse(fs.readFileSync(path.join(repo, "public/metadata/200.json"), "utf8"))), []);
-const pinned4 = Buffer.from(JSON.stringify({ ...JSON.parse(rebuilt(4)), description: "x", attributes: repo4.attributes.map((a) => (/Weapon/.test(a.trait_type) ? { ...a, value: "Rail Gun" } : a)) }, null, 2));
-assert.ok(sweep.checkMemberJson(4, pinned4, `https://ipfs.x1forge.xyz/ipfs/${K.cidV0(pinned4)}`, repo4).some((x) => /differs from repo/.test(x)), "#4 Rail Gun vs repo Energy Sword");
-assert.ok(sweep.checkMemberJson(1, rebuilt(1), u(2), repo1).some((x) => /hash to/.test(x)), "bytes do not match the uri's CID");
-const imgOther = Buffer.from(JSON.stringify({ ...JSON.parse(rebuilt(1)), image: "https://gateway.lighthouse.storage/ipfs/" + repo1.image.split("/").pop() }, null, 2));
-assert.ok(sweep.checkMemberJson(1, imgOther, `https://ipfs.x1forge.xyz/ipfs/${K.cidV0(imgOther)}`, repo1).some((x) => /lighthouse|gateway/.test(x)), "image on another gateway");
-const imgCid = Buffer.from(JSON.stringify({ ...JSON.parse(rebuilt(1)), image: "https://ipfs.x1forge.xyz/ipfs/QmS2zXzuR6VTuuPvUkZn18G1Ewm8MBJ1gLTXGon3ZwvVVV" }, null, 2));
-assert.ok(sweep.checkMemberJson(1, imgCid, `https://ipfs.x1forge.xyz/ipfs/${K.cidV0(imgCid)}`, repo1).some((x) => /image CID/.test(x)), "different image CID");
-const extUrl = Buffer.from(JSON.stringify({ ...JSON.parse(rebuilt(1)), external_url: "https://x1forge.xyz/collection/capy" }, null, 2));
-assert.ok(sweep.checkMemberJson(1, extUrl, `https://ipfs.x1forge.xyz/ipfs/${K.cidV0(extUrl)}`, repo1).some((x) => /external_url/.test(x)), "a field the repo file lacks");
-const named = Buffer.from(JSON.stringify({ ...JSON.parse(rebuilt(1)), name: "Capy Warrior #2" }, null, 2));
-assert.ok(sweep.checkMemberJson(1, named, `https://ipfs.x1forge.xyz/ipfs/${K.cidV0(named)}`, { ...repo1, name: "Capy Warrior #2" }).some((x) => /JSON name/.test(x)), "#1..#30 must be named Capy Warrior #N");
-const cj = Buffer.from(JSON.stringify({ name: "Capy Warriors", image: `https://ipfs.x1forge.xyz/ipfs/${QM}`, properties: { files: [{ uri: `https://ipfs.x1forge.xyz/ipfs/${QM}`, type: "image/jpeg" }] } }, null, 2));
-const cu = `https://ipfs.x1forge.xyz/ipfs/${K.cidV0(cj)}`;
-assert.deepStrictEqual(sweep.checkCollectionJson(cj, cu, cj), []);
-assert.ok(sweep.checkCollectionJson(cj, cu, Buffer.concat([cj, Buffer.from(" ")])).some((x) => /local file/.test(x)), "L5: byte compare with the local file");
-assert.ok(sweep.checkCollectionJson(cj, cu, null).some((x) => /--collection-json/.test(x)));
-const repoColl = fs.readFileSync(path.join(repo, "public/metadata/collection.json"));
-assert.ok(sweep.checkCollectionJson(repoColl, `https://ipfs.x1forge.xyz/ipfs/${K.cidV0(repoColl)}`, repoColl).some((x) => /vercel/.test(x)), "today's collection.json (image on Vercel) is refused");
-ok("verify: member = repo file except image (same CID, map's gateway), bytes hash to the uri CID; collection = local file byte for byte, no Vercel");
+// ── verify checks (pure): served bytes == pinned form of the repo file ──
+const u = (k) => expMap[k];
+const pinnedOf = (k) => K.pinnedMemberBytes(repoB(k));
+for (const k of [1, 4, 200, 500]) assert.deepStrictEqual(sweep.checkMemberJson(k, pinnedOf(k), u(k), repoB(k)), [], `#${k}`);
+const reCid = (b) => `https://ipfs.x1forge.xyz/ipfs/${K.cidV0(b)}`;
+const mut = (k, f) => { const o = JSON.parse(pinnedOf(k)); f(o); return Buffer.from(JSON.stringify(o, null, 2)); };
+const old4 = K.pinnedMemberBytes(mainB(4)); // the Rail Gun JSON on chain today
+assert.ok(sweep.checkMemberJson(4, old4, reCid(old4), repoB(4)).some((x) => /JSON name|external_url|!= pinned form/.test(x)), "today's #4 fails");
+assert.ok(sweep.checkMemberJson(1, pinnedOf(1), u(2), repoB(1)).some((x) => /hash to/.test(x)), "bytes do not match the uri's CID");
+for (const [label, b, re] of [
+  ["Rail Gun", mut(4, (o) => { o.attributes[3].value = "Rail Gun"; }), /!= pinned form/],
+  ["other gateway", mut(1, (o) => { o.image = o.image.replace("ipfs.x1forge.xyz", "gateway.lighthouse.storage"); }), /lighthouse|!= pinned form/],
+  ["image CID", mut(1, (o) => { o.image = "https://ipfs.x1forge.xyz/ipfs/QmS2zXzuR6VTuuPvUkZn18G1Ewm8MBJ1gLTXGon3ZwvVVV"; }), /!= pinned form/],
+  ["no external_url", mut(1, (o) => { delete o.external_url; }), /external_url/],
+  ["old name", mut(31, (o) => { o.name = "Capy: Beach — Original"; }), /JSON name/],
+  ["formatting only", Buffer.from(JSON.stringify(JSON.parse(pinnedOf(7)))), /formatting differs/],
+]) assert.ok(sweep.checkMemberJson(label === "Rail Gun" ? 4 : label === "old name" ? 31 : label === "formatting only" ? 7 : 1, b, reCid(b), label === "Rail Gun" ? repoB(4) : label === "old name" ? repoB(31) : label === "formatting only" ? repoB(7) : repoB(1)).some((x) => re.test(x)), label);
+const collPinned = K.pinnedCollectionBytes(collRepoB);
+assert.deepStrictEqual(sweep.checkCollectionJson(collPinned, u("collection"), collRepoB), []);
+assert.ok(sweep.checkCollectionJson(collRepoB, reCid(collRepoB), collRepoB).some((x) => /pinned form/.test(x)), "L5: the repo file's own bytes (\\u2014 escapes) are not what gets pinned");
+assert.ok(sweep.checkCollectionJson(collPinned, u("collection"), null).some((x) => /no repo collection.json/.test(x)));
+const mainColl = mainB("collection");
+assert.ok(sweep.checkCollectionJson(K.pinnedCollectionBytes(mainColl), reCid(K.pinnedCollectionBytes(mainColl)), mainColl).some((x) => /vercel/.test(x)), "main's collection.json (image on Vercel) is refused");
+ok("verify: served bytes must equal the pinned form of the repo file (members and collection), hash to the uri CID, name Capy Warrior #N, external_url set");
+
+// ── pin_metadata.cjs (pure parts) ──
+const cands = pin.imageCandidates(jpg);
+for (const k of [1, 4, 31, 500]) assert.deepStrictEqual(pin.checkMemberFile(k, repoB(k)), [], `#${k}`);
+assert.ok(pin.checkMemberFile(4, mainB(4)).some((x) => /external_url/.test(x)), "main's #4 lacks external_url");
+assert.ok(pin.checkMemberFile(31, mainB(31)).some((x) => /name/.test(x)), "main's #31 has the descriptive name");
+assert.ok(pin.checkMemberFile(5, repoB(4)).some((x) => /Capy Warrior #5/.test(x)), "file under the wrong number");
+assert.deepStrictEqual(pin.checkCollectionFile(collRepoB, cands), []);
+assert.ok(pin.checkCollectionFile(mainColl, cands).length >= 2, "main's collection.json refused (Vercel image)");
+const swapped = pin.setCollectionImage(collRepoB.toString("utf8"), cands[1]);
+assert.deepStrictEqual(pin.checkCollectionFile(Buffer.from(swapped), cands), [], "1 MiB fallback is valid too");
+assert.deepStrictEqual(K.jsonDiff(JSON.parse(collRepoB), JSON.parse(swapped)).map((d) => d.split(":")[0]).sort(), ["image", "properties.files.0.uri"]);
+assert.ok(swapped.includes("\\u2014"), "the rewrite keeps the file's formatting");
+assert.throws(() => pin.setCollectionImage(collRepoB.toString("utf8"), "bafy"), /CIDv0/);
+assert.strictEqual(pin.buildMapText(expMap), fs.readFileSync(path.join(fz, "uri_map.expected.json"), "utf8"), "pin writes the same bytes as make_uri_map");
+const pinDry = spawnSync(process.execPath, [path.join(fz, "pin_metadata.cjs")], { encoding: "utf8" });
+assert.strictEqual(pinDry.status, 0, pinDry.stderr);
+assert.match(pinDry.stdout, /expected uri_map sha256 38aac4ccf0df8aed9201e6ba65955856336f87ebdbe17fa47bc47e2f73dea635/);
+assert.match(pinDry.stdout, /DRY RUN — no network, no JWT/);
+ok("pin_metadata.cjs: file checks, collection image candidates + offline 1 MiB fallback rewrite, map bytes = make_uri_map, dry run = expected sha256 38aac4cc…");
 
 // ── S2: discovery keeps only verified members of HC8zqrya…, exactly 500, numbered 1..500 ──
 function encMd({ ua, mint, name, uri, fee = 100, creators, coll, isMutable = true }) {
@@ -232,17 +277,18 @@ const fakeConn = (list) => ({ getProgramAccounts: async () => list, getAccountIn
   ok("map record: lock needs --map-sha256 == file == the sha256 a full --verify recorded, per scope");
 
   // ── make_uri_map.cjs ──
-  const built = mk.build(cidsV2, "https://ipfs.x1forge.xyz");
-  assert.deepStrictEqual(built, good);
+  assert.deepStrictEqual(mk.build(cidsV2, "https://ipfs.x1forge.xyz"), good, "the on-chain-today map (v2) still builds");
   const exp = path.join(fz, "uri_map.expected.json");
-  assert.strictEqual(fs.readFileSync(exp, "utf8"), JSON.stringify(good, null, 2) + "\n", "committed uri_map.expected.json = metadata-cids-v2.json on ipfs.x1forge.xyz");
-  assert.strictEqual(K.sha256File(exp), "2c0201cf0c622a3f861ed8c36f7cc4708f06327967dee97a54b7266cf170adb3");
+  const built3 = mk.build(cidsV3, "https://ipfs.x1forge.xyz", { collectionCid: "QmXEiV3LR2J6ymj29mLVfomiwxNCVUn4EFCkdzQqMkhPfv" });
+  assert.strictEqual(fs.readFileSync(exp, "utf8"), JSON.stringify(built3, null, 2) + "\n", "committed uri_map.expected.json = make_uri_map(metadata-cids-v3.json, collection QmXEiV3L…)");
+  assert.strictEqual(K.sha256File(exp), "38aac4ccf0df8aed9201e6ba65955856336f87ebdbe17fa47bc47e2f73dea635");
+  assert.strictEqual(Object.keys(built3).length, 501);
   const b2 = mk.build(cidsV2, "https://ipfs.x1forge.xyz", { collectionCid: QM, set: "4=QmTYE7JJBTnu9juAb4FcBCG56SxFotsJ4Ryw41NgQPHSSW" });
   assert.strictEqual(b2[4], "https://ipfs.x1forge.xyz/ipfs/QmTYE7JJBTnu9juAb4FcBCG56SxFotsJ4Ryw41NgQPHSSW"); assert.strictEqual(b2.collection, `https://ipfs.x1forge.xyz/ipfs/${QM}`);
   for (const [g, o] of [["https://ipfs.x1forge.xyz/", {}], ["http://ipfs.x1forge.xyz", {}], ["https://ipfs.x1forge.xyz", { set: "0=" + QM }], ["https://ipfs.x1forge.xyz", { collectionCid: "bafy" }]])
     assert.throws(() => mk.build(cidsV2, g, o));
   assert.throws(() => mk.build({ ...cidsV2, 3: undefined }, "https://ipfs.x1forge.xyz"), /cids\["3"\]/);
-  ok("make_uri_map.cjs: rebuilds the committed expected map (sha256 2c0201cf…); --set / --collection-cid validated");
+  ok("make_uri_map.cjs: reproduces the committed expected map (500 + collection, sha256 38aac4cc…); --set / --collection-cid validated");
 
   // ── vault_collection.cjs ──
   assert.strictEqual(vault.MINT_STATE.toBase58(), vault.EXPECTED_MINT_STATE);
@@ -291,8 +337,17 @@ const fakeConn = (list) => ({ getProgramAccounts: async () => list, getAccountIn
   X("sweep_uri.cjs", [...RPC, "--map", "x.json", "--token", "0"], /1\.\.500/);
   X("sweep_uri.cjs", [...RPC, "--map", "x.json", "--collection", "--token", "1"], /exclusive/);
   X("sweep_uri.cjs", [...RPC, "--map", "x.json", "--verify", "--send", "--confirm-mainnet"], /read-only/);
-  X("sweep_uri.cjs", [...RPC, "--map", "x.json", "--verify", "--collection"], /--collection-json/);
-  X("sweep_uri.cjs", [...RPC, "--map", "x.json", "--collection-json", "c.json"], /only applies/);
+  X("sweep_uri.cjs", [...RPC, "--map", "x.json", "--verify", "--collection", "--collection-json", "c.json"], /unknown argument/);
+  X("pin_metadata.cjs", ["--executee"], /unknown argument/);
+  X("pin_metadata.cjs", ["--token", "0"], /1\.\.500/);
+  X("pin_metadata.cjs", ["--token", "501", "--execute"], /1\.\.500/);
+  X("pin_metadata.cjs", ["--collection", "--token", "4"], /exclusive/);
+  X("pin_metadata.cjs", ["--write-expected", "--execute"], /dry-run option/);
+  X("pin_metadata.cjs", ["--set-collection-image", "QmULhXwBDnqpCmJZ3BSP2CRsgLawJbQfKuHi8ZhRjhdVfb", "--execute"], /runs alone/);
+  X("pin_metadata.cjs", ["--set-collection-image", "bafy123"], /CIDv0/);
+  X("pin_metadata.cjs", ["--set-collection-image", QM], /is not a CID of/);
+  X("pin_metadata.cjs", ["--gateway", "https://ipfs.x1forge.xyz/ipfs/"], /https origin/);
+  X("pin_metadata.cjs", ["--dir", path.join(repo, "contract")], /problem/);
   X("sweep_uri.cjs", [...RPC, "--map", "x.json", "--revert"], /unknown argument/);
   X("sweep_uri.cjs", [...RPC, "--map", "x.json", "--verify", "--allow-vercel-diff", "image"], /unknown argument/);
   X("sweep_uri.cjs", [...RPC, "--map", "x.json", "--verify", "--skip-vercel-compare"], /unknown argument/);
@@ -345,8 +400,18 @@ const fakeConn = (list) => ({ getProgramAccounts: async () => list, getAccountIn
     const before = src.slice(0, firstRead);
     assert.ok(/if \(!SEND\)[\s\S]*return;[\s\S]*$/.test(before) || /if \(SEND\) \{\s*$/.test(before.trimEnd().slice(-40)) || /if \(SEND\) \{[^}]*$/.test(before.slice(-120)), `${f}: keypair read only on the send path`);
   }
-  for (const f of fs.readdirSync(fz).filter((x) => x.endsWith(".cjs"))) assert.ok(!/pinata\/jwt|\.config\/pinata/.test(fs.readFileSync(path.join(fz, f), "utf8")), `${f} never touches the Pinata JWT`);
-  ok("static: keypairs are read only on the --send path; no script references the Pinata JWT");
+  for (const f of fs.readdirSync(fz).filter((x) => x.endsWith(".cjs") && x !== "pin_metadata.cjs")) assert.ok(!/\.config\/pinata|api\.pinata\.cloud|\bjwt\b/i.test(fs.readFileSync(path.join(fz, f), "utf8")), `${f} never touches Pinata or the JWT`);
+  { // pin_metadata.cjs: the JWT file is read once, after the dry-run return, and never logged
+    const src = fs.readFileSync(path.join(fz, "pin_metadata.cjs"), "utf8");
+    const readAt = src.indexOf("jwt = fs.readFileSync(JWT_PATH");
+    assert.ok(readAt > 0 && src.indexOf("jwt = fs.readFileSync", readAt + 1) === -1, "one read");
+    assert.ok(src.lastIndexOf("if (!EXECUTE) {", readAt) > 0 && src.slice(src.lastIndexOf("if (!EXECUTE) {", readAt), readAt).includes("return;"), "after the dry-run return");
+    const logged = [...src.matchAll(/(?:console\.(?:log|error)|process\.stdout\.write)\(([^;]*)\)/g)].map((m) => m[1]);
+    assert.ok(logged.length > 10);
+    for (const args of logged) assert.ok(!/\bjwt\b/.test(args), `logs the JWT? ${args}`); // the identifier, case-sensitive
+    assert.ok(/scrub\(/.test(src), "error texts are scrubbed of the JWT");
+  }
+  ok("static: keypairs are read only on the --send path; only pin_metadata.cjs touches the JWT: one read after the dry-run return, never logged, errors scrubbed");
   // (the temporary map directory is left in os.tmpdir(); nothing is deleted)
   console.log(`\nALL ${n} OFFLINE CHECK GROUPS PASSED`);
 })().catch((e) => { console.error("FAILED:", e); process.exit(1); });

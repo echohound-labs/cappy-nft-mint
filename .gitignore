@@ -7,3 +7,8 @@ dist/
 .env*
 contract/capy-collection-mint.json
 scratch/
+
+# freeze run-time state (written by freeze/*.cjs; never commit)
+freeze/pin.state.json
+freeze/uri_map.json
+freeze/uri_map.json.verified.json

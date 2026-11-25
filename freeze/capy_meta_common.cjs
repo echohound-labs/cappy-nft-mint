@@ -249,8 +249,9 @@ function jsonDiff(a, b, path = "") {
   return out;
 }
 
-// ── CIDv0 of a single-chunk file (≤ 256 KiB), as `ipfs add --cid-version 0` ──
-// (from rise-phoenix-contract/pin_metadata.cjs). dag-pb node { Data: unixfs File, Links: [] }.
+// ── CIDv0, as `ipfs add --cid-version 0 [--chunker=size-N]` (kubo defaults: balanced layout,
+// dag-pb leaves, no raw leaves). Single chunk: one dag-pb node; up to 174 chunks: one root with
+// links (checked against the ipfs CLI for 256 KiB and 1 MiB chunks in the offline tests).
 const B58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 function b58(buf) {
   let n = BigInt("0x" + (buf.toString("hex") || "0")), s = "";
@@ -258,14 +259,46 @@ function b58(buf) {
   for (const b of buf) { if (b !== 0) break; s = "1" + s; }
   return s;
 }
-function varint(n) { const o = []; while (n >= 0x80) { o.push((n & 0x7f) | 0x80); n >>>= 7; } o.push(n); return Buffer.from(o); }
-function cidV0(bytes) {
+function varint(n) { const o = []; while (n >= 0x80) { o.push((n & 0x7f) | 0x80); n = Math.floor(n / 128); } o.push(n); return Buffer.from(o); }
+const pbField = (tag, b) => Buffer.concat([Buffer.from([tag]), varint(b.length), b]);
+const multihash = (node) => Buffer.concat([Buffer.from([0x12, 0x20]), crypto.createHash("sha256").update(node).digest()]);
+const leafNode = (chunk) => pbField(0x0a, Buffer.concat([Buffer.from([0x08, 0x02]), pbField(0x12, chunk), Buffer.from([0x18]), varint(chunk.length)]));
+const CHUNK_256K = 262144, CHUNK_1M = 1048576;
+function cidV0(bytes, chunk = CHUNK_256K) {
   if (!bytes.length) throw new Error("empty file");
-  if (bytes.length > 262144) throw new Error("file larger than one 256 KiB chunk: not supported here");
-  const unixfs = Buffer.concat([Buffer.from([0x08, 0x02, 0x12]), varint(bytes.length), bytes, Buffer.from([0x18]), varint(bytes.length)]);
-  const node = Buffer.concat([Buffer.from([0x0a]), varint(unixfs.length), unixfs]);
-  const h = crypto.createHash("sha256").update(node).digest();
-  return b58(Buffer.concat([Buffer.from([0x12, 0x20]), h]));
+  if (bytes.length <= chunk) return b58(multihash(leafNode(bytes)));
+  const links = [], sizes = [];
+  for (let o = 0; o < bytes.length; o += chunk) {
+    const c = bytes.slice(o, o + chunk), node = leafNode(c);
+    links.push(pbField(0x12, Buffer.concat([pbField(0x0a, multihash(node)), Buffer.from([0x12, 0x00, 0x18]), varint(node.length)])));
+    sizes.push(Buffer.concat([Buffer.from([0x20]), varint(c.length)]));
+  }
+  if (links.length > 174) throw new Error(`${links.length} chunks: more than one tree level, not supported`);
+  const unixfs = Buffer.concat([Buffer.from([0x08, 0x02, 0x18]), varint(bytes.length), ...sizes]);
+  return b58(multihash(Buffer.concat([...links, pbField(0x0a, unixfs)])));
+}
+
+// ── What gets pinned (owner decision 2026-11-24, follow-up 1) ───────────
+// Members: the repo file public/metadata/N.json, parsed, with only `image` moved to
+// <gateway>/ipfs/<same CID>, serialised as JSON.stringify(x, null, 2) (no trailing newline).
+// This is exactly how the 500 JSONs on chain today were made (rewrite-metadata.cjs): 499/500
+// of them rebuild byte for byte from main's files (all but #4, whose fix was never pinned).
+// Collection: public/metadata/collection.json (its image is already on the gateway), parsed and
+// serialised the same way. So pinned bytes and repo file differ only in the image host and in
+// JSON formatting (e.g. "\u2014" escapes in #4, #398 and collection.json become "—").
+const EXTERNAL_URL = "https://x1forge.xyz/collection/capy";
+const DEFAULT_GATEWAY = "https://ipfs.x1forge.xyz";
+const CID_RE = /^Qm[1-9A-HJ-NP-Za-km-z]{44}$/;
+function pinnedMemberBytes(repoBytes, gateway = DEFAULT_GATEWAY) {
+  const r = JSON.parse(Buffer.isBuffer(repoBytes) ? repoBytes.toString("utf8") : repoBytes);
+  const cid = typeof r.image === "string" ? r.image.split("/").pop() : "";
+  if (!CID_RE.test(cid)) throw new Error(`image ${JSON.stringify(r.image)} does not end in a CIDv0`);
+  const o = {};
+  for (const [k, v] of Object.entries(r)) o[k] = k === "image" ? `${gateway}/ipfs/${cid}` : v;
+  return Buffer.from(JSON.stringify(o, null, 2));
+}
+function pinnedCollectionBytes(repoBytes) {
+  return Buffer.from(JSON.stringify(JSON.parse(Buffer.isBuffer(repoBytes) ? repoBytes.toString("utf8") : repoBytes), null, 2));
 }
 
 module.exports = {
@@ -273,5 +306,6 @@ module.exports = {
   COLLECTION_MINT, COLLECTION_METADATA, COLLECTION_NAME, COLLECTION_KEY, COLLECTION_OLD_URI, NAME_RE,
   royaltyTarget, royaltyIsFinal, royaltyPlan, sha256Hex, sha256File, recordPath, writeVerifyRecord, checkVerifyRecord,
   mdPda, mintStatePda, parseArgs, V, parseMetadata, num, fingerprint, isMember, discover, readBack,
-  checkMap, cidOfUri, hostOf, forbiddenHost, jsonDiff, cidV0,
+  checkMap, cidOfUri, hostOf, forbiddenHost, jsonDiff, cidV0, CHUNK_256K, CHUNK_1M, CID_RE,
+  EXTERNAL_URL, DEFAULT_GATEWAY, pinnedMemberBytes, pinnedCollectionBytes,
 };
