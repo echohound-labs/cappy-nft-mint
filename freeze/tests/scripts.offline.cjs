@@ -4,6 +4,7 @@
 // Prereqs: the freeze build's IDL at contract/idl/capy_warriors.json (committed), and
 // `cd contract/tests/svm && cargo test --offline` (writes the metadata dumps used below).
 // Run from the repo root: node freeze/tests/scripts.offline.cjs
+// (reads main's metadata with git; in a copy without .git set CAPY_GIT_REPO=<path to the repo>)
 const assert = require("assert"), fs = require("fs"), path = require("path"), os = require("os"), crypto = require("crypto");
 const { spawnSync } = require("child_process");
 const repo = path.join(__dirname, "..", "..");
@@ -97,7 +98,9 @@ const { execSync } = require("child_process");
 const pin = require(path.join(fz, "pin_metadata.cjs"));
 const cidsV3 = JSON.parse(fs.readFileSync(path.join(fz, "metadata-cids-v3.json")));
 const repoB = (k) => fs.readFileSync(path.join(repo, `public/metadata/${k}.json`));
-const mainB = (k) => execSync(`git -C ${JSON.stringify(repo)} show main:public/metadata/${k}.json`);
+// main's files are read with git: from this repo, or from $CAPY_GIT_REPO (e.g. when running in a `git archive` copy)
+const gitRepo = process.env.CAPY_GIT_REPO || repo;
+const mainB = (k) => execSync(`git -C ${JSON.stringify(gitRepo)} show main:public/metadata/${k}.json`, { stdio: ["ignore", "pipe", "pipe"] });
 // (a) main's files rebuild today's on-chain CIDs (metadata-cids-v2.json): 499/500, all but #4
 const mismMain = [];
 for (let k = 1; k <= 500; k++) if (K.cidV0(K.pinnedMemberBytes(mainB(k))) !== cidsV2[k]) mismMain.push(k);
