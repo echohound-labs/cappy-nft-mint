@@ -8,7 +8,8 @@ Handover with the full step list: `~/handovers/capy-freeze-build-1.md`.
 | `update_royalty.cjs` | final royalty on 500 members + collection; target from `--bps` / `--creator` (required) | only with `--send --confirm-mainnet` |
 | `pin_metadata.cjs` | pins the 500 member JSONs + collection image/JSON as bare files, verifies each by GET + sha256, writes `uri_map.json` | uploads only with `--execute` (reads the JWT only then) |
 | `make_uri_map.cjs` | builds `uri_map.json` from a CID map (offline) | never |
-| `sweep_uri.cjs` | points URIs at the map; `--verify` checks the pinned JSONs and records the map sha256 | only with `--send --confirm-mainnet` |
+| `sweep_uri.cjs` | points URIs at the map; `--verify` checks the pinned JSONs, downloads each image in full and requires its body to hash to the image URL's CID, and records the map sha256 | only with `--send --confirm-mainnet` |
+| `image_census.cjs` | read-only census of the 500 member images + collection image: **full** GET, body CIDv0 = URL CID; `--range` adds an informational Range probe; writes `image_census.json` (git-ignored) | never (GET only) |
 | `lock_metadata.cjs` | `lock_metadata` (is_mutable = false), gated on the verified map and the royalty target | only with `--send --confirm-mainnet` |
 | `vault_collection.cjs` | moves the collection NFT token into ATA(mint_state) after lock-all | only with `--send --confirm-mainnet` |
 | `readonly_checks.cjs` | master editions; simulated update after a lock (expects 59) | never |
@@ -22,6 +23,10 @@ What gets pinned = `JSON.stringify(repo file with image on https://ipfs.x1forge.
 (`QmXEiV3L…khPfv`), sha256 `38aac4ccf0df8aed9201e6ba65955856336f87ebdbe17fa47bc47e2f73dea635`
 (`node freeze/make_uri_map.cjs --cids freeze/metadata-cids-v3.json --gateway https://ipfs.x1forge.xyz --collection-cid QmXEiV3LR2J6ymj29mLVfomiwxNCVUn4EFCkdzQqMkhPfv`).
 `public/metadata-cids-v2.json` = what is on chain before the sweep (the undo map before any lock).
+
+Images (follow-up 2): never judge an image by a Range request. Pinata's gateway intermittently answers
+`404 … timed out searching for a file on the non-pinata IPFS network` to Range requests on multi-chunk files
+(all 150 PNGs are multi-chunk with the 1 MiB chunker) while serving the same file in full with 200.
 
 Tests: `node freeze/tests/scripts.offline.cjs` (after `cd contract/tests/svm && cargo test --offline`).
 The repo-root `update_royalty.cjs` / `sweep_uri.cjs` are the older pre-freeze tools; do not use them for the freeze.

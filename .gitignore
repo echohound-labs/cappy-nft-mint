@@ -12,3 +12,4 @@ scratch/
 freeze/pin.state.json
 freeze/uri_map.json
 freeze/uri_map.json.verified.json
+freeze/image_census.json

@@ -16,6 +16,7 @@ const lockS = require(path.join(fz, "lock_metadata.cjs"));
 const roy = require(path.join(fz, "update_royalty.cjs"));
 const vault = require(path.join(fz, "vault_collection.cjs"));
 const mk = require(path.join(fz, "make_uri_map.cjs"));
+const census = require(path.join(fz, "image_census.cjs"));
 const mainnetFx = path.join(repo, "contract/tests/svm/fixtures/mainnet");
 const dumps = path.join(repo, "contract/tests/svm/target/metadata-dumps");
 const idl = JSON.parse(fs.readFileSync(path.join(repo, "contract/idl/capy_warriors.json")));
@@ -155,6 +156,57 @@ assert.ok(sweep.checkCollectionJson(collPinned, u("collection"), null).some((x) 
 const mainColl = mainB("collection");
 assert.ok(sweep.checkCollectionJson(K.pinnedCollectionBytes(mainColl), reCid(K.pinnedCollectionBytes(mainColl)), mainColl).some((x) => /vercel/.test(x)), "main's collection.json (image on Vercel) is refused");
 ok("verify: served bytes must equal the pinned form of the repo file (members and collection), hash to the uri CID, name Capy Warrior #N, external_url set");
+
+// ── verify: the image body must hash to the CID in its URL (audit H1 fix 4 / I1) ──
+{
+  const GW = "https://ipfs.x1forge.xyz/ipfs/";
+  // a deterministic 2.5 MiB "image": 3 chunks of 1 MiB, so the 1 MiB-chunker DAG has a root with links
+  const big = Buffer.alloc(2.5 * 1048576); let x = 7; for (let i = 0; i < big.length; i++) { x = (x * 1103515245 + 12345) >>> 0; big[i] = x >>> 24; }
+  const bigCid = K.cidV0(big, K.CHUNK_1M);
+  assert.notStrictEqual(bigCid, K.cidV0(big, K.CHUNK_256K));
+  assert.strictEqual(sweep.checkImageBody(GW + bigCid, 200, "image/png", big), null, "right body, 1 MiB chunks");
+  assert.strictEqual(K.cidMatch(big, bigCid), "1MiB");
+  const flipped = Buffer.from(big); flipped[1500000] ^= 1;
+  assert.match(sweep.checkImageBody(GW + bigCid, 200, "image/png", flipped), /does not hash to/, "one flipped byte");
+  assert.match(sweep.checkImageBody(GW + bigCid, 200, "image/png", big.subarray(0, 1048576)), /does not hash to/, "truncated to the first chunk");
+  assert.match(sweep.checkImageBody(GW + bigCid, 200, "image/png", Buffer.concat([big, Buffer.from([0])])), /does not hash to/, "one byte appended");
+  assert.match(sweep.checkImageBody(GW + K.cidV0(big, K.CHUNK_256K) .replace(/.$/, "x"), 200, "image/png", big), /does not hash to/, "other CID");
+  assert.match(sweep.checkImageBody(GW + bigCid, 200, "text/plain", big), /content-type/);
+  assert.match(sweep.checkImageBody(GW + bigCid, 404, "text/plain", Buffer.from("The request timed out")), /HTTP 404/);
+  assert.match(sweep.checkImageBody(GW + bigCid, 200, "image/png", Buffer.alloc(0)), /empty/);
+  assert.match(sweep.checkImageBody("http://ipfs.x1forge.xyz/ipfs/" + bigCid, 200, "image/png", big), /not https/);
+  assert.match(sweep.checkImageBody("https://ipfs.x1forge.xyz/collection.jpg", 200, "image/png", big), /CIDv0/);
+  // the collection image (2 chunks of 256 KiB) under its committed CID; its 1 MiB CID is also the same file
+  const collImgCid = JSON.parse(collRepoB).image.split("/").pop();
+  assert.strictEqual(sweep.checkImageBody(GW + collImgCid, 200, "image/jpeg", jpg), null, "collection.jpg, 256 KiB CID");
+  assert.strictEqual(sweep.checkImageBody(GW + "QmfW5REhs2EQ8XjQ1KGN3i7bh7GZsHskDVBAcBoCDrhVSw", 200, "image/jpeg", jpg), null, "collection.jpg, 1 MiB CID");
+  assert.match(sweep.checkImageBody(GW + collImgCid, 200, "image/jpeg", big), /does not hash to/, "another image under the collection CID");
+  // real art, when the masters are on this machine (cid_map.json = ipfs add --chunker=size-1048576)
+  const masters = "/mnt/c/X1/capy/all_images", cidMapF = "/mnt/c/X1/capy/cid_map.json";
+  let real = 0;
+  if (fs.existsSync(cidMapF)) {
+    const cm = JSON.parse(fs.readFileSync(cidMapF, "utf8"));
+    for (const f of ["151.jpg", "1.png"]) {
+      const fp = path.join(masters, f); if (!fs.existsSync(fp)) continue;
+      const b = fs.readFileSync(fp), n = parseInt(f, 10);
+      assert.strictEqual(cm[f], JSON.parse(repoB(n)).image.split("/").pop(), `${f}: cid_map = metadata`);
+      assert.strictEqual(sweep.checkImageBody(GW + cm[f], 200, f.endsWith("png") ? "image/png" : "image/jpeg", b), null, `${f} master`);
+      assert.match(sweep.checkImageBody(GW + cm[f === "1.png" ? "151.jpg" : "1.png"], 200, "image/png", b), /does not hash to/, `${f} under another token's CID`);
+      real++;
+    }
+  }
+  // census judge (freeze/image_census.cjs): a 404 or a wrong body is never "served"
+  const img = { key: "9", url: GW + bigCid, cid: bigCid };
+  assert.strictEqual(census.judge(img, { status: 200, ct: "image/png", body: big, ms: 1 }).served, true);
+  assert.strictEqual(census.judge(img, { status: 200, ct: "image/png", body: flipped, ms: 1 }).served, false);
+  assert.strictEqual(census.judge(img, { status: 404, ct: "text/plain", body: Buffer.from("timed out"), ms: 1 }).served, false);
+  assert.strictEqual(census.judge(img, { status: 206, ct: "image/png", body: big.subarray(0, 16), ms: 1 }).served, false, "a Range answer is not a census pass");
+  const ex = census.expectedImages(path.join(repo, "public/metadata"), { cidMap: fs.existsSync(cidMapF) ? JSON.parse(fs.readFileSync(cidMapF, "utf8")) : null });
+  assert.deepStrictEqual(ex.problems, []); assert.strictEqual(ex.images.length, 501);
+  assert.ok(ex.images.every((i) => i.url === "https://ipfs.x1forge.xyz/ipfs/" + i.cid && K.CID_RE.test(i.cid)));
+  assert.strictEqual(new Set(ex.images.map((i) => i.cid)).size, 501, "501 distinct image CIDs");
+  ok(`verify image: body must hash to the URL's CID (1 MiB chunks; 256 KiB for the collection image): wrong, truncated, extended, flipped bodies refused; census judge agrees${real ? `; real masters checked: ${real}` : " (masters not on this machine: real-art check skipped)"}`);
+}
 
 // ── pin_metadata.cjs (pure parts) ──
 const cands = pin.imageCandidates(jpg);
@@ -391,6 +443,10 @@ const fakeConn = (list) => ({ getProgramAccounts: async () => list, getAccountIn
   X("readonly_checks.cjs", ["editions"], /--rpc/);
   X("readonly_checks.cjs", ["send"], /editions or update-sim/);
   X("make_uri_map.cjs", ["--cids", "public/metadata-cids-v2.json"], /--gateway/);
+  X("image_census.cjs", ["--collection", "--token", "1"], /exclusive/);
+  X("image_census.cjs", ["--token", "0"], /1\.\.500/);
+  X("image_census.cjs", ["--census-range"], /unknown/);
+  X("image_census.cjs", ["--concurrency", "0"], /positive/);
   X("make_uri_map.cjs", ["--cids", path.join(repo, "public/metadata-cids-v2.json"), "--gateway", "https://ipfs.x1forge.xyz", "--out", exp], /exists/);
   ok(`refusal paths: ${cnt} bad invocations exit 1 before any network call (no default RPC, no default royalty, no override flags)`);
   for (const f of fs.readdirSync(fz).filter((x) => x.endsWith(".cjs"))) assert.strictEqual(spawnSync(process.execPath, ["--check", path.join(fz, f)]).status, 0, f);

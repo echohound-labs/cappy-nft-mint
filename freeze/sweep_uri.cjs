@@ -35,7 +35,8 @@
 //       - the served bytes EQUAL K.pinnedMemberBytes(repo file public/metadata/N.json) byte for byte:
 //         the repo file with only `image` moved to the map's gateway (same CID), JSON.stringify(x,null,2);
 //       - JSON name "Capy Warrior #N", external_url https://x1forge.xyz/collection/capy, no Vercel /
-//         Lighthouse / pinata.cloud string; the image downloads in full with an image/* content type.
+//         Lighthouse / pinata.cloud string; the image downloads in full (no Range) with an image/* content
+//         type, and its body hashes back to the CID in the image URL (1 MiB chunks; checkImageBody).
 //     --verify --collection: served bytes EQUAL K.pinnedCollectionBytes(<json-dir>/collection.json) byte
 //     for byte (RISE audit L5) and hash to the uri's CID; same host and image checks.
 //   * A FULL passing --verify (all 500 members, or --collection) records the map's sha256 in
@@ -130,15 +131,26 @@ function checkCollectionJson(servedBytes, uri, repoBytes) {
   for (const f of (meta.properties && meta.properties.files) || []) if (f && f.uri !== meta.image) p.push(`properties.files uri ${f.uri} != image`);
   return p;
 }
+// Pure check of a downloaded image (audit H1 fix 4 / I1): the body must hash back to the CID in its
+// URL (1 MiB chunks, as the member art was added; 256 KiB accepted for the collection image). That
+// proves the gateway served the exact pinned file, not just something with an image content type.
+function checkImageBody(url, status, ct, body) {
+  if (typeof url !== "string" || !url.startsWith("https://")) return `image is not https: ${url}`;
+  const cid = K.cidOfUri(url);
+  if (!cid) return `image ${url} is not <gateway>/ipfs/<CIDv0>`;
+  if (status !== 200) return `image HTTP ${status} ${url}`;
+  if (!body || !body.length) return "image is empty";
+  if (!String(ct || "").startsWith("image/")) return `image content-type "${ct}"`;
+  if (!K.cidMatch(body, cid)) return `image body (${body.length} B, sha256 ${K.sha256Hex(body).slice(0, 12)}…) does not hash to ${cid}`;
+  return null;
+}
 async function checkImage(url) {
   if (typeof url !== "string" || !url.startsWith("https://")) return `image is not https: ${url}`;
+  // Full download, no Range header: Pinata's gateway intermittently answers 404 to Range requests on
+  // multi-chunk files that it serves in full (follow-up 2), so a Range probe proves nothing.
   const res = await get(url, 180000);
-  if (!res.ok) return `image HTTP ${res.status} ${url}`;
-  const body = Buffer.from(await res.arrayBuffer()); // full download, not a HEAD or Range probe
-  const ct = res.headers.get("content-type") || "";
-  if (!body.length) return "image is empty";
-  if (!ct.startsWith("image/")) return `image content-type "${ct}"`;
-  return null;
+  const body = res.ok ? Buffer.from(await res.arrayBuffer()) : null;
+  return checkImageBody(url, res.status, res.headers.get("content-type") || "", body);
 }
 
 async function main() {
@@ -297,4 +309,4 @@ async function main() {
 }
 
 if (require.main === module) main().catch((e) => { console.error("ERR", e.message); process.exit(1); });
-module.exports = { updateTokenUriIx, loadMap, checkMemberJson, checkCollectionJson, DISC };
+module.exports = { updateTokenUriIx, loadMap, checkMemberJson, checkCollectionJson, checkImageBody, DISC };

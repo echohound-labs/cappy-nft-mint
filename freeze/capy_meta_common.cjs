@@ -277,6 +277,15 @@ function cidV0(bytes, chunk = CHUNK_256K) {
   const unixfs = Buffer.concat([Buffer.from([0x08, 0x02, 0x18]), varint(bytes.length), ...sizes]);
   return b58(multihash(Buffer.concat([...links, pbField(0x0a, unixfs)])));
 }
+// Does `bytes` hash to `cid`? The member art was added with 1 MiB chunks (MANIFEST.md); the
+// collection image may be either. A CID is a hash of the whole DAG, so a match proves the bytes are
+// exactly the file. Returns "1MiB" / "256KiB" or null.
+function cidMatch(bytes, cid) {
+  if (!bytes || !bytes.length || !CID_RE.test(cid || "")) return null;
+  if (cidV0(bytes, CHUNK_1M) === cid) return "1MiB";
+  if (bytes.length > CHUNK_256K && cidV0(bytes, CHUNK_256K) === cid) return "256KiB";
+  return null;
+}
 
 // ── What gets pinned (owner decision 2026-11-24, follow-up 1) ───────────
 // Members: the repo file public/metadata/N.json, parsed, with only `image` moved to
@@ -306,6 +315,6 @@ module.exports = {
   COLLECTION_MINT, COLLECTION_METADATA, COLLECTION_NAME, COLLECTION_KEY, COLLECTION_OLD_URI, NAME_RE,
   royaltyTarget, royaltyIsFinal, royaltyPlan, sha256Hex, sha256File, recordPath, writeVerifyRecord, checkVerifyRecord,
   mdPda, mintStatePda, parseArgs, V, parseMetadata, num, fingerprint, isMember, discover, readBack,
-  checkMap, cidOfUri, hostOf, forbiddenHost, jsonDiff, cidV0, CHUNK_256K, CHUNK_1M, CID_RE,
+  checkMap, cidOfUri, hostOf, forbiddenHost, jsonDiff, cidV0, cidMatch, CHUNK_256K, CHUNK_1M, CID_RE,
   EXTERNAL_URL, DEFAULT_GATEWAY, pinnedMemberBytes, pinnedCollectionBytes,
 };
